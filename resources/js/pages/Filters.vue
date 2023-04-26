@@ -27,23 +27,11 @@
     data() {
       return {
         filters: [
-          {
-            id: 1,
-            name: 'path/to/image1.jpg',
-          },
-          {
-            id: 2,
-            name: 'path/to/image2.jpg',
-          },
-          {
-            id: 3,
-            name: 'path/to/image3.jpg',
-          },
         ],
       };
     },
     mounted(){
-        axios.post('/api/get-filters', {}).then(function(response) {
+        axios.post('/api/get-filters', {}).then(response => {
             this.filters = response.data.filters;
         })
     }

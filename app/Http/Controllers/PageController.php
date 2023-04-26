@@ -36,7 +36,7 @@ class PageController extends Controller
     {
         $id = $request->page_id;
         $page = Page::find($id)->first();
-        return response()->json(['page' => $page]);
+        return response()->json($page);
     }
 
     public function getPages()

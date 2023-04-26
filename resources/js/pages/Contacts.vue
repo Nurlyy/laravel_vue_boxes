@@ -40,7 +40,7 @@ export default {
         axios.post('/api/save-contacts', {email: this.email, phone_number: this.phone_number, address: this.address}).then(function(response){
             console.log(response.data);
         })
-        alert('saved');
+        // alert('saved');
     },
     updateValues(){
 

@@ -1,11 +1,13 @@
 <template>
     <h1>Add Page</h1>
-    <CForm>
+    <CForm @submit.prevent='submitForm()'>
         <div class="mb-3">
             <CFormLabel for="name">Name</CFormLabel>
             <CFormInput
                 type="text"
-                v-bind="name"
+                v-model="name"
+                :value='name'
+                @change="slugify_name()"
                 id="name"
                 placeholder="NAME"
             />
@@ -17,7 +19,8 @@
                 type="text"
                 placeholder="SLUG"
                 aria-label="Disabled input example"
-                v-bind="slug"
+                v-model="slug"
+                :value='slug'
                 disabled
             />
         </div>
@@ -26,7 +29,8 @@
             <CFormLabel for="title">Title</CFormLabel>
             <CFormInput
                 type="text"
-                v-bind="title"
+                v-model="title"
+                :value='title'
                 id="title"
                 placeholder="TITLE"
             />
@@ -34,14 +38,15 @@
 
         <div class="mb-3">
             <CFormLabel for="body">Body</CFormLabel>
-            <CFormTextarea id="body" v-bind="body" rows="3"></CFormTextarea>
+            <CFormTextarea id="body" v-model="body" rows="3">{{ this.body }}</CFormTextarea>
         </div>
 
         <div class="mb-3">
             <CFormLabel for="keyword">Keyword</CFormLabel>
             <CFormInput
                 type="text"
-                v-bind="keyword"
+                v-model="keyword"
+                :value='keyword'
                 id="keyword"
                 placeholder="Keyword"
             />
@@ -51,7 +56,8 @@
             <CFormLabel for="description">Description</CFormLabel>
             <CFormTextarea
                 id="description"
-                v-bind="description"
+                v-model="description"
+                :value='description'
                 rows="3"
             ></CFormTextarea>
         </div>
@@ -60,7 +66,7 @@
             <CFormLabel for="show">Visibility</CFormLabel>
             <CFormCheck
                 style="margin-left: 15px"
-                v-bind="visibility"
+                v-model="visibility"
                 id="show"
             />
         </div>
@@ -84,6 +90,9 @@ export default {
         };
     },
     methods: {
+        slugify_name(){
+            this.slug = this.slugify(this.name);
+        },
         submitForm() {
             axios
                 .post("/api/add-page", {
@@ -98,7 +107,15 @@ export default {
                 .then(function (response) {
                     console.log(response.data);
                 });
-            alert("saved");
+            // alert("saved");
+        },
+        slugify(str) {
+            return str
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, "")
+                .replace(/[\s_-]+/g, "-")
+                .replace(/^-+|-+$/g, "");
         },
     },
 };

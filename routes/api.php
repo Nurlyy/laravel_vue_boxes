@@ -32,7 +32,7 @@ Route::post('me', [AuthController::class, 'me'])->middleware('auth:api');
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 Route::post('add-filter', "App\Http\Controllers\FilterController@addFilter")->middleware('auth:api');
-Route::post('add-image', "App\Http\Controllers\ImageController@addaddImage")->middleware('auth:api');
+Route::post('add-image', "App\Http\Controllers\ImageController@addImage")->middleware('auth:api');
 Route::post('add-page', "App\Http\Controllers\PageController@addPage")->middleware('auth:api');
 Route::post('save-contacts', "App\Http\Controllers\ContactsController@saveContacts")->middleware('auth:api');
 Route::post('save-admin', "App\Http\Controllers\AdminController@saveAdmin")->middleware('auth:api');

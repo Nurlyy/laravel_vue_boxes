@@ -3,15 +3,15 @@
     <CForm @submit.prevent="submitForm">
     <div class="mb-3">
       <CFormLabel for="email">Email address</CFormLabel>
-      <CFormInput type="text" id="email" placeholder="name@example.com"/>
+      <CFormInput v-model="email" :value='email' type="text" id="email" placeholder="name@example.com"/>
     </div>
     <div class="mb-3">
       <CFormLabel for="username">Username</CFormLabel>
-      <CFormInput type="text" id="username" placeholder="admin"/>
+      <CFormInput v-model='username' :value='username' type="text" id="username" placeholder="admin"/>
     </div>
     <div class="mb-3">
       <CFormLabel for="password">Password</CFormLabel>
-      <CFormInput type="text" id="password" placeholder="PASSWORD"/>
+      <CFormInput v-model="password" :value="password" type="text" id="password" placeholder="Enter new password"/>
     </div>
     <button class="btn btn-primary "> Save</button>
   </CForm>
@@ -27,16 +27,17 @@
             password:'',
         }
     },
-    mouned(){
-        axios.post('/api/get-user', {}).then(function(response){
+    mounted(){
+        axios.post('/api/get-admin', {}).then(response => {
             this.email = response.data.email;
             this.username = response.data.username;
-            this.password = response.data.password;
+            // console.log(response.data);
+            // this.password = response.data.password;
         });
     },
     methods: {
       submitForm(){
-        axios.post('/api/save-user', {email:this.email, username:this.username, password:this.password}).then(function(response){
+        axios.post('/api/save-admin', {email:this.email, username:this.username, password:this.password}).then(function(response){
             console.log(response.data);
         })
         //   alert('saved');

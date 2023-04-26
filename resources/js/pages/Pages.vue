@@ -67,7 +67,7 @@ export default {
     };
   },
   mounted(){
-    axios.post('/api/get-pages', {}).then(function(response){
+    axios.post('/api/get-pages', {}).then(response => {
         this.items = response.data.items;
     })
   }
