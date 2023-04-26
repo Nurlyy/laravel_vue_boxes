@@ -1,6 +1,6 @@
 import { h, resolveComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
-import createStore from '../store/index.js';
+import createStore from "../store/index.js";
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
@@ -23,7 +23,7 @@ const routes = [
                     ),
             },
             {
-                path: "/images",
+                path: "/admin/images",
                 name: "Images",
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
@@ -32,9 +32,10 @@ const routes = [
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/Images.vue"
                     ),
+                meta: { requiresAuth: true },
             },
             {
-                path: "/filters",
+                path: "/admin/filters",
                 name: "Filters",
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
@@ -43,9 +44,10 @@ const routes = [
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/Filters.vue"
                     ),
+                meta: { requiresAuth: true },
             },
             {
-                path: "/contacts",
+                path: "/admin/contacts",
                 name: "Contacts",
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
@@ -54,9 +56,10 @@ const routes = [
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/Contacts.vue"
                     ),
+                meta: { requiresAuth: true },
             },
             {
-                path: "/user",
+                path: "/admin/user",
                 name: "User",
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
@@ -65,9 +68,10 @@ const routes = [
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/User.vue"
                     ),
+                meta: { requiresAuth: true },
             },
             {
-                path: "/images/add-image",
+                path: "/admin/images/add-image",
                 name: "AddImage",
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
@@ -76,9 +80,10 @@ const routes = [
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
                     ),
+                meta: { requiresAuth: true },
             },
             {
-                path: "/pages",
+                path: "/admin/pages",
                 name: "pages",
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
@@ -87,6 +92,7 @@ const routes = [
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/Pages.vue"
                     ),
+                meta: { requiresAuth: true },
             },
             {
                 path: "/theme",
@@ -340,7 +346,7 @@ const routes = [
             },
         ],
     },
-    
+
     {
         path: "/login",
         name: "Login",
@@ -385,14 +391,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (!store.getters.isAuthenticated) {
-            next({ name: "login" });
-        } else {
-            next();
-        }
-    } else {
+    if (to.path.startsWith('/admin/') && to.path !== '/admin/login' && to.path !== '/admin/login/' && to.path !== '/admin/logout' && to.matched.some(record => record.meta.requiresAuth)) {
+      const accessToken = localStorage.getItem('access_token');
+      console.log('beforeEach:' + accessToken);
+      if (!accessToken) {
+        next({ name: 'Login' });
+      } else {
         next();
+      }
+    } else {
+      next();
     }
-});
+  });
+
+
+
 export default router;

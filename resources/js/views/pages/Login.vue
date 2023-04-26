@@ -47,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+import router from '@/router/index.js';
 export default {
   name: 'Login',
   data() {
@@ -67,7 +68,7 @@ export default {
         // Save access token to local storage
         localStorage.setItem('access_token', response.data.access_token)
         // Redirect to admin index page
-        window.location.href = '/admin/index'
+        router.push({name: "Images"});
       })
       .catch(error => {
         // Handle login error

@@ -2,31 +2,31 @@ export default [
     {
         component: "CNavItem",
         name: "Images",
-        to: "/images",
+        to: "/admin/images",
         icon: "cil-storage",
     },
     {
         component: "CNavItem",
         name: "Filters",
-        to: "/filters",
+        to: "/admin/filters",
         icon: "cil-storage",
     },
     {
         component: "CNavItem",
         name: "Contacts",
-        to: "/contacts",
+        to: "/admin/contacts",
         icon: "cil-storage",
     },
     {
         component: "CNavItem",
         name: "Admin",
-        to: "/user",
+        to: "/admin/user",
         icon: "cil-storage",
     },
     {
         component: "CNavItem",
         name: "Pages",
-        to: "/pages",
+        to: "/admin/pages",
         icon: "cil-storage",
     },
     {

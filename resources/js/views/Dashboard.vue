@@ -403,18 +403,18 @@ export default {
         // Get the access token from localStorage
 
         // Send the Axios request with the access token
-        axios
-            .get("/api/user", {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            })
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        // axios
+        //     .get("/api/user", {
+        //         headers: {
+        //             Authorization: `Bearer ${accessToken}`,
+        //         },
+        //     })
+        //     .then((response) => {
+        //         console.log(response.data);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
     },
     setup() {
         const progressGroupExample1 = [

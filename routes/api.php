@@ -29,10 +29,11 @@ use App\Http\Controllers\AuthController;
 // Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('me', [AuthController::class, 'me'])->middleware('auth:api');
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::middleware('auth:api')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-});
+// Route::middleware('auth:api')->group(function () {
+//     Route::post('/logout', [AuthController::class, 'logout']);
+// });
 
 Route::middleware('auth:api')->post('/user', function (Request $request) {
     return $request->user();
