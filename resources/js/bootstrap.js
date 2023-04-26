@@ -13,6 +13,7 @@ axios.interceptors.request.use(function (config) {
     if (
         accessToken &&
         config.url.startsWith("/admin/") &&
+        config.url.startsWith("/api/") &&
         config.url != ("/admin/login") &&
         config.url != ("/admin/login/") &&
         config.url != ("/admin/logout")

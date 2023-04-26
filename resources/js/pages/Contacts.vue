@@ -3,15 +3,15 @@
   <CForm @submit.prevent="submitForm">
   <div class="mb-3">
     <CFormLabel for="email">Email address</CFormLabel>
-    <CFormInput v-bind="email"  type="text" id="email" placeholder="name@example.com"/>
+    <CFormInput v-model="email" :value='email'  type="text" id="email" placeholder="name@example.com"/>
   </div>
   <div class="mb-3">
     <CFormLabel for="phone_number">Phone Number</CFormLabel>
-    <CFormInput  v-bind="phone_number" type="text" id="phone_number" placeholder="87477477447"/>
+    <CFormInput  v-model="phone_number" :value='phone_number' type="text" id="phone_number" placeholder="87477477447"/>
   </div>
   <div class="mb-3">
     <CFormLabel for="address">Address</CFormLabel>
-    <CFormInput v-bind="address"  type="text" id="address" placeholder=""/>
+    <CFormInput v-model="address" :value='address'  type="text" id="address" placeholder=""/>
   </div>
   <button class="btn btn-primary "> Save</button>
 </CForm>
@@ -28,10 +28,11 @@ export default {
     }
   },
   mounted(){
-    axios.post('/api/get-contacts', {}).then(function(response){
-        this.email = response.data.email;
-        this.phone_number = response.data.phone_number;
-        this.address = response.data.address;
+    axios.post('/api/get-contacts', {}).then(response => {
+        console.log(response.data.contacts.email);
+        this.email = response.data.contacts.email;
+        this.phone_number = response.data.contacts.phone_number;
+        this.address = response.data.contacts.address;
     })
   },
   methods: {
@@ -40,6 +41,9 @@ export default {
             console.log(response.data);
         })
         alert('saved');
+    },
+    updateValues(){
+
     }
   }
 };

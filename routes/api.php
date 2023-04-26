@@ -38,8 +38,8 @@ Route::post('save-contacts', "App\Http\Controllers\ContactsController@saveContac
 Route::post('save-admin', "App\Http\Controllers\AdminController@saveAdmin")->middleware('auth:api');
 
 
-Route::post('get-filters', "App\Http\Controllers\FilterController@getImage");
-Route::post('get-images', "App\Http\Controllers\ImageController@getFilters");
+Route::post('get-filters', "App\Http\Controllers\FilterController@getFilters");
+Route::post('get-images', "App\Http\Controllers\ImageController@getImages");
 Route::post('get-contacts', "App\Http\Controllers\ContactsController@getContacts");
 Route::post('get-admin', "App\Http\Controllers\AdminController@getAdmin");
 Route::post('get-page', "App\Http\Controllers\PageController@getPage");
