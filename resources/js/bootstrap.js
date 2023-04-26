@@ -8,19 +8,34 @@ import "bootstrap";
 
 import axios from "axios";
 
+// axios.interceptors.request.use(function (config) {
+//     const accessToken = localStorage.getItem("accessToken");
+//     if (
+//         accessToken &&
+//         config.url.startsWith("/admin/") &&
+//         config.url.startsWith("/api/") &&
+//         config.url != ("/admin/login") &&
+//         config.url != ("/admin/login/") &&
+//         config.url != ("/admin/logout")
+//     ) {
+//         config.headers.Authorization = `Bearer ${accessToken}`;
+//     }
+//     return config;
+// });
+
 axios.interceptors.request.use(function (config) {
-    const accessToken = localStorage.getItem("accessToken");
-    if (
-        accessToken &&
-        config.url.startsWith("/admin/") &&
-        config.url.startsWith("/api/") &&
-        config.url != ("/admin/login") &&
-        config.url != ("/admin/login/") &&
-        config.url != ("/admin/logout")
-    ) {
+    const accessToken = localStorage.getItem("access_token");
+    const protectedUrls = ["/admin/", "/api/"];
+    const unprotectedUrls = ["/admin/login", "/admin/logout"];
+    const isProtectedUrl = protectedUrls.some(url => config.url.startsWith(url));
+    const isUnprotectedUrl = unprotectedUrls.includes(config.url);
+    
+    if (accessToken && isProtectedUrl && !isUnprotectedUrl) {
         config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    
     return config;
+
 });
 
 window.axios = axios;

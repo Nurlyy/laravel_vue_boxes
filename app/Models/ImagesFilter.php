@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ImagesFilter extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'images_filter';
     protected $fillable = ['id', 'image_id', 'filter_id'];
 

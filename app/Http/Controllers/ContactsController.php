@@ -9,13 +9,14 @@ class ContactsController extends Controller
 {
 
     public function saveContacts(Request $request){
-        $username = $request->username;
+        // return $request;
+        $phone_number = $request->phone_number;
         $email = $request->email;
         $address = $request->address;
 
-        $contact = Contact::all()->first();
+        $contact = Contact::findById(0);
         $contact->update([
-            'username' => $username,
+            'phone_number' => $phone_number,
             'email' => $email,
             'address' => $address
         ]);

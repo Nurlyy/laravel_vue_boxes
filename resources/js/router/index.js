@@ -423,7 +423,7 @@ router.beforeEach((to, from, next) => {
         to.matched.some((record) => record.meta.requiresAuth)
     ) {
         const accessToken = localStorage.getItem("access_token");
-        console.log("beforeEach:" + accessToken);
+        // console.log("beforeEach:" + accessToken);
         if (!accessToken) {
             next({ name: "Login" });
         } else {

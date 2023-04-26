@@ -29,11 +29,11 @@ export default {
   },
   mounted(){
     axios.post('/api/get-contacts', {}).then(response => {
-        console.log(response.data.contacts.email);
+        console.log(response.data);
         this.email = response.data.contacts.email;
         this.phone_number = response.data.contacts.phone_number;
         this.address = response.data.contacts.address;
-    })
+    });
   },
   methods: {
     submitForm(){
