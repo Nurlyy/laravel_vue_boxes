@@ -9,7 +9,7 @@
         <li><a href="#">Технологии</a></li>
         <li><a href="#">Контакты</a></li>
       </ul>
-      <button class="close"></button>
+      <button @click='$emit("close");' class="close"></button>
     </nav> 
   </div>
 </template>

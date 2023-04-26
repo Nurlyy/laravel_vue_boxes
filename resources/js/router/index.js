@@ -10,7 +10,34 @@ const routes = [
     {
         path: '/',
         name: 'Main',
-        component: MainLayout
+        component: MainLayout,
+        redirect: '/index',
+        children: [
+            {
+                path: '/index',
+                name: 'MainIndex',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ '@/main/Index.vue'
+                    ),
+            },
+            // {
+            //     path: '/order-request',
+            //     name: 'MainOrderRequest',
+            //     component: () =>
+            //         import(
+            //             /* webpackChunkName: "dashboard" */ '@/main/Order.vue'
+            //         ),
+            // },
+            {
+                path: '/likes',
+                name: 'MainLikes',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ '@/main/LikePage.vue'
+                    ),
+            },
+        ]
     },
     {
         path: "/admin",

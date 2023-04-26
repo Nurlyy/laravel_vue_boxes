@@ -1,12 +1,20 @@
 <template>
   <div class="container-button">
-    <button class="button-up"></button>
+    <button @click=' scrollToTop()' class="button-up"></button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'ButtonUp',
+  methods: {
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
 }
 </script>
 

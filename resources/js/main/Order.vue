@@ -16,7 +16,7 @@
       <div class="container-one">
         <button class="btn-order-enter">Отправить заявку</button>
       </div>
-      <button class="close"></button>
+      <button @click='$emit("close");' class="close"></button>
       
       <!-- Выводим уведомление при успешной отправки -->
       <!-- <div class="container-sending-true">

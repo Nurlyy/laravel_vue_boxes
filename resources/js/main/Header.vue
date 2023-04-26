@@ -1,21 +1,21 @@
 <template>
   <div class="container-header-wrapper">
     <div class="container-header">
-      <a href="#" class="logo">
+      <a href="/" class="logo">
         <img src="@/assets/logo.svg" alt="">
       </a>
       <div class="slogan">
         Производство упаковки
       </div>
-      <button class="btn-gamburger-menu">
+      <button @click='showModal()' class="btn-gamburger-menu">
         <span class="line"></span>
         <span class="line ots"></span>
         <span class="line ots"></span>
       </button>
-      <button class="btn-like">
-        <span class="counter">9</span>
+      <button @click='go_to_likes()' class="btn-like">
+        <span class="counter">{{likes_count}}</span>
       </button>
-      <button class="btn-header-universal order">
+      <button @click='showOrder()' class="btn-header-universal order">
         Заявка на расчёт
       </button>
       <button class="btn-header-universal filter">
@@ -26,11 +26,45 @@
       </a>
     </div>
   </div>
+
+  <Order v-if="showingOrder" @close="hideOrder" />
+    <Modal v-if="showingModal" @close="hideModal" />
+
 </template>
 
 <script>
+import Modal from './Modal.vue'; 
+import Order from './Order.vue';
+import router from '@/router/index.js';
 export default {
-  name: 'Header'
+  name: 'Header',
+  components: {
+    Modal, Order,
+  },
+  data() {
+    return {
+      showingOrder: false,
+      showingModal: false,
+      likes_count: localStorage.getItem('likedImages')?JSON.parse(localStorage.getItem('likedImages')).length : 0,
+    };
+  },
+  methods: {
+    go_to_likes(){
+        router.push({name:"MainLikes"})
+    },
+    showOrder() {
+      this.showingOrder = true;
+    },
+    hideOrder() {
+      this.showingOrder = false;
+    },
+    showModal() {
+      this.showingModal = true;
+    },
+    hideModal() {
+      this.showingModal = false;
+    }
+  }
 }
 </script>
 

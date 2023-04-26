@@ -2,9 +2,12 @@
     <div id="app" class="">
       <!-- При открытии модального окна, добавляем класс "blocked" к контейнеру с ID "app". Он блокирует весь контен на сайте при модальном окне -->
       <div class="wrapper">
-        <Header />
-        <Greeting />
-        <Main />
+        
+        <!-- <Greeting />
+        <Main /> -->
+
+        <router-view></router-view>
+
         <ButtonUp />
         <!-- <Pages/> -->
         <Footer />
