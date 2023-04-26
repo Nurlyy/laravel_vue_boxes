@@ -9,7 +9,7 @@ const routes = [
         path: "/",
         name: "Home",
         component: DefaultLayout,
-        redirect: "/dashboard",
+        redirect: "/admin/images",
         children: [
             {
                 path: "/dashboard",
@@ -79,6 +79,30 @@ const routes = [
                 component: () =>
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
+                    ),
+                meta: { requiresAuth: true },
+            },
+            {
+                path: "/admin/images/add-filter",
+                name: "AddFilter",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/AddFilter.vue"
+                    ),
+                meta: { requiresAuth: true },
+            },
+            {
+                path: "/admin/images/add-page",
+                name: "AddPage",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/AddPage.vue"
                     ),
                 meta: { requiresAuth: true },
             },
@@ -391,19 +415,23 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.path.startsWith('/admin/') && to.path !== '/admin/login' && to.path !== '/admin/login/' && to.path !== '/admin/logout' && to.matched.some(record => record.meta.requiresAuth)) {
-      const accessToken = localStorage.getItem('access_token');
-      console.log('beforeEach:' + accessToken);
-      if (!accessToken) {
-        next({ name: 'Login' });
-      } else {
-        next();
-      }
+    if (
+        to.path.startsWith("/admin/") &&
+        to.path !== "/admin/login" &&
+        to.path !== "/admin/login/" &&
+        to.path !== "/admin/logout" &&
+        to.matched.some((record) => record.meta.requiresAuth)
+    ) {
+        const accessToken = localStorage.getItem("access_token");
+        console.log("beforeEach:" + accessToken);
+        if (!accessToken) {
+            next({ name: "Login" });
+        } else {
+            next();
+        }
     } else {
-      next();
+        next();
     }
-  });
-
-
+});
 
 export default router;
