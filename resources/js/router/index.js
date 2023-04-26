@@ -1,5 +1,5 @@
 import { h, resolveComponent } from "vue";
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import createStore from '../store/index.js';
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
@@ -275,6 +275,22 @@ const routes = [
         ],
     },
     {
+        path: "/images",
+        name: "Images",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import(
+                /* webpackChunkName: "dashboard" */ "@/pages/Images.vue"
+            ),
+    },
+    {
+        path: "/login",
+        name: "Login",
+        component: () => import("@/views/pages/Login.vue"),
+    },
+    {
         path: "/pages",
         redirect: "/pages/404",
         name: "Pages",
@@ -295,11 +311,6 @@ const routes = [
                 component: () => import("@/views/pages/Page500.vue"),
             },
             {
-                path: "login",
-                name: "Login",
-                component: () => import("@/views/pages/Login.vue"),
-            },
-            {
                 path: "register",
                 name: "Register",
                 component: () => import("@/views/pages/Register.vue"),
@@ -309,7 +320,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(process.env.BASE_URL),
+    history: createWebHistory(),
     routes,
     scrollBehavior() {
         // always scroll to top

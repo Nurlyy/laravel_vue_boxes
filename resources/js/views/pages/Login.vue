@@ -64,6 +64,10 @@ export default {
       })
       .then(response => {
         console.log(response);
+        // Save access token to local storage
+        localStorage.setItem('access_token', response.data.access_token)
+        // Redirect to admin index page
+        window.location.href = '/admin/index'
       })
       .catch(error => {
         // Handle login error
