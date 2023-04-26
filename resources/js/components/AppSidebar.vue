@@ -11,18 +11,6 @@
         })
     "
   >
-    <CSidebarBrand>
-      <CIcon
-        custom-class-name="sidebar-brand-full"
-        :icon="logoNegative"
-        :height="35"
-      />
-      <CIcon
-        custom-class-name="sidebar-brand-narrow"
-        :icon="sygnet"
-        :height="35"
-      />
-    </CSidebarBrand>
     <AppSidebarNav />
     <CSidebarToggler
       class="d-none d-lg-flex"

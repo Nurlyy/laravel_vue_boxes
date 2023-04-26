@@ -23,6 +23,72 @@ const routes = [
                     ),
             },
             {
+                path: "/images",
+                name: "Images",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/Images.vue"
+                    ),
+            },
+            {
+                path: "/filters",
+                name: "Filters",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/Filters.vue"
+                    ),
+            },
+            {
+                path: "/contacts",
+                name: "Contacts",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/Contacts.vue"
+                    ),
+            },
+            {
+                path: "/user",
+                name: "User",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/User.vue"
+                    ),
+            },
+            {
+                path: "/images/add-image",
+                name: "AddImage",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
+                    ),
+            },
+            {
+                path: "/pages",
+                name: "pages",
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/Pages.vue"
+                    ),
+            },
+            {
                 path: "/theme",
                 name: "Theme",
                 redirect: "/theme/typography",
@@ -274,17 +340,7 @@ const routes = [
             },
         ],
     },
-    {
-        path: "/images",
-        name: "Images",
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import(
-                /* webpackChunkName: "dashboard" */ "@/pages/Images.vue"
-            ),
-    },
+    
     {
         path: "/login",
         name: "Login",

@@ -7,6 +7,30 @@ export default [
     },
     {
         component: "CNavItem",
+        name: "Filters",
+        to: "/filters",
+        icon: "cil-storage",
+    },
+    {
+        component: "CNavItem",
+        name: "Contacts",
+        to: "/contacts",
+        icon: "cil-storage",
+    },
+    {
+        component: "CNavItem",
+        name: "Admin",
+        to: "/user",
+        icon: "cil-storage",
+    },
+    {
+        component: "CNavItem",
+        name: "Pages",
+        to: "/pages",
+        icon: "cil-storage",
+    },
+    {
+        component: "CNavItem",
         name: "Dashboard",
         to: "/dashboard",
         icon: "cil-speedometer",
