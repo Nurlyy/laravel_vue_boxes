@@ -4,7 +4,14 @@ import createStore from "../store/index.js";
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
+import MainLayout from "@/layouts/MainLayout.vue";
+
 const routes = [
+    {
+        path: '/',
+        name: 'Main',
+        component: MainLayout
+    },
     {
         path: "/admin",
         name: "Home",

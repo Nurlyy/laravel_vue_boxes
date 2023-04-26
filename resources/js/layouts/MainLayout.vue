@@ -23,7 +23,8 @@
   import Order from '../main/Order.vue'
   import ButtonUp from '../main/ButtonUp.vue'
   import Pages from '../main/Pages.vue'
-  
+  import LikePage from '../main/LikePage.vue'
+
   export default {
     name: 'MainLayout',
     components: {
@@ -34,7 +35,8 @@
       Modal,
       Order,
       ButtonUp,
-      Pages
+      Pages,
+      LikePage,
     }
   }
   </script>
