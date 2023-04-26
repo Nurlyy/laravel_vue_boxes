@@ -6,7 +6,7 @@
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
-                <CForm>
+                <CForm @submit.prevent="login">
                   <h1>Login</h1>
                   <p class="text-medium-emphasis">Sign In to your account</p>
                   <CInputGroup class="mb-3">
@@ -16,6 +16,7 @@
                     <CFormInput
                       placeholder="Username"
                       autocomplete="username"
+                      v-model="email"
                     />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
@@ -26,34 +27,15 @@
                       type="password"
                       placeholder="Password"
                       autocomplete="current-password"
+                      v-model="password"
                     />
                   </CInputGroup>
                   <CRow>
                     <CCol :xs="6">
-                      <CButton color="primary" class="px-4"> Login </CButton>
-                    </CCol>
-                    <CCol :xs="6" class="text-right">
-                      <CButton color="link" class="px-0">
-                        Forgot password?
-                      </CButton>
+                      <CButton color="primary" @click="login()" class="px-4"> Login </CButton>
                     </CCol>
                   </CRow>
                 </CForm>
-              </CCardBody>
-            </CCard>
-            <CCard class="text-white bg-primary py-5" style="width: 44%">
-              <CCardBody class="text-center">
-                <div>
-                  <h2>Sign up</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
-                  <CButton color="light" variant="outline" class="mt-3">
-                    Register Now!
-                  </CButton>
-                </div>
               </CCardBody>
             </CCard>
           </CCardGroup>
@@ -64,7 +46,28 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Login',
+  data() {
+    return {
+        email: '',
+      password: ''
+    }
+  },
+  methods: {
+    login() {
+        console.log('clicked');
+      axios.post('/api/login', {
+        email: this.email,
+        password: this.password
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        // Handle login error
+      })}
+  },
 }
 </script>

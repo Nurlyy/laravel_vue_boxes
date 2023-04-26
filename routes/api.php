@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Http\Controllers\AccessTokenController;
+use Laravel\Passport\Http\Controllers\ApproveAuthorizationController;
+use Laravel\Passport\Http\Controllers\DenyAuthorizationController;
+use Psr\Http\Message\ServerRequestInterface;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +19,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::post('/contacts', "App\Http\Controllers\ContactController@index")->middleware('custom_auth');
+// Route::post('/login', "App\Http\Controllers\ContactController@index")->middleware('custom_auth');
+
+// Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+
+
+
+Route::post('oauth/authorize', [ApproveAuthorizationController::class, 'approve']);
+Route::delete('oauth/authorize', [DenyAuthorizationController::class, 'deny']);
+Route::post('oauth/token', [AccessTokenController::class, 'issueToken'])->middleware('throttle');
