@@ -28,3 +28,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+// Import Main styles for this application
+@import '../styles/style.scss';
+</style>
+

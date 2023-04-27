@@ -4,19 +4,38 @@
       <p>Меню</p>
       <ul>
         <li><a href="#">Главная</a></li>
-        <li><a href="#">Заявка на расчёт</a></li>
-        <li><a href="#">Материалы</a></li>
+        <li><a @click='showOrder = true;' >Заявка на расчёт</a></li>
+        <!-- <li><a v-for="page in pages" :key='page.id' :href='"page/"+page.slug'>{{page.name}}</a></li> -->
+        <li v-for="page in pages" :key='page.id' ><router-link :to="'/page/' + page.slug">{{ page.title }}</router-link></li>
+        <!-- <li><a href="#">Материалы</a></li>
         <li><a href="#">Технологии</a></li>
-        <li><a href="#">Контакты</a></li>
+        <li><a href="#">Контакты</a></li> -->
       </ul>
       <button @click='$emit("close");' class="close"></button>
     </nav> 
   </div>
+  <Order v-if="showOrder" @close='closeOrder' />
 </template>
 
 <script>
 export default {
-  name: 'Modal'
+  name: 'Modal',
+  data(){
+    return {
+        showOrder :false,
+        pages: null,
+    }
+  },
+  mounted() {
+    axios.post('/api/get-pages').then(response => {
+        this.pages = response.data.items;
+    })
+  },
+  methods: {
+    closeOrder(){
+        this.showOrder = false;
+    }
+  }
 }
 </script>
 

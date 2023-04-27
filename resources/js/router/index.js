@@ -5,20 +5,26 @@ import createStore from "../store/index.js";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 import MainLayout from "@/layouts/MainLayout.vue";
+import Pages from "@/main/Pages.vue";
 
 const routes = [
     {
-        path: '/',
-        name: 'Main',
+        path: "/page/:slug", // slug is the dynamic parameter
+        component: Pages,
+        props: true, // allows passing slug as a prop to the component
+    },
+    {
+        path: "/",
+        name: "Main",
         component: MainLayout,
-        redirect: '/index',
+        redirect: "/index",
         children: [
             {
-                path: '/index',
-                name: 'MainIndex',
+                path: "/index",
+                name: "MainIndex",
                 component: () =>
                     import(
-                        /* webpackChunkName: "dashboard" */ '@/main/Index.vue'
+                        /* webpackChunkName: "dashboard" */ "@/main/Index.vue"
                     ),
             },
             // {
@@ -30,14 +36,14 @@ const routes = [
             //         ),
             // },
             {
-                path: '/likes',
-                name: 'MainLikes',
+                path: "/likes",
+                name: "MainLikes",
                 component: () =>
                     import(
-                        /* webpackChunkName: "dashboard" */ '@/main/LikePage.vue'
+                        /* webpackChunkName: "dashboard" */ "@/main/LikePage.vue"
                     ),
             },
-        ]
+        ],
     },
     {
         path: "/admin",
@@ -150,6 +156,15 @@ const routes = [
                     import(
                         /* webpackChunkName: "dashboard" */ "@/pages/Pages.vue"
                     ),
+                meta: { requiresAuth: true },
+            },
+            {
+                path: "/admin/pages/:slug", // slug is the dynamic parameter
+                component: () =>
+                import(
+                    /* webpackChunkName: "dashboard" */ "@/pages/AddPage.vue"
+                ),
+                props: true, // allows passing slug as a prop to the component
                 meta: { requiresAuth: true },
             },
         ],

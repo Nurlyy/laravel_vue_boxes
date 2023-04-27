@@ -34,6 +34,8 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api')
 Route::post('add-filter', "App\Http\Controllers\FilterController@addFilter")->middleware('auth:api');
 Route::post('add-image', "App\Http\Controllers\ImageController@addImage")->middleware('auth:api');
 Route::post('add-page', "App\Http\Controllers\PageController@addPage")->middleware('auth:api');
+Route::post('update-page', "App\Http\Controllers\PageController@updatePage")->middleware('auth:api');
+Route::post('delete-page', "App\Http\Controllers\PageController@deletePage")->middleware('auth:api');
 Route::post('save-contacts', "App\Http\Controllers\ContactsController@saveContacts")->middleware('auth:api');
 Route::post('save-admin', "App\Http\Controllers\AdminController@saveAdmin")->middleware('auth:api');
 
@@ -43,7 +45,9 @@ Route::post('get-images', "App\Http\Controllers\ImageController@getImages");
 Route::post('get-contacts', "App\Http\Controllers\ContactsController@getContacts");
 Route::post('get-admin', "App\Http\Controllers\AdminController@getAdmin");
 Route::post('get-page', "App\Http\Controllers\PageController@getPage");
-Route::post('get-pages', "App\Http\Controllers\PageController@getPages")->middleware('auth:api');
+Route::post('get-pages', "App\Http\Controllers\PageController@getPages");
+Route::post('get-pages-admin', "App\Http\Controllers\PageController@getPagesAdmin")->middleware('auth:api');
+Route::post('get-page-admin', "App\Http\Controllers\PageController@getPageAdmin")->middleware('auth:api');
 
 // Route::middleware('auth:api')->group(function () {
 //     Route::post('/logout', [AuthController::class, 'logout']);

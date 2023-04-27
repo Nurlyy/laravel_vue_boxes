@@ -11,7 +11,7 @@
                 которые Вам понравились.
             </p>
             <div class="container-order-main">
-                <button class="btn-order-main">
+                <button @click='showOrder = !showOrder;' class="btn-order-main">
                     Подать заявку на расчёт упаковки
                 </button>
             </div>
@@ -25,19 +25,23 @@
             </div>
         </div>
     </div>
+    <Order v-if='showOrder' @close='closeOrder' />
 </template>
 
 <script>
 import Header from "./Header.vue";
+import Order from "./Order.vue";
+
 export default {
     name: "LikePage",
     components: {
-        Header,
+        Header,Order,
     },
     data() {
         return {
             images: [],
             likedImages: [],
+            showOrder : false,
         };
     },
     mounted() {
@@ -64,11 +68,15 @@ export default {
             );
             this.$refs.header.likes_count = this.likedImages.length;
         },
+        closeOrder(){
+            this.showOrder = false;
+        }
     },
 };
 </script>
 
 <style scoped lang="scss">
+
 h1 {
     font-family: Roboto;
     font-weight: 200;
