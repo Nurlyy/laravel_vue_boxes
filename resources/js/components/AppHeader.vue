@@ -12,7 +12,7 @@
             </CHeaderBrand>
 
             <CHeaderNav>
-                <h4 @click="logout()">Logout</h4>
+                <CButton color="warning" @click="logout()">Выход</CButton>
             </CHeaderNav>
         </CContainer>
         <CHeaderDivider />

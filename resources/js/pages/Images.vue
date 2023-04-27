@@ -1,32 +1,32 @@
 <template>
     <div class="d-flex flex-row justify-content-between">
-        <h1>Images</h1>
+        <h1>Изображения</h1>
         <a
             href="/admin/images/add-image"
             class="btn btn-primary"
             style="margin-left: 30px"
-            >Add Image</a
+            >Добавить изображение</a
         >
     </div>
     <CTable stripedColumns>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Image Path</th>
-                <th>Description</th>
+                <th>№</th>
+                <th>путь изображения</th>
+                <th>Описание</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="image in images" :key="image.id">
                 <td>{{ image.id }}</td>
-                <td><img :src="image.path" alt="" /></td>
+                <td>{{ image.path }}</td>
                 <td>{{ image.description }}</td>
                 <td>
                     <router-link :to="'/admin/images/' + image.id"
-                        >Edit</router-link
+                        >Изменить</router-link
                     >
                 </td>
-                <td><button @click="deletePage(item.id)">Delete</button></td>
+                <td><button @click="deletePage(item.id)">Удалить</button></td>
             </tr>
         </tbody>
     </CTable>

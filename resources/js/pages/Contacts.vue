@@ -1,19 +1,19 @@
 <template>
-  <h1>Contacts</h1>
+  <h1>Контактные данные</h1>
   <CForm @submit.prevent="submitForm">
   <div class="mb-3">
-    <CFormLabel for="email">Email address</CFormLabel>
+    <CFormLabel for="email">Email</CFormLabel>
     <CFormInput v-model="email" :value='email'  type="text" id="email" placeholder="name@example.com"/>
   </div>
   <div class="mb-3">
-    <CFormLabel for="phone_number">Phone Number</CFormLabel>
+    <CFormLabel for="phone_number">Номер телефона</CFormLabel>
     <CFormInput  v-model="phone_number" :value='phone_number' type="text" id="phone_number" placeholder="87477477447"/>
   </div>
   <div class="mb-3">
-    <CFormLabel for="address">Address</CFormLabel>
+    <CFormLabel for="address">Адресс</CFormLabel>
     <CFormInput v-model="address" :value='address'  type="text" id="address" placeholder=""/>
   </div>
-  <button class="btn btn-primary "> Save</button>
+  <button class="btn btn-primary "> Сохранить</button>
 </CForm>
 </template>
 

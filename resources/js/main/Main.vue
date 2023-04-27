@@ -1,23 +1,29 @@
 <template>
     <div>
-        <div class="pin_container scroll-container" ref="scrollContainer">
-            <div
-                v-for="image in images"
-                :key="image.id"
-                :class="image.class"
-                :id="image.id + '_image'"
-            >
-                <img :src="image.path" alt="" />
-                <a @click="likeImage(image.id)"></a>
-                <button
-                    :class="
-                        isLiked(image.id)
-                            ? 'btn-like-card active'
-                            : 'btn-like-card no-active'
-                    "
-                ></button>
-                <span class="number-card">#{{ image.id }}</span>
-            </div>
+        <div
+            class="pin_container scroll-container"
+            ref="scrollContainer"
+            @scroll="console.log('Main scrolled')"
+        >
+            <TransitionGroup @before-leave="beforeLeave">
+                <div
+                    v-for="image in images"
+                    :key="image.id"
+                    :class="image.class"
+                    :id="image.id + '_image'"
+                >
+                    <img :src="image.path" alt="" />
+                    <a @click="likeImage(image.id)"></a>
+                    <button
+                        :class="
+                            isLiked(image.id)
+                                ? 'btn-like-card active'
+                                : 'btn-like-card no-active'
+                        "
+                    ></button>
+                    <span class="number-card">#{{ image.id }}</span>
+                </div>
+            </TransitionGroup>
         </div>
     </div>
 </template>
@@ -25,6 +31,14 @@
 <script>
 export default {
     name: "Main",
+    created() {
+        window.addEventListener("scroll", this.handleScroll);
+        this.observer = new IntersectionObserver(this.handleIntersection, {
+            root: null,
+            rootMargin: "0px",
+            threshold: 1.0,
+        });
+    },
     data() {
         return {
             images: [],
@@ -39,7 +53,24 @@ export default {
             observer: null,
         };
     },
+    // setup () {
+    //     document.addEventListener("DOMContentLoaded", function (e) {
+    //         document.addEventListener("scroll", function (e) {
+    //             let documentHeight = document.body.scrollHeight;
+    //             let currentScroll = window.scrollY + window.innerHeight;
+    //             // When the user is [modifier]px from the bottom, fire the event.
+    //             let modifier = 200;
+    //             if (currentScroll + modifier > documentHeight) {
+    //                 console.log("You are at the bottom!");
+    //             }
+    //         });
+    //     });
+    // },
     mounted() {
+        // mounted() {
+        // window.addEventListener('scroll', this.handleScroll);
+        // }
+
         // axios.post("/api/get-images", {}).then((response) => {
         //     this.images = response.data.images;
         //     // console.log( response.data.images);
@@ -59,17 +90,20 @@ export default {
         //     });
         // });
 
-        this.observer = new IntersectionObserver(this.handleIntersection, {
-            root: this.$refs.scrollContainer,
-            rootMargin: "0px",
-            threshold: 1.0,
-        });
-
         this.loadNextPage();
 
         // console.log(this.images);
     },
     methods: {
+        beforeLeave(el) {
+            const { marginLeft, marginTop, width, height } =
+                window.getComputedStyle(el);
+
+            el.style.left = `${el.offsetLeft - parseFloat(marginLeft, 10)}px`;
+            el.style.top = `${el.offsetTop - parseFloat(marginTop, 10)}px`;
+            el.style.width = width;
+            el.style.height = height;
+        },
         getClass(id) {
             return "card " + this.randomClasses[id];
         },
@@ -103,6 +137,7 @@ export default {
             });
         },
         loadNextPage() {
+            console.log("loadnextpage");
             if (this.isLoading || this.isError) {
                 return;
             }
@@ -116,11 +151,17 @@ export default {
                 .then((response) => {
                     this.isLoading = false;
                     var temp = response.data.images;
-                    temp.forEach(element => {
+                    temp.forEach((element) => {
                         // const randomIndex = Math.floor(Math.random() * this.sizeClasses.length);
                         // item.size = this.sizeClasses[randomIndex];
-                        element['class'] = 'card ' + this.classList[Math.floor(Math.random() * this.classList.length)]
-                    })
+                        element["class"] =
+                            "card " +
+                            this.classList[
+                                Math.floor(
+                                    Math.random() * this.classList.length
+                                )
+                            ];
+                    });
                     this.images.push(...temp);
                     this.page += 1;
                 })
@@ -134,6 +175,17 @@ export default {
             if (entries[0].isIntersecting) {
                 this.loadNextPage();
             }
+        },
+        handleScroll: function (el) {
+            window.onscroll = () => {
+                if (
+                    window.innerHeight + Math.ceil(window.pageYOffset) >=
+                    document.body.offsetHeight - 50
+                ) {
+                    this.loadNextPage();
+                }
+            };
+            // console.log("scrolled");
         },
     },
     // created() {
@@ -153,6 +205,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.list-enter-active,
+.list-leave-active {
+    transition: opacity 0.5s ease;
+}
+
 .pin_container {
     padding: 0;
     position: relative;

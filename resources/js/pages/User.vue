@@ -1,19 +1,19 @@
 <template>
-    <h1>Edit Admin User</h1>
+    <h1>Изменить аккаунт админа</h1>
     <CForm @submit.prevent="submitForm">
     <div class="mb-3">
-      <CFormLabel for="email">Email address</CFormLabel>
+      <CFormLabel for="email">Email</CFormLabel>
       <CFormInput v-model="email" :value='email' type="text" id="email" placeholder="name@example.com"/>
     </div>
     <div class="mb-3">
-      <CFormLabel for="username">Username</CFormLabel>
+      <CFormLabel for="username">Имя пользователя</CFormLabel>
       <CFormInput v-model='username' :value='username' type="text" id="username" placeholder="admin"/>
     </div>
     <div class="mb-3">
-      <CFormLabel for="password">Password</CFormLabel>
-      <CFormInput v-model="password" :value="password" type="text" id="password" placeholder="Enter new password"/>
+      <CFormLabel for="password">Новый пароль</CFormLabel>
+      <CFormInput v-model="password" :value="password" type="text" id="password" placeholder="Введите новый пароль"/>
     </div>
-    <button class="btn btn-primary "> Save</button>
+    <button class="btn btn-primary "> Сохранить</button>
   </CForm>
   </template>
   

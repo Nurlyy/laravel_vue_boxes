@@ -46,7 +46,7 @@
       
   <style lang="scss">
   body {
-    padding:68px 0 0 0;
+    // padding:68px 0 0 0;
     margin:0;
     background-color: #000;
   }
@@ -60,21 +60,21 @@
       z-index: 0 !important;
     }
   }
-  .wrapper {
-    margin:0 auto;
-    height:auto;
-    padding:0 20px;
-    box-sizing:border-box;
-    @media (min-width:1160px) {
-      width:1140px;
-    }
-    @media (min-width:1000px) and (max-width:1160px) {
-      width:980px;
-    }
-    @media (max-width:1000px) {
-      width:100%;
-      min-width:370px;
-    }
-  }
+//   .wrapper {
+//     margin:0 auto;
+//     height:auto;
+//     padding:0 20px;
+//     box-sizing:border-box;
+//     @media (min-width:1160px) {
+//       width:1140px;
+//     }
+//     @media (min-width:1000px) and (max-width:1160px) {
+//       width:980px;
+//     }
+//     @media (max-width:1000px) {
+//       width:100%;
+//       min-width:370px;
+//     }
+//   }
   </style>
   

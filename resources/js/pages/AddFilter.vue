@@ -1,12 +1,12 @@
 <template>
-    <h1>Add Filter</h1>
+    <h1>Добавить фильтр</h1>
     <CForm @submit.prevent='submitForm()'>
         <div class="mb-3">
-            <CFormLabel for="name">Name</CFormLabel>
+            <CFormLabel for="name">Название</CFormLabel>
             <CFormInput type="text" v-model="name" :value='name' id="name" placeholder="NAME" />
         </div>
 
-        <button class="btn btn-primary mb-5">Save</button>
+        <button class="btn btn-primary mb-5">Сохранить</button>
     </CForm>
 </template>
 

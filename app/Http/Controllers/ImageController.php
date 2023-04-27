@@ -68,7 +68,7 @@ class ImageController extends Controller
             $page = $request->page;
             $per_page = $request->per_page;
             // if ($page != 1) {
-                $images = Image::skip(($page - 1) * $per_page)->take($per_page)->get();
+            $images = Image::all();
             // } else {
 
                 // $images = Image::skip(0)->take($per_page)->get();
@@ -77,6 +77,17 @@ class ImageController extends Controller
 
 
         return response()->json(['images' => $images, 'filters' => $filters]);
+    }
+
+    public function getLikes(Request $request){
+        $filters = Filter::all();
+
+        if ($request->images_ids == []) {
+            return response()->json(['images' => [], 'filters' => $filters]);
+        }
+        // return "FOFJEWO";
+        // return $request->images_ids[0];
+        // $images = Image::whereIn('id', json_decode($request->images_ids))->get();
     }
 
     public function getImagesAdmin(Request $request)

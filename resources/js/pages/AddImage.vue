@@ -1,8 +1,8 @@
 <template>
-    <h1>Add Image</h1>
+    <h1>Добавить Изображение</h1>
     <CForm @submit.prevent="submitForm()">
         <div class="mb-3">
-            <CFormLabel for="image">Add Image</CFormLabel>
+            <CFormLabel for="image">Добавить Изображение</CFormLabel>
             <CFormInput
                 @change="saveImage"
                 type="file"
@@ -11,7 +11,7 @@
         </div>
 
         <div class="mb-3">
-            <CFormLabel for="description">Description</CFormLabel>
+            <CFormLabel for="description">Описание</CFormLabel>
             <CFormTextarea
                 v-model="description"
                 :value="description"
@@ -21,7 +21,7 @@
         </div>
 
         <div>
-            <h5>Selected filters:</h5>
+            <h5>Выбранные Фильтры:</h5>
             <div>
                 <b-row>
                     <b-col md="6" xl="3" sm="6" xs="12">
@@ -59,7 +59,7 @@
                                     for="filter-select"
                                     class="mr-3"
                                     style="margin-top: 7px"
-                                    >Available Filters:</label
+                                    >Доступные фильтры:</label
                                 >
                                 <div
                                     v-for="(filter, index) in availableFilters"
@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <button class="btn btn-primary mb-5 mt-5">Save</button>
+        <button class="btn btn-primary mb-5 mt-5">Сохранить</button>
     </CForm>
 </template>
 

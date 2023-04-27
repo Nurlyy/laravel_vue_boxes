@@ -1,14 +1,14 @@
 <template>
     <AppSidebar />
     <div class="d-flex flex-row justify-content-between">
-    <h1>Filters</h1>
+    <h1>Фильтры</h1>
       <a href="/admin/images/add-filter" class="btn btn-primary" style='margin-left:30px;'>Add Filter</a>
     </div>
     <CTable stripedColumns>
       <thead>
           <tr>
-            <th>ID</th>
-            <th>NAME</th>
+            <th>№</th>
+            <th>Название</th>
           </tr>
         </thead>
         <tbody>

@@ -1,7 +1,7 @@
 <template>
     <CForm @submit.prevent="submitForm()">
     <div class="mb-3">
-        <CFormLabel for="name">Name</CFormLabel>
+        <CFormLabel for="name">название</CFormLabel>
         <CFormInput
             type="text"
             v-model="name"
@@ -12,7 +12,7 @@
         />
     </div>
     <div class="mb-3">
-        <CFormLabel for="slug">Slug</CFormLabel>
+        <CFormLabel for="slug">URL</CFormLabel>
         <CFormInput
             id="slug"
             type="text"
@@ -25,7 +25,7 @@
     </div>
 
     <div class="mb-3">
-        <CFormLabel for="title">Title</CFormLabel>
+        <CFormLabel for="title">Тайтл</CFormLabel>
         <CFormInput
             type="text"
             v-model="title"
@@ -35,6 +35,7 @@
         />
     </div>
 
+    <CFormLabel for="title">Тело</CFormLabel>
     <QuillEditor :value='body' theme="snow" />
 
     <!-- <div class="mb-3">
@@ -45,7 +46,7 @@
         </div> -->
 
     <div class="mb-3">
-        <CFormLabel for="keyword">Keyword</CFormLabel>
+        <CFormLabel for="keyword">Ключевые слова</CFormLabel>
         <CFormInput
             type="text"
             v-model="keyword"
@@ -56,7 +57,7 @@
     </div>
 
     <div class="mb-3">
-        <CFormLabel for="description">Description</CFormLabel>
+        <CFormLabel for="description">Описание</CFormLabel>
         <CFormTextarea
             id="description"
             v-model="description"
@@ -66,11 +67,11 @@
     </div>
 
     <div class="mb-3">
-        <CFormLabel for="show">Visibility</CFormLabel>
+        <CFormLabel for="show">Показывать</CFormLabel>
         <CFormCheck style="margin-left: 15px" @change="changeVisibility" :checked='visibility' id="show" />
     </div>
 
-    <button class="btn btn-primary mb-5">Save</button>
+    <button class="btn btn-primary mb-5">Сохранить</button>
     </CForm>
 </template>
 

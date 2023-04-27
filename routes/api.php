@@ -44,6 +44,7 @@ Route::post('save-admin', "App\Http\Controllers\AdminController@saveAdmin")->mid
 
 Route::post('get-filters', "App\Http\Controllers\FilterController@getFilters");
 Route::get('get-images', "App\Http\Controllers\ImageController@getImages");
+Route::get('get-likes', "App\Http\Controllers\ImageController@getLikes");
 Route::post('get-images-admin', "App\Http\Controllers\ImageController@getImagesAdmin")->middleware('auth:api');
 Route::post('get-contacts', "App\Http\Controllers\ContactsController@getContacts");
 Route::post('get-admin', "App\Http\Controllers\AdminController@getAdmin");

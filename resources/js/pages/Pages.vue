@@ -1,22 +1,22 @@
 <template>
     <AppSidebar />
     <div class="d-flex flex-row justify-content-between">
-        <h1>Pages</h1>
+        <h1>Страницы</h1>
         <a
             href="/admin/images/add-page"
             class="btn btn-primary"
             style="margin-left: 30px; padding-bottom: -15px"
-            >Add Page</a
+            >Добавить страницу</a
         >
     </div>
     <CTable stripedColumns>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Keyword</th>
-                <th>Show</th>
+                <th>№</th>
+                <th>Название</th>
+                <th>URL</th>
+                <th>Ключевые слова</th>
+                <th>Показывать</th>
             </tr>
         </thead>
         <tbody>
@@ -25,13 +25,13 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.slug }}</td>
                 <td>{{ item.keyword }}</td>
-                <td>{{ item.show }}</td>
+                <td><CFormCheck style="margin-left: 15px" :checked='item.show' id="show" disabled /></td>
                 <td>
                     <router-link :to="'/admin/pages/' + item.slug"
-                        >Edit</router-link
+                        >Изменить</router-link
                     >
                 </td>
-                <td><button @click="deletePage(item.id)">Delete</button></td>
+                <td><button @click="deletePage(item.id)">Удалить</button></td>
             </tr>
         </tbody>
     </CTable>
