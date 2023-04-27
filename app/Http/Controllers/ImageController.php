@@ -21,7 +21,7 @@ class ImageController extends Controller
             // $newPath = $request->image->store('public/uploads', 's3');
             // return $newPath;
 
-            $path = 'public/uploads/' . $imageName;
+            $path = 'uploads/' . $imageName;
             $description = $request->description;
             // return $description;
             $imageFilters = $request->imageFilters;
@@ -47,8 +47,20 @@ class ImageController extends Controller
 
     public function getImages(Request $request)
     {
-        $images = Image::all();
         $filters = Filter::all();
+
+        if($request->images_ids != null){
+            if($request->images_ids == []){
+                return response()->json(['images' => [], 'filters' => $filters]);
+            }
+            // return "FOFJEWO";
+            // return $request->images_ids[0];
+            $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+        }
+        else {
+            $images = Image::all();
+        }
+        
 
         return response()->json(['images' => $images, 'filters' => $filters]);
     }

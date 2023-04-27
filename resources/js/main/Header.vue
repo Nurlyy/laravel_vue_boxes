@@ -21,8 +21,8 @@
       <button class="btn-header-universal filter">
         Каталог упаковки
       </button>
-      <a href="tel:+78122092729" class="phone">
-        +7 812 209-27-29
+      <a :href='"tel:"+phone_number' class="phone">
+        {{phone_number}}
       </a>
     </div>
   </div>
@@ -45,8 +45,15 @@ export default {
     return {
       showingOrder: false,
       showingModal: false,
-      likes_count: localStorage.getItem('likedImages')?JSON.parse(localStorage.getItem('likedImages')).length : 0,
+      likes_count: 0,
+      phone_number: null,
     };
+  },
+  mounted() {
+    this.likes_count = localStorage.getItem('likedImages')?JSON.parse(localStorage.getItem('likedImages')).length : 0;
+    axios.post('/api/get-contacts', {}).then(response => {
+        this.phone_number = response.data.contacts.phone_number;
+    });
   },
   methods: {
     go_to_likes(){

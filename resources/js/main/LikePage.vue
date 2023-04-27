@@ -17,13 +17,12 @@
             </div>
         </div>
         <div class="pin_container">
-            <div class="card">
-                <img src="@/assets/product/1.jpg" alt="" />
-                <a href="#"></a>
-                <button class="btn-like-card no-active"></button>
-                <span class="number-card"># 53</span>
+            <div v-for="(image, index) in images" :key="index" class="card">
+                <img :src='image.path' alt="" />
+                <a @click="unlikeImage(image.id, index)"></a>
+                <button class="btn-like-card active"></button>
+                <span class="number-card">#{{image.id}}</span>
             </div>
-            
         </div>
     </div>
 </template>
@@ -34,6 +33,37 @@ export default {
     name: "LikePage",
     components: {
         Header,
+    },
+    data() {
+        return {
+            images: [],
+            likedImages: [],
+        };
+    },
+    mounted() {
+        this.likedImages =
+            localStorage.getItem("likedImages") != null
+                ? JSON.parse(localStorage.getItem("likedImages"))
+                : [];
+        // console.log({ images_ids: JSON.stringify(this.likedImages) });
+        axios
+            .post("/api/get-images", { images_ids: JSON.stringify(this.likedImages) })
+            .then((response) => {
+                this.images = response.data.images;
+                // console.log( response.data);
+            });
+    },
+    methods: {
+        unlikeImage(id, index) {
+            this.images.splice(index, 1);
+            this.likedImages.splice(this.likedImages.indexOf(id), 1);
+            // console.log(JSON.stringify(this.likedImages));
+            localStorage.setItem(
+                "likedImages",
+                JSON.stringify(this.likedImages)
+            );
+            this.$refs.header.likes_count = this.likedImages.length;
+        },
     },
 };
 </script>

@@ -2,11 +2,11 @@
   <div class="container-footer-wrapper">
     <div class="contact-footer">
       <div>
-        <span class="tell">+7 812 209 70 45</span>
-        <span class="e-mail">public@propako.ru</span>
+        <span class="tell">{{phone_number}}</span>
+        <span class="e-mail">{{email}}</span>
       </div>
       <div>
-      <span class="address">Россия, Санкт-Петербург, Петровская коса, д.1, к.1, БЦ Петровский</span>
+      <span class="address">{{ address }}</span>
 
       </div>
     </div>
@@ -19,6 +19,20 @@
 <script>
 export default {
   name: 'Footer',
+  data(){
+    return {
+        phone_number:null,
+        email:null,
+        address:null
+    }
+  },
+  mounted() {
+    axios.post('/api/get-contacts', {}).then(response => {
+        this.phone_number = response.data.contacts.phone_number;
+        this.email = response.data.contacts.email;
+        this.address = response.data.contacts.address;
+    })
+  }
 }
 </script>
 
