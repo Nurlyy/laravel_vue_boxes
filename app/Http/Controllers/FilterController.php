@@ -9,12 +9,10 @@ class FilterController extends Controller
 {
 
     public function addFilter(Request $request){
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-        ]);
+        $name = $request->name;
 
         $filter = Filter::create([
-            'name' => $validatedData['name'],
+            'name' => $name
         ]);
 
         return response()->json(['filter' => $filter], 201);

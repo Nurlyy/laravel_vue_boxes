@@ -24,15 +24,20 @@ class ImageController extends Controller
             $path = 'uploads/' . $imageName;
             $description = $request->description;
             // return $description;
-            $imageFilters = $request->imageFilters;
+            $imageFilters = json_decode($request->imageFilters);
+
+            // return $imageFilters[1];
 
             if ($path != null && $description != null) {
 
                 $image = Image::create(['path' => $path, 'description' => $description]);
 
                 if ($imageFilters != null) {
+                    
                     foreach ($imageFilters as $imageFilter) {
-                        $filter = Filter::find($imageFilter['id'])->first();
+                        // return $imageFilter['id'];
+                        $filter = Filter::where('id', $imageFilter->id)->first();
+                        // return $filter;
                         if ($filter != null && $filter != '' && $filter != []) {
                             $imagesFilter = ImagesFilter::create([
                                 'image_id' => $image->id,

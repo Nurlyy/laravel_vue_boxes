@@ -1,6 +1,6 @@
 <template>
     <h1>Add Filter</h1>
-    <CForm>
+    <CForm @submit.prevent='submitForm()'>
         <div class="mb-3">
             <CFormLabel for="name">Name</CFormLabel>
             <CFormInput type="text" v-model="name" :value='name' id="name" placeholder="NAME" />

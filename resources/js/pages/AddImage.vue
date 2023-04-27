@@ -108,7 +108,7 @@ export default {
                 let formData = new FormData();
                 formData.append("image", this.image);
                 formData.append("description", this.description);
-                formData.append("imageFilters", this.imageFilters);
+                formData.append("imageFilters", JSON.stringify(this.imageFilters));
                 axios
                     .post("/api/add-image", formData)
                     .then((response) => {
