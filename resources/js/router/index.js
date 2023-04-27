@@ -167,6 +167,16 @@ const routes = [
                 props: true, // allows passing slug as a prop to the component
                 meta: { requiresAuth: true },
             },
+            {
+                path: "/admin/images/:id", // slug is the dynamic parameter
+                // component: () =>
+                // import(
+                //     /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
+                // ),
+                redirect: '/admin/images',
+                // props: true, // allows passing slug as a prop to the component
+                meta: { requiresAuth: true },
+            },
         ],
     },
 

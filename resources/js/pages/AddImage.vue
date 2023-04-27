@@ -3,7 +3,11 @@
     <CForm @submit.prevent="submitForm()">
         <div class="mb-3">
             <CFormLabel for="image">Add Image</CFormLabel>
-            <CFormInput @change="saveImage" type="file" id="image" />
+            <CFormInput
+                @change="saveImage"
+                type="file"
+                id="image"
+            />
         </div>
 
         <div class="mb-3">
@@ -90,6 +94,7 @@ export default {
             description: null,
             imageSrc: "",
             imageFilters: [],
+            id: null,
             availableFilters: [
                 // { id: 1, name: "Filter 1" },
                 // { id: 2, name: "Filter 2" },
@@ -104,21 +109,46 @@ export default {
     },
     methods: {
         submitForm() {
-            if (this.image != null) {
-                let formData = new FormData();
-                formData.append("image", this.image);
-                formData.append("description", this.description);
-                formData.append("imageFilters", JSON.stringify(this.imageFilters));
-                axios
-                    .post("/api/add-image", formData)
-                    .then((response) => {
-                        // this.saveImagePath(response.data.path);
-                        console.log(response.data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-                //   alert("saved");
+            if (this.id == null) {
+                if (this.image != null) {
+                    let formData = new FormData();
+                    formData.append("image", this.image);
+                    formData.append("description", this.description);
+                    formData.append(
+                        "imageFilters",
+                        JSON.stringify(this.imageFilters)
+                    );
+                    axios
+                        .post("/api/add-image", formData)
+                        .then((response) => {
+                            // this.saveImagePath(response.data.path);
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                    //   alert("saved");
+                }
+            } else {
+                if (this.image != null) {
+                    let formData = new FormData();
+                    formData.append("image", this.image);
+                    formData.append("description", this.description);
+                    formData.append(
+                        "imageFilters",
+                        JSON.stringify(this.imageFilters)
+                    );
+                    axios
+                        .post("/api/update-image", formData)
+                        .then((response) => {
+                            // this.saveImagePath(response.data.path);
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                    //   alert("saved");
+                }
             }
         },
         saveImage(event) {
@@ -134,6 +164,26 @@ export default {
             this.availableFilters.push(filter);
             this.imageFilters.splice(index, 1);
         },
+    },
+    created() {
+        const id = this.$route.params.id;
+        if (id) {
+            axios.post("/api/get-page-admin", { id: id }).then((response) => {
+                // this.page = response.data.page;
+                // console.log(reponse.data);
+                this.image = response.data.image.path;
+                this.description = response.data.image.description;
+                this.imageFilters = JSON.parse(response.data.image.filters);
+                this.imageFilters.forEach((imageFilter) => {
+                    if (this.availableFilters.includes(imageFilter)) {
+                        this.availableFilters.splice(
+                            this.availableFilters.indexOf(imageFilter),
+                            1
+                        );
+                    }
+                });
+            });
+        }
     },
 };
 </script>
