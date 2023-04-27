@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="pin_container">
+        <div class="pin_container scroll-container" ref="scrollContainer">
             <div
                 v-for="image in images"
                 :key="image.id"
-                :class="getClass(image.id)"
+                :class="image.class"
                 :id="image.id + '_image'"
             >
                 <img :src="image.path" alt="" />
@@ -31,32 +31,46 @@ export default {
             likedImages: [],
             classList: ["card_small", "card_medium", "card_large"],
             randomClasses: {},
+            page: 1,
+            perPage: 10,
+            isLoading: false,
+            isError: false,
+            error: "",
+            observer: null,
         };
     },
     mounted() {
-        axios.post("/api/get-images", {}).then((response) => {
-            this.images = response.data.images;
-            // console.log( response.data.images);
-            this.likedImages =
-                localStorage.getItem("likedImages") != null
-                    ? JSON.parse(localStorage.getItem("likedImages"))
-                    : [];
-            this.$nextTick(() => {
-                this.$emit("likesCount");
-            });
+        // axios.post("/api/get-images", {}).then((response) => {
+        //     this.images = response.data.images;
+        //     // console.log( response.data.images);
+        //     this.likedImages =
+        //         localStorage.getItem("likedImages") != null
+        //             ? JSON.parse(localStorage.getItem("likedImages"))
+        //             : [];
+        //     this.$nextTick(() => {
+        //         this.$emit("likesCount");
+        //     });
 
-            this.images.forEach((image) => {
-                const randomIndex = Math.floor(
-                    Math.random() * this.classList.length
-                );
-                this.randomClasses[image.id] = this.classList[randomIndex];
-            });
+        //     this.images.forEach((image) => {
+        //         const randomIndex = Math.floor(
+        //             Math.random() * this.classList.length
+        //         );
+        //         this.randomClasses[image.id] = this.classList[randomIndex];
+        //     });
+        // });
+
+        this.observer = new IntersectionObserver(this.handleIntersection, {
+            root: this.$refs.scrollContainer,
+            rootMargin: "0px",
+            threshold: 1.0,
         });
+
+        this.loadNextPage();
 
         // console.log(this.images);
     },
     methods: {
-        getClass(id){
+        getClass(id) {
             return "card " + this.randomClasses[id];
         },
         isLiked(id) {
@@ -87,6 +101,39 @@ export default {
             this.$nextTick(() => {
                 this.$emit("likesCount");
             });
+        },
+        loadNextPage() {
+            if (this.isLoading || this.isError) {
+                return;
+            }
+
+            this.isLoading = true;
+
+            axios
+                .get(
+                    `/api/get-images?page=${this.page}&per_page=${this.perPage}`
+                )
+                .then((response) => {
+                    this.isLoading = false;
+                    var temp = response.data.images;
+                    temp.forEach(element => {
+                        // const randomIndex = Math.floor(Math.random() * this.sizeClasses.length);
+                        // item.size = this.sizeClasses[randomIndex];
+                        element['class'] = 'card ' + this.classList[Math.floor(Math.random() * this.classList.length)]
+                    })
+                    this.images.push(...temp);
+                    this.page += 1;
+                })
+                .catch((error) => {
+                    this.isLoading = false;
+                    this.isError = true;
+                    this.error = error.message;
+                });
+        },
+        handleIntersection(entries) {
+            if (entries[0].isIntersecting) {
+                this.loadNextPage();
+            }
         },
     },
     // created() {
