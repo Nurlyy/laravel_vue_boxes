@@ -33,6 +33,7 @@
         "core-js": "^3.26.1",
         "vue": "^3.2.45",
         "vue-axios": "^3.5.2",
+        "vue-easy-lightbox": "^1.16.0",
         "vue-router": "^4.1.6",
         "vuex": "^4.1.0"
     },

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-main">
         <div
             class="pin_container scroll-container"
             ref="scrollContainer"
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { returnStatement } from '@babel/types';
+import VueEasyLightbox from 'vue-easy-lightbox'
 export default {
     name: "Main",
     created() {
@@ -47,6 +49,7 @@ export default {
             randomClasses: {},
             page: 1,
             perPage: 10,
+            lastPage: null,
             isLoading: false,
             isError: false,
             error: "",
@@ -74,13 +77,10 @@ export default {
         // axios.post("/api/get-images", {}).then((response) => {
         //     this.images = response.data.images;
         //     // console.log( response.data.images);
-        //     this.likedImages =
-        //         localStorage.getItem("likedImages") != null
-        //             ? JSON.parse(localStorage.getItem("likedImages"))
-        //             : [];
-        //     this.$nextTick(() => {
-        //         this.$emit("likesCount");
-        //     });
+            this.likedImages =
+                localStorage.getItem("likedImages") != null
+                    ? JSON.parse(localStorage.getItem("likedImages"))
+                    : [];
 
         //     this.images.forEach((image) => {
         //         const randomIndex = Math.floor(
@@ -108,7 +108,7 @@ export default {
             return "card " + this.randomClasses[id];
         },
         isLiked(id) {
-            return this.likedImages.includes(id);
+            return JSON.parse(localStorage.getItem('likedImages')).includes(id);
         },
 
         likeImage(id) {
@@ -137,8 +137,12 @@ export default {
             });
         },
         loadNextPage() {
-            console.log("loadnextpage");
+            // console.log("loadnextpage");
             if (this.isLoading || this.isError) {
+                return;
+            }
+
+            if((this.page - 1) >= this.lastPage && this.lastPage != null){
                 return;
             }
 
@@ -154,6 +158,7 @@ export default {
                     temp.forEach((element) => {
                         // const randomIndex = Math.floor(Math.random() * this.sizeClasses.length);
                         // item.size = this.sizeClasses[randomIndex];
+                        
                         element["class"] =
                             "card " +
                             this.classList[
@@ -164,6 +169,7 @@ export default {
                     });
                     this.images.push(...temp);
                     this.page += 1;
+                    this.lastPage = response.data.lastPage;
                 })
                 .catch((error) => {
                     this.isLoading = false;
@@ -210,6 +216,22 @@ export default {
     transition: opacity 0.5s ease;
 }
 
+.container-main {
+  margin:0 auto;
+  height:auto;
+  padding:0 20px;
+  box-sizing:border-box;
+  @media (min-width:1160px) {
+    width:1140px;
+  }
+  @media (min-width:1000px) and (max-width:1160px) {
+    width:980px;
+  }
+  @media (max-width:1000px) {
+    width:100%;
+    min-width:370px;
+  }
+}
 .pin_container {
     padding: 0;
     position: relative;

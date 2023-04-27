@@ -1,81 +1,101 @@
 <template>
-  <div class="container-header-wrapper">
-    <div class="container-header">
-      <a href="/" class="logo">
-        <img src="@/assets/logo.svg" alt="">
-      </a>
-      <div class="slogan">
-        Производство упаковки
-      </div>
-      <button @click='showModal()' class="btn-gamburger-menu">
-        <span class="line"></span>
-        <span class="line ots"></span>
-        <span class="line ots"></span>
-      </button>
-      <button @click='go_to_likes()' class="btn-like">
-        <span class="counter">{{likes_count}}</span>
-      </button>
-      <button @click='showOrder()' class="btn-header-universal order">
-        Заявка на расчёт
-      </button>
-      <button class="btn-header-universal filter">
-        Каталог упаковки
-      </button>
-      <a :href='"tel:"+phone_number' class="phone">
-        {{phone_number}}
-      </a>
+    <div>
+        <div class="conteaner-zero"></div>
+        <div class="container-header-wrapper">
+            <div class="container-header">
+                <a href="/" class="logo">
+                    <img src="@/assets/logo.svg" alt="" />
+                </a>
+                <div class="slogan">Производство упаковки</div>
+                <button @click="showModal()" class="btn-gamburger-menu">
+                    <span class="line"></span>
+                    <span class="line ots"></span>
+                    <span class="line ots"></span>
+                </button>
+                <button @click="go_to_likes()" class="btn-like">
+                    <span class="counter">{{ likes_count }}</span>
+                </button>
+                <button @click="showOrder()" class="btn-header-universal order">
+                    Заявка на расчёт
+                </button>
+                <button @click='showFilters()' class="btn-header-universal filter">
+                    Каталог упаковки
+                </button>
+                <a :href="'tel:' + phone_number" class="phone">
+                    {{ phone_number }}
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <Order v-if="showingOrder" @close="hideOrder" />
+    <Order v-if="showingOrder" @close="hideOrder" />
     <Modal v-if="showingModal" @close="hideModal" />
-
+    <Filters v-if="showingFilters" @close='hideFilters' />
 </template>
 
 <script>
-import Modal from './Modal.vue'; 
-import Order from './Order.vue';
-import router from '@/router/index.js';
+import Modal from "./Modal.vue";
+import Order from "./Order.vue";
+import router from "@/router/index.js";
+import Filters from './Filters.vue';
+
 export default {
-  name: 'Header',
-  components: {
-    Modal, Order,
-  },
-  data() {
-    return {
-      showingOrder: false,
-      showingModal: false,
-      likes_count: 0,
-      phone_number: null,
-    };
-  },
-  mounted() {
-    this.likes_count = localStorage.getItem('likedImages')?JSON.parse(localStorage.getItem('likedImages')).length : 0;
-    axios.post('/api/get-contacts', {}).then(response => {
-        this.phone_number = response.data.contacts.phone_number;
-    });
-  },
-  methods: {
-    go_to_likes(){
-        router.push({name:"MainLikes"})
+    name: "Header",
+    components: {
+        Modal,
+        Order,
+        Filters,
     },
-    showOrder() {
-      this.showingOrder = true;
+    data() {
+        return {
+            showingOrder: false,
+            showingModal: false,
+            likes_count: 0,
+            phone_number: null,
+            showingFilters: false,
+        };
     },
-    hideOrder() {
-      this.showingOrder = false;
+    mounted() {
+        this.likes_count = localStorage.getItem("likedImages")
+            ? JSON.parse(localStorage.getItem("likedImages")).length
+            : 0;
+        axios.post("/api/get-contacts", {}).then((response) => {
+            this.phone_number = response.data.contacts.phone_number;
+        });
     },
-    showModal() {
-      this.showingModal = true;
+    methods: {
+        hideFilters(){
+            this.showingFilters = false;
+        },
+        showFilters(){
+            this.showingFilters = true;
+        },
+        go_to_likes() {
+            router.push({ name: "MainLikes" });
+        },
+        showOrder() {
+            this.showingOrder = true;
+        },
+        hideOrder() {
+            this.showingOrder = false;
+        },
+        showModal() {
+            this.showingModal = true;
+        },
+        hideModal() {
+            this.showingModal = false;
+        },
     },
-    hideModal() {
-      this.showingModal = false;
-    }
-  }
-}
+};
 </script>
 
 <style scoped lang="scss">
+.conteaner-zero {
+  position: relative;
+  height:68px;
+  background: none;
+  width:100%;
+}
 .container-header-wrapper {
   width:100%;
   height:68px;

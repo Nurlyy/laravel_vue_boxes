@@ -55,6 +55,7 @@ class ImageController extends Controller
 
 
         $filters = Filter::all();
+        
 
         if ($request->images_ids != null) {
             if ($request->images_ids == []) {
@@ -65,29 +66,40 @@ class ImageController extends Controller
             $images = Image::whereIn('id', json_decode($request->images_ids))->get();
         } else {
 
+            
+
             $page = $request->page;
             $per_page = $request->per_page;
+
+            $items = Image::count();
+            $lastPage = ceil($items / $per_page);
             // if ($page != 1) {
-            $images = Image::all();
+            // $images = Image::all();
             // } else {
 
-                // $images = Image::skip(0)->take($per_page)->get();
+            $images = Image::skip(($page-1) * $per_page)->take($per_page)->get();
             // }
         }
 
 
-        return response()->json(['images' => $images, 'filters' => $filters]);
+        return response()->json(['images' => $images, 'filters' => $filters, 'lastPage' => $lastPage]);
     }
 
-    public function getLikes(Request $request){
+    public function getLikes(Request $request)
+    {
         $filters = Filter::all();
+
 
         if ($request->images_ids == []) {
             return response()->json(['images' => [], 'filters' => $filters]);
         }
         // return "FOFJEWO";
         // return $request->images_ids[0];
-        // $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+        $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+
+
+
+        return response()->json(['images' => $images, 'filters' => $filters]);
     }
 
     public function getImagesAdmin(Request $request)

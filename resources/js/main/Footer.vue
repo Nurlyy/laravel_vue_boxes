@@ -38,6 +38,20 @@ export default {
 
 <style scoped lang="scss">
 .container-footer-wrapper {
+  margin:0 auto;
+  height:auto;
+  padding:0 20px;
+  box-sizing:border-box;
+  @media (min-width:1160px) {
+    width:1140px;
+  }
+  @media (min-width:1000px) and (max-width:1160px) {
+    width:980px;
+  }
+  @media (max-width:1000px) {
+    width:100%;
+    min-width:370px;
+  }
   .contact-footer {
     width:100%;
     display: grid;

@@ -2,7 +2,9 @@
   <div class="container-order-wrapper">
     <div class="container-order">
       <p>Заявка на расчёт упаковки</p>
-      <span class="order-header-text">Расскажите, что Вам нужно, это займёт не больше минуты. Так же можете прикрепить фотографии, которым Вы поставили лайк</span>
+      <span class="order-header-text" style="white-space:pre-line">Свяжитесь с нами для расчета стоимости или консультации <br>
+        {{ contacts.phone_number }} | {{ contacts.email }} <br>
+        Или заполните форму ниже</span>
       <div class="container-two">
         <input type="text" class="inp" placeholder="Ваше имя">
         <input type="text" class="inp" placeholder="Телефон / E-Mail">
@@ -29,8 +31,19 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: 'Order'
+  name: 'Order',
+  data() {
+    return {
+        contacts: null,
+    }
+  },
+  mounted() {
+    axios.post('/api/get-contacts').then(response => {
+        this.contacts = response.data.contacts;
+    })
+  }
 }
 </script>
 

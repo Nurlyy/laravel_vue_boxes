@@ -1,23 +1,25 @@
 <template>
     <Header ref="header" />
     <div class="container-pages-wrapper">
-        <h1>
-            <h1>{{ page.title }}</h1>
-        </h1>
-        <span class="dividing-line"></span>
-        <div class="container-body-pages">
-            <div v-html="page.body"></div>
+        <div class="container-pages">
+            <h1>
+                <h1>{{ page.title }}</h1>
+            </h1>
+            <span class="dividing-line"></span>
+            <div class="container-body-pages">
+                <div v-html="page.body"></div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import Header from './Header.vue';
+import Header from "./Header.vue";
 
 export default {
     name: "Pages",
     components: {
-        Header
+        Header,
     },
     data() {
         return {
@@ -26,10 +28,10 @@ export default {
     },
     created() {
         const slug = this.$route.params.slug;
-        axios.post('/api/get-page', {slug: slug}).then(response => {
+        axios.post("/api/get-page", { slug: slug }).then((response) => {
             this.page = response.data.page;
             console.log(reponse.data);
-        })
+        });
         // Fetch page data from database using slug
         // Set page data to this.page
     },
@@ -38,6 +40,22 @@ export default {
 
 <style scoped lang="scss">
 .container-pages-wrapper {
+    margin: 0 auto;
+    height: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    @media (min-width: 1160px) {
+        width: 1140px;
+    }
+    @media (min-width: 1000px) and (max-width: 1160px) {
+        width: 980px;
+    }
+    @media (max-width: 1000px) {
+        width: 100%;
+        min-width: 370px;
+    }
+}
+.container-pages {
     width: 100%;
     background-color: #fff;
     border-radius: 14px;
