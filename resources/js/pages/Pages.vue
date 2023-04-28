@@ -27,11 +27,13 @@
                 <td>{{ item.keyword }}</td>
                 <td><CFormCheck style="margin-left: 15px" :checked='item.show' id="show" disabled /></td>
                 <td>
-                    <router-link :to="'/admin/pages/' + item.slug"
+                    <CButton component="a" color="info" :href="'/admin/pages/' + item.slug" role="button">Изменить</CButton>
+                    <!-- <router-link :to="'/admin/images/' + image.id"
                         >Изменить</router-link
-                    >
+                    > -->
                 </td>
-                <td><button @click="deletePage(item.id)">Удалить</button></td>
+                
+                <td><CButton @click="deletePage(item.id)" color="danger" role="button">Удалить</CButton></td>
             </tr>
         </tbody>
     </CTable>
@@ -55,7 +57,8 @@ export default {
         deletePage(id) {
             if (confirm("Are you sure you want to delete this?")) {
                 axios.post("/api/delete-page", { id: id }).then((response) => {
-                router.push({ name: "Pages" });
+                this.items = response.data.items;
+                // router.push({ name: "Pages" });
             });
             }
         },

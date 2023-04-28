@@ -17,19 +17,42 @@ export default {
     data() {
         return {
             name: "",
+            id: null,
         };
     },
     methods: {
         submitForm() {
-            axios
+            if(this.id){
+                axios
                 .post("/api/add-filter", { name: this.name })
                 .then(function (response) {
                     // alert('Saved');
                     // console.log(response);
                     router.push({name: "Filters"});
                 });
+            }
+            {
+                axios.post('/api/update-filter', {id: this.id, name: this.name}).then(response => {
+                    router.push({'name' : "Filters"});
+                });
+            }
             // alert("saved");
         },
+    },
+    created() {
+        const id = this.$route.params.id;
+        if (id) {
+            this.id = id;
+            axios.post("/api/get-page-admin", { id: id }).then((response) => {
+                // this.page = response.data.page;
+                // console.log(reponse.data);
+                this.name = response.data.filter.name;
+                this.id = response.data.filter.id;
+            });
+        }
+
+        // Fetch page data from database using slug
+        // Set page data to this.page
     },
 };
 </script>

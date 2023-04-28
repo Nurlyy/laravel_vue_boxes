@@ -39,9 +39,11 @@ export default {
     methods: {
         showOrder() {
             this.showingOrder = true;
+            document.getElementById("app_main").className = "blocked";
         },
         hideOrder() {
             this.showingOrder = false;
+            document.getElementById("app_main").className = "";
         },
     },
 };

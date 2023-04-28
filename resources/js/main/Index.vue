@@ -2,7 +2,7 @@
     <div @scroll='console.log("Index scrolled")'>
         <Header ref="header" />
         <Greeting />
-        <Main @likesCount="getLikesCount()" />
+        <Main :category_id='id' @likesCount="getLikesCount()" />
     </div>
 </template>
 
@@ -21,7 +21,12 @@ export default {
     data() {
         return {
             likes_count: 0,
+            id: null,
         };
+    },
+    mounted(){
+        this.id = this.$route.params.id;
+        console.log('cat id from index: ' + this.id);
     },
     methods: {
         getLikesCount() {
@@ -31,9 +36,7 @@ export default {
             // console.log(this.likes_count);
             this.$refs.header.likes_count = this.likes_count;
         },
-        onScroll(){
-            console.log('scrolled');
-        }
+
     },
    
 };

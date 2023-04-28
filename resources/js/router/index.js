@@ -14,6 +14,12 @@ const routes = [
         props: true, // allows passing slug as a prop to the component
     },
     {
+        path: "/category/:id", // slug is the dynamic parameter
+        component: () =>
+            import(/* webpackChunkName: "dashboard" */ "@/main/Index.vue"),
+        props: true, // allows passing slug as a prop to the component
+    },
+    {
         path: "/",
         name: "Main",
         component: MainLayout,
@@ -161,20 +167,30 @@ const routes = [
             {
                 path: "/admin/pages/:slug", // slug is the dynamic parameter
                 component: () =>
-                import(
-                    /* webpackChunkName: "dashboard" */ "@/pages/AddPage.vue"
-                ),
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/AddPage.vue"
+                    ),
                 props: true, // allows passing slug as a prop to the component
                 meta: { requiresAuth: true },
             },
             {
                 path: "/admin/images/:id", // slug is the dynamic parameter
-                // component: () =>
-                // import(
-                //     /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
-                // ),
-                redirect: '/admin/images',
-                // props: true, // allows passing slug as a prop to the component
+                component: () =>
+                import(
+                    /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
+                ),
+                // redirect: "/admin/images",
+                props: true, // allows passing slug as a prop to the component
+                meta: { requiresAuth: true },
+            },
+            {
+                path: "/admin/filters/:id", // slug is the dynamic parameter
+                component: () =>
+                import(
+                    /* webpackChunkName: "dashboard" */ "@/pages/AddFilter.vue"
+                ),
+                // redirect: "/admin/images",
+                props: true, // allows passing slug as a prop to the component
                 meta: { requiresAuth: true },
             },
         ],

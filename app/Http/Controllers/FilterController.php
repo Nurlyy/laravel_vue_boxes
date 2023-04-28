@@ -43,11 +43,18 @@ class FilterController extends Controller
         return response()->json(['filter' => $filter]);
     }
 
-    public function destroy(Filter $filter)
+    public function getFilterAdmin(Request $request){
+        $id = $request->id;
+        $filter = Filter::where('id', $id)->first();
+        return response()->json(['filter' => $filter]);
+    }
+
+    public function deleteFilter(Request $request)
     {
+        $filter = $request->id;
         $filter->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['filters' => Filter::all()], 204);
     }
 
 }

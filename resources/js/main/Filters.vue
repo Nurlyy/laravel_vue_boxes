@@ -4,8 +4,8 @@
         <p>Фильтры</p>
         <ul>
           <li v-for="filter in filters" :key='filter.id' >
-            <!-- <router-link :to="'/page/' + page.slug">{{ page.title }}</router-link> -->
-            {{ filter.name }}
+            <router-link :to="'/category/' + filter.id">{{ filter.name }}</router-link>
+            <!-- {{ filter.name }} -->
         </li>
           <!-- <li><a href="#">Материалы</a></li>
           <li><a href="#">Технологии</a></li>
@@ -70,7 +70,7 @@
         font-size: 15px;
         text-transform: uppercase;
         color:#000;
-        padding:5px 0 16px;
+        padding:17px 0 16px;
         border-bottom:1px solid #e6e6e6;
       }
       .close {

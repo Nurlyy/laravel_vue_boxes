@@ -19,14 +19,29 @@
         <tbody>
             <tr v-for="image in images" :key="image.id">
                 <td>{{ image.id }}</td>
-                <td>{{ image.path }}</td>
+                <!-- <td>{{ image.path }}</td> -->
                 <td>{{ image.description }}</td>
                 <td>
-                    <router-link :to="'/admin/images/' + image.id"
+                    <CButton
+                        component="a"
+                        color="info"
+                        :href="'/admin/images/' + image.id"
+                        role="button"
+                        >Изменить</CButton
+                    >
+                    <!-- <router-link :to="'/admin/images/' + image.id"
                         >Изменить</router-link
+                    > -->
+                </td>
+
+                <td>
+                    <CButton
+                        @click="deleteImage(image.id)"
+                        color="danger"
+                        role="button"
+                        >Удалить</CButton
                     >
                 </td>
-                <td><button @click="deletePage(item.id)">Удалить</button></td>
             </tr>
         </tbody>
     </CTable>
@@ -44,6 +59,15 @@ export default {
         axios.post("/api/get-images-admin", {}).then((response) => {
             this.images = response.data.images;
         });
+    },
+    methods: {
+        deleteImage(id) {
+            if (confirm("Are you sure you want to delete this?")) {
+                axios.post("/api/delete-image", { id: id }).then((response) => {
+                    this.images = response.data.images;
+                });
+            }
+        },
     },
 };
 </script>

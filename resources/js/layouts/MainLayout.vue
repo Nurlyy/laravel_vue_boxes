@@ -1,65 +1,64 @@
 <template>
-    <div id="app" class="">
-      <!-- При открытии модального окна, добавляем класс "blocked" к контейнеру с ID "app". Он блокирует весь контен на сайте при модальном окне -->
-      <div class="wrapper">
-        
-        <!-- <Greeting />
+    <div id="app_main" class="">
+        <!-- При открытии модального окна, добавляем класс "blocked" к контейнеру с ID "app". Он блокирует весь контен на сайте при модальном окне -->
+        <div class="wrapper">
+            <!-- <Greeting />
         <Main /> -->
 
-        <router-view></router-view>
+            <router-view></router-view>
 
-        <ButtonUp />
-        <!-- <Pages/> -->
-        <Footer />
-      </div>
-      <!-- <Modal/> -->
-      <!-- <Order/> -->
+            <ButtonUp />
+            <!-- <Pages/> -->
+            <Footer />
+        </div>
+        <!-- <Modal/> -->
+        <!-- <Order/> -->
     </div>
-  </template>
-  
-  <script>
-  import Header from '../main/Header.vue'
-  import Greeting from '../main/Greeting.vue'
-  import Main from '../main/Main.vue'
-  import Footer from '../main/Footer.vue'
-  import Modal from '../main/Modal.vue'
-  import Order from '../main/Order.vue'
-  import ButtonUp from '../main/ButtonUp.vue'
-  import Pages from '../main/Pages.vue'
-  import LikePage from '../main/LikePage.vue'
+</template>
 
-  export default {
-    name: 'MainLayout',
+<script>
+import Header from "../main/Header.vue";
+import Greeting from "../main/Greeting.vue";
+import Main from "../main/Main.vue";
+import Footer from "../main/Footer.vue";
+import Modal from "../main/Modal.vue";
+import Order from "../main/Order.vue";
+import ButtonUp from "../main/ButtonUp.vue";
+import Pages from "../main/Pages.vue";
+import LikePage from "../main/LikePage.vue";
+
+export default {
+    name: "MainLayout",
     components: {
-      Header,
-      Greeting,
-      Main,
-      Footer,
-      Modal,
-      Order,
-      ButtonUp,
-      Pages,
-      LikePage,
-    }
-  }
-  </script>
-      
-  <style lang="scss">
-  body {
+        Header,
+        Greeting,
+        Main,
+        Footer,
+        Modal,
+        Order,
+        ButtonUp,
+        Pages,
+        LikePage,
+    },
+};
+</script>
+
+<style lang="scss">
+body {
     // padding:68px 0 0 0;
-    margin:0;
+    margin: 0;
     background-color: #000;
-  }
-  #app {
-    margin:0;
-    width:100%;
-    min-width:370px;
-    .blocked {
-      display: block;
-      position: fixed !important;
-      z-index: 0 !important;
-    }
-  }
+}
+#app_main {
+    margin: 0;
+    width: 100%;
+    min-width: 370px;
+}
+.blocked {
+    display: block;
+    position: fixed !important;
+    z-index: 0 !important;
+}
 //   .wrapper {
 //     margin:0 auto;
 //     height:auto;
@@ -76,5 +75,4 @@
 //       min-width:370px;
 //     }
 //   }
-  </style>
-  
+</style>

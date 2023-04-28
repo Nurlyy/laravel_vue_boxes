@@ -11,15 +11,17 @@
             </div>
         </div>
     </div>
+    <Footer />
 </template>
 
 <script>
+import Footer from './Footer.vue';
 import Header from "./Header.vue";
-
 export default {
     name: "Pages",
     components: {
         Header,
+        Footer,
     },
     data() {
         return {

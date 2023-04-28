@@ -5,9 +5,12 @@
       <span class="order-header-text" style="white-space:pre-line">Свяжитесь с нами для расчета стоимости или консультации <br>
         {{ contacts.phone_number }} | {{ contacts.email }} <br>
         Или заполните форму ниже</span>
+        <div class="container-one">
+            <input type="text" class="inp" placeholder="Ваше имя">
+        </div>
       <div class="container-two">
-        <input type="text" class="inp" placeholder="Ваше имя">
-        <input type="text" class="inp" placeholder="Телефон / E-Mail">
+        <input type="text" class="inp" placeholder="Email">
+        <input type="text" class="inp" placeholder="Телефон">
       </div>
       <div class="container-one">
         <textarea class="inp txr" placeholder="Опишите Вашу задачу"></textarea>
@@ -76,7 +79,7 @@ export default {
       font-size: 15px;
       text-transform: uppercase;
       color:#000;
-      padding:5px 0 16px;
+      padding:17px 0 16px;
       border-bottom:1px solid #e6e6e6;
     }
     .order-header-text {
@@ -137,6 +140,7 @@ export default {
       gap: 14px;
       box-sizing:border-box;
       padding: 0 20px;
+      margin-top:14px;
     }
     .label {
       font-family: Roboto;

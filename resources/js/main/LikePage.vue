@@ -1,6 +1,6 @@
 <template>
     <Header ref="header" />
-    <div class="wrapper">
+    <div class="wrapper-like-page">
         <div>
             <div>
                 <h1>Фотографии которые Вам понравились</h1>
@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wrapper {
+.wrapper-like-page {
   margin:0 auto;
   height:auto;
   padding:0 20px;

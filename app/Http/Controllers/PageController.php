@@ -101,6 +101,6 @@ class PageController extends Controller
         $id = $request->id;
         $page = Page::where('id', $id)->first();
         $page->delete();
-        return response()->json(null, 204);
+        return response()->json(['items' => Page::all()], 204);
     }
 }

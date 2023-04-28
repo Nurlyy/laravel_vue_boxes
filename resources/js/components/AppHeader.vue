@@ -7,10 +7,6 @@
             >
                 <CIcon icon="cil-menu" size="lg" />
             </CHeaderToggler>
-            <CHeaderBrand class="mx-auto d-lg-none" to="/">
-                <CIcon :icon="logo" height="48" alt="Logo" />
-            </CHeaderBrand>
-
             <CHeaderNav>
                 <CButton color="warning" @click="logout()">Выход</CButton>
             </CHeaderNav>
@@ -25,7 +21,6 @@
 <script>
 import AppBreadcrumb from "./AppBreadcrumb.vue";
 import AppHeaderDropdownAccnt from "./AppHeaderDropdownAccnt.vue";
-import { logo } from "@/assets/brand/logo";
 import router from '@/router/index.js';
 
 export default {

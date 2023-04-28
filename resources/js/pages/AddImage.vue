@@ -7,6 +7,7 @@
                 @change="saveImage"
                 type="file"
                 id="image"
+                :disabled='image!=null'
             />
         </div>
 
@@ -132,8 +133,8 @@ export default {
             } else {
                 if (this.image != null) {
                     let formData = new FormData();
-                    formData.append("image", this.image);
                     formData.append("description", this.description);
+                    formData.append("id", this.id);
                     formData.append(
                         "imageFilters",
                         JSON.stringify(this.imageFilters)
@@ -168,12 +169,13 @@ export default {
     created() {
         const id = this.$route.params.id;
         if (id) {
-            axios.post("/api/get-page-admin", { id: id }).then((response) => {
+            axios.post("/api/get-image-admin", { id: id }).then((response) => {
                 // this.page = response.data.page;
                 // console.log(reponse.data);
                 this.image = response.data.image.path;
                 this.description = response.data.image.description;
-                this.imageFilters = JSON.parse(response.data.image.filters);
+                this.imageFilters = response.data.image_filters ? JSON.parse(response.data.image_filters) : [];
+                this.id = id;
                 this.imageFilters.forEach((imageFilter) => {
                     if (this.availableFilters.includes(imageFilter)) {
                         this.availableFilters.splice(

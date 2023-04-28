@@ -66,24 +66,30 @@ export default {
     methods: {
         hideFilters(){
             this.showingFilters = false;
+            document.getElementById("app_main").className = "";
         },
         showFilters(){
             this.showingFilters = true;
+            document.getElementById("app_main").className = "blocked";
         },
         go_to_likes() {
             router.push({ name: "MainLikes" });
         },
         showOrder() {
             this.showingOrder = true;
+            document.getElementById("app_main").className = "blocked";
         },
         hideOrder() {
             this.showingOrder = false;
+            document.getElementById("app_main").className = "";
         },
         showModal() {
             this.showingModal = true;
+            document.getElementById("app_main").className = "blocked";
         },
         hideModal() {
             this.showingModal = false;
+            document.getElementById("app_main").className = "";
         },
     },
 };
@@ -217,11 +223,12 @@ export default {
       }
       .counter {
         position: absolute;
-        bottom:0;
+        bottom:-2px;
+        // padding-bottom:2px;
         left:17px;
         height:17px;
         box-sizing:border-box;
-        padding:1px 4px;
+        padding:0px 4px;
         background-color: #d40000;
         border-radius: 10px;
         font-family: Roboto;
@@ -288,7 +295,8 @@ export default {
       font-family: Roboto;
       font-weight:300;
       font-size: 23px;
-      padding: 3px 0;
+    //   padding: 3px 0;
+    //   padding-bottom:3px;
       color:#fff;
       text-decoration: none;
       margin-right:12px;

@@ -44,6 +44,7 @@ Route::post('save-admin', "App\Http\Controllers\AdminController@saveAdmin")->mid
 
 Route::post('get-filters', "App\Http\Controllers\FilterController@getFilters");
 Route::get('get-images', "App\Http\Controllers\ImageController@getImages");
+Route::get('get-category-images', "App\Http\Controllers\ImageController@getCategoryImages");
 Route::post('get-likes', "App\Http\Controllers\ImageController@getLikes");
 Route::post('get-images-admin', "App\Http\Controllers\ImageController@getImagesAdmin")->middleware('auth:api');
 Route::post('get-contacts', "App\Http\Controllers\ContactsController@getContacts");
@@ -52,6 +53,7 @@ Route::post('get-page', "App\Http\Controllers\PageController@getPage");
 Route::post('get-pages', "App\Http\Controllers\PageController@getPages");
 Route::post('get-pages-admin', "App\Http\Controllers\PageController@getPagesAdmin")->middleware('auth:api');
 Route::post('get-page-admin', "App\Http\Controllers\PageController@getPageAdmin")->middleware('auth:api');
+Route::post('get-image-admin', "App\Http\Controllers\ImageController@getImageAdmin");
 
 // Route::middleware('auth:api')->group(function () {
 //     Route::post('/logout', [AuthController::class, 'logout']);

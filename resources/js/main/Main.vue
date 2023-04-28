@@ -15,6 +15,7 @@
                     <img :src="image.path" alt="" />
                     <a @click="likeImage(image.id)"></a>
                     <button
+                        :id="'like_button_' + image.id"
                         :class="
                             isLiked(image.id)
                                 ? 'btn-like-card active'
@@ -29,8 +30,8 @@
 </template>
 
 <script>
-import { returnStatement } from '@babel/types';
-import VueEasyLightbox from 'vue-easy-lightbox'
+import { returnStatement } from "@babel/types";
+import VueEasyLightbox from "vue-easy-lightbox";
 export default {
     name: "Main",
     created() {
@@ -40,6 +41,9 @@ export default {
             rootMargin: "0px",
             threshold: 1.0,
         });
+    },
+    props: {
+        category_id: null,
     },
     data() {
         return {
@@ -54,6 +58,8 @@ export default {
             isError: false,
             error: "",
             observer: null,
+            api_url: null,
+            // category_id: null,
         };
     },
     // setup () {
@@ -77,10 +83,10 @@ export default {
         // axios.post("/api/get-images", {}).then((response) => {
         //     this.images = response.data.images;
         //     // console.log( response.data.images);
-            this.likedImages =
-                localStorage.getItem("likedImages") != null
-                    ? JSON.parse(localStorage.getItem("likedImages"))
-                    : [];
+        this.likedImages =
+            localStorage.getItem("likedImages") != null
+                ? JSON.parse(localStorage.getItem("likedImages"))
+                : [];
 
         //     this.images.forEach((image) => {
         //         const randomIndex = Math.floor(
@@ -108,7 +114,11 @@ export default {
             return "card " + this.randomClasses[id];
         },
         isLiked(id) {
-            return JSON.parse(localStorage.getItem('likedImages')).includes(id);
+            if (localStorage.getItem("likedImages")) {
+                return JSON.parse(localStorage.getItem("likedImages")).includes(
+                    id
+                );
+            }
         },
 
         likeImage(id) {
@@ -122,8 +132,12 @@ export default {
                 this.$nextTick(() => {
                     this.$emit("likesCount");
                 });
+                var btn = document.getElementById("like_button_" + id);
+                btn.className = "btn-like-card active";
             } else {
                 this.unlikeImage(id);
+                var btn = document.getElementById("like_button_" + id);
+                btn.className = "btn-like-card no-active";
             }
         },
         unlikeImage(id) {
@@ -137,20 +151,26 @@ export default {
             });
         },
         loadNextPage() {
-            // console.log("loadnextpage");
+            console.log('cat id: '+this.category_id);
             if (this.isLoading || this.isError) {
                 return;
             }
 
-            if((this.page - 1) >= this.lastPage && this.lastPage != null){
+            if (this.page - 1 >= this.lastPage && this.lastPage != null) {
                 return;
             }
 
             this.isLoading = true;
 
+            if(this.category_id == null){
+                this.api_url = `/api/get-images?page=${this.page}&per_page=${this.perPage}`;
+            }else{
+                // this.api_url = `/api/get-category-images?category_id=${this.category_id}&{page=${this.page}&per_page=${this.perPage}`;
+            }
+
             axios
                 .get(
-                    `/api/get-images?page=${this.page}&per_page=${this.perPage}`
+                    this.api_url
                 )
                 .then((response) => {
                     this.isLoading = false;
@@ -158,7 +178,7 @@ export default {
                     temp.forEach((element) => {
                         // const randomIndex = Math.floor(Math.random() * this.sizeClasses.length);
                         // item.size = this.sizeClasses[randomIndex];
-                        
+
                         element["class"] =
                             "card " +
                             this.classList[
@@ -217,20 +237,20 @@ export default {
 }
 
 .container-main {
-  margin:0 auto;
-  height:auto;
-  padding:0 20px;
-  box-sizing:border-box;
-  @media (min-width:1160px) {
-    width:1140px;
-  }
-  @media (min-width:1000px) and (max-width:1160px) {
-    width:980px;
-  }
-  @media (max-width:1000px) {
-    width:100%;
-    min-width:370px;
-  }
+    margin: 0 auto;
+    height: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    @media (min-width: 1160px) {
+        width: 1140px;
+    }
+    @media (min-width: 1000px) and (max-width: 1160px) {
+        width: 980px;
+    }
+    @media (max-width: 1000px) {
+        width: 100%;
+        min-width: 370px;
+    }
 }
 .pin_container {
     padding: 0;
