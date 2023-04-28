@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class MainPage extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table ='page';
-    protected $fillable = ['id', 'name', 'slug', 'title', 'header_title', 'body', 'keyword', 'description', 'show'];
+    protected $table ='main_page';
+    protected $fillable = ['title', 'header', 'body'];
     
 }

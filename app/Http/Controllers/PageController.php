@@ -14,17 +14,21 @@ class PageController extends Controller
         $name = $request->name;
         $slug  = $request->slug;
         $title = $request->title;
+        $header_title = $request->header_title;
         $body = $request->body;
         $keyword = $request->keyword;
         $description = $request->description;
         $show = $request->visibility;
 
         $slug_page = Page::where('slug', $slug)->first();
+
+        return response()->json("grpogjre", $slug_page);
         if($slug_page != null && $slug_page != []){
             $page = Page::create([
                 'name' => $name,
                 'slug' => $slug,
                 'title' => $title,
+                'header_title' => $header_title,
                 'body' => $body,
                 'keyword' => $keyword,
                 'description' => $description,
@@ -41,29 +45,32 @@ class PageController extends Controller
 
     public function updatePage(Request $request)
     {
+        // return response()->json(['page' => $request->name]);
+        // $name = $request->name;
+        // $slug  = $request->slug;
+        // $title = $request->title;
+        // $header_title = $request->header_title;
+        // $body = $request->body;
+        // $keyword = $request->keyword;
+        // $description = $request->description;
+        // $show = $request->visibility;
+        // $id = $request->id;
+        // // return $request->name;
+        // $page = Page::where('id', intval($id))->first();
+        // return response()->json(['page' => $page], 200);
+        // $page->update([
+        //     'name' => $name,
+        //     'slug' => $slug,
+        //     'title' => $title,
+        //     'header_title' => $header_title,
+        //     'body' => $body,
+        //     'keyword' => $keyword,
+        //     'description' => $description,
+        //     'show' => $show,
+        // ]);
 
-        $name = $request->name;
-        $slug  = $request->slug;
-        $title = $request->title;
-        $body = $request->body;
-        $keyword = $request->keyword;
-        $description = $request->description;
-        $show = $request->visibility;
-        $id = $request->id;
-
-        $page = Page::where('id', $id)->first();
-
-        $page->update([
-            'name' => $name,
-            'slug' => $slug,
-            'title' => $title,
-            'body' => $body,
-            'keyword' => $keyword,
-            'description' => $description,
-            'show' => $show,
-        ]);
-
-        return response()->json(['page' => $page], 201);
+        // return response()->json(['page' => $page], 201);
+        return response()->json(['message' => 'tell developer to make this function ))'], 200);
     }
 
 

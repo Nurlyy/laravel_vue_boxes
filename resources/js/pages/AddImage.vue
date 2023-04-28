@@ -174,7 +174,9 @@ export default {
                 // console.log(reponse.data);
                 this.image = response.data.image.path;
                 this.description = response.data.image.description;
-                this.imageFilters = response.data.image_filters ? JSON.parse(response.data.image_filters) : [];
+                console.log(response.data.image_filters);
+                // console.log(typeof(response.data.image_filters));
+                this.imageFilters = response.data.image_filters.length >= 1 ? JSON.parse(response.data.image_filters) : [];
                 this.id = id;
                 this.imageFilters.forEach((imageFilter) => {
                     if (this.availableFilters.includes(imageFilter)) {

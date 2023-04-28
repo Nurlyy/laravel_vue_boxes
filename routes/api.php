@@ -39,10 +39,15 @@ Route::post('add-page', "App\Http\Controllers\PageController@addPage")->middlewa
 Route::post('update-page', "App\Http\Controllers\PageController@updatePage")->middleware('auth:api');
 Route::post('delete-page', "App\Http\Controllers\PageController@deletePage")->middleware('auth:api');
 Route::post('save-contacts', "App\Http\Controllers\ContactsController@saveContacts")->middleware('auth:api');
+Route::post('save-main-page', "App\Http\Controllers\MainPageController@saveMainPage")->middleware('auth:api');
 Route::post('save-admin', "App\Http\Controllers\AdminController@saveAdmin")->middleware('auth:api');
 
 
 Route::post('get-filters', "App\Http\Controllers\FilterController@getFilters");
+Route::post('get-main-page', "App\Http\Controllers\MainPageController@getMainPage");
+Route::post('get-filter-admin', "App\Http\Controllers\FilterController@getFilterAdmin")->middleware('auth:api');
+Route::post('update-filter', "App\Http\Controllers\FilterController@updateFilter")->middleware('auth:api');
+Route::post('delete-filter', "App\Http\Controllers\FilterController@deleteFilter")->middleware('auth:api');
 Route::get('get-images', "App\Http\Controllers\ImageController@getImages");
 Route::get('get-category-images', "App\Http\Controllers\ImageController@getCategoryImages");
 Route::post('get-likes', "App\Http\Controllers\ImageController@getLikes");

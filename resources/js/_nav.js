@@ -29,6 +29,12 @@ export default [
         to: "/admin/pages",
         icon: "cil-storage",
     },
+    {
+        component: "CNavItem",
+        name: "Главная",
+        to: "/admin/main-page",
+        icon: "cil-storage",
+    },
     // {
     //     component: "CNavItem",
     //     name: "Dashboard",

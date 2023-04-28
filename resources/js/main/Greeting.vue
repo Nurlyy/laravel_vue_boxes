@@ -1,18 +1,9 @@
 <template>
     <div class="container-greeting-wrapper">
         <div class="container-greeting">
-            <h1>Эмоции начинаются с упаковки</h1>
-            <p class="greeting-text">
-                Коробка с логотипом выглядит гораздо привлекательнее, чем просто
-                коробка, даже если мы используем для оклейки самую красивую
-                дизайнерскую бумагу. Брендирование - это не только логотип, но
-                любое изображение, которое будет нанесено на коробку. В
-                некоторых случаях, цвет коробки тоже будет элементом
-                брендирования. Исходя из того, что наша специализация -
-                производство коробок с основой из переплетного картона, мы можем
-                использовать несколько основных технологий нанесения изображения
-                на коробку.
-                <a href="#">Подробнее</a>
+            <h1>{{ title }}</h1>
+            <p v-html="body" class="greeting-text">
+              
             </p>
             <div class="container-order-main">
                 <button @click="showOrder()" class="btn-order-main">
@@ -34,6 +25,9 @@ export default {
     data() {
         return {
             showingOrder: false,
+            title:'',
+            body:'',
+            header:'',
         };
     },
     methods: {
@@ -46,6 +40,13 @@ export default {
             document.getElementById("app_main").className = "";
         },
     },
+    mounted(){
+        axios.post('/api/get-main-page').then(response =>{
+            this.title = response.data.mainPage.title;
+            this.body = response.data.mainPage.body;
+            this.header = response.data.mainPage.header;
+        })
+    }
 };
 </script>
 

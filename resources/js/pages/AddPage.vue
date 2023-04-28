@@ -35,8 +35,19 @@
         />
     </div>
 
+    <div class="mb-3">
+        <CFormLabel for="header_title">Заголовок страницы</CFormLabel>
+        <CFormInput
+            type="text"
+            v-model="header_title"
+            :value="header_title"
+            id="header_title"
+            placeholder="Заголовок"
+        />
+    </div>
+
     <CFormLabel for="title">Тело</CFormLabel>
-    <QuillEditor :value='body' theme="snow" />
+    <QuillEditor :content-type='html' :contentType='html' v-model="body" :value='body' theme="snow" />
 
     <!-- <div class="mb-3">
             <CFormLabel for="body">Body</CFormLabedl>
@@ -88,6 +99,7 @@ export default {
             name: "",
             slug: "",
             title: "",
+            header_title: "",
             body: "",
             keyword: "",
             description: "",
@@ -105,17 +117,7 @@ export default {
         submitForm() {
             const visibility = this.visibility == true ? "1" : "0";
             if (this.id != null) {
-                axios
-                    .post("/api/update-page", {
-                        name: this.name,
-                        slug: this.slug,
-                        title: this.title,
-                        body: this.body,
-                        keyword: this.keyword,
-                        description: this.description,
-                        visibility: visibility,
-                        id: this.id,
-                    })
+                axios.post("/api/update-page", { name: this.name, slug: this.slug, title: this.title, header_title: this.header_title, body: this.body, keyword: this.keyword, description: this.description, visibility: visibility, id: this.id})
                     .then(function (response) {
                         console.log(response.data);
                     });
@@ -125,6 +127,7 @@ export default {
                         name: this.name,
                         slug: this.slug,
                         title: this.title,
+                        header_title: this.header_title,
                         body: this.body,
                         keyword: this.keyword,
                         description: this.description,
@@ -155,6 +158,7 @@ export default {
                 this.name = response.data.page.name;
                 this.slug = response.data.page.slug;
                 this.title = response.data.page.title;
+                this.header_title = response.data.page.header_title;
                 this.body = response.data.page.body;
                 this.keyword = response.data.page.keyword;
                 this.description = response.data.page.description;

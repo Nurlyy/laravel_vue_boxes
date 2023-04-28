@@ -1,9 +1,15 @@
 <template>
     <h1>Добавить фильтр</h1>
-    <CForm @submit.prevent='submitForm()'>
+    <CForm @submit.prevent="submitForm()">
         <div class="mb-3">
             <CFormLabel for="name">Название</CFormLabel>
-            <CFormInput type="text" v-model="name" :value='name' id="name" placeholder="NAME" />
+            <CFormInput
+                type="text"
+                v-model="name"
+                :value="name"
+                id="name"
+                placeholder="NAME"
+            />
         </div>
 
         <button class="btn btn-primary mb-5">Сохранить</button>
@@ -11,7 +17,7 @@
 </template>
 
 <script>
-import router from '@/router/index.js';
+import router from "@/router/index.js";
 export default {
     name: "AddFilter",
     data() {
@@ -22,19 +28,25 @@ export default {
     },
     methods: {
         submitForm() {
-            if(this.id){
+            console.log(this.id);
+            if (!this.id) {
                 axios
-                .post("/api/add-filter", { name: this.name })
-                .then(function (response) {
-                    // alert('Saved');
-                    // console.log(response);
-                    router.push({name: "Filters"});
-                });
+                    .post("/api/add-filter", { name: this.name })
+                    .then(function (response) {
+                        // alert('Saved');
+                        // console.log(response);
+                        router.push({ name: "Filters" });
+                    });
             }
-            {
-                axios.post('/api/update-filter', {id: this.id, name: this.name}).then(response => {
-                    router.push({'name' : "Filters"});
-                });
+            else {
+                axios
+                    .post("/api/update-filter", {
+                        id: this.id,
+                        name: this.name,
+                    })
+                    .then((response) => {
+                        router.push({ name: "Filters" });
+                    });
             }
             // alert("saved");
         },
@@ -43,7 +55,7 @@ export default {
         const id = this.$route.params.id;
         if (id) {
             this.id = id;
-            axios.post("/api/get-page-admin", { id: id }).then((response) => {
+            axios.post("/api/get-filter-admin", { id: id }).then((response) => {
                 // this.page = response.data.page;
                 // console.log(reponse.data);
                 this.name = response.data.filter.name;

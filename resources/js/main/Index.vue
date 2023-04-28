@@ -30,6 +30,7 @@ export default {
     },
     methods: {
         getLikesCount() {
+            console.log(this.id);
             this.likes_count = localStorage.getItem("likedImages")
                 ? JSON.parse(localStorage.getItem("likedImages")).length
                 : 0;

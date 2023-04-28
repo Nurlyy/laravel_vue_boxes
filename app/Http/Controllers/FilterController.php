@@ -30,10 +30,10 @@ class FilterController extends Controller
 
     public function updateFilter(Request $request)
     {
-        $filter = Filter::find($request->filterId);
+        $filter = Filter::find($request->id);
 
         $validatedData = $request->validate([
-            'name' => 'required|unique:filters|max:255',
+            'name' => 'required|unique:filter|max:255',
         ]);
 
         $filter->update([
@@ -51,7 +51,7 @@ class FilterController extends Controller
 
     public function deleteFilter(Request $request)
     {
-        $filter = $request->id;
+        $filter = Filter::find($request->id);
         $filter->delete();
 
         return response()->json(['filters' => Filter::all()], 204);
