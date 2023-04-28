@@ -55,14 +55,18 @@ export default {
         };
     },
     mounted() {
-        axios.post("/api/get-filters", {}).then((response) => {
-            this.filters = response.data.filters;
-        });
+        this.getFilters();
     },
     methods: {
+        getFilters() {
+            axios.post("/api/get-filters", {}).then((response) => {
+                this.filters = response.data.filters;
+            });
+        },
         deleteFilter(id) {
             axios.post("/api/delete-filter", { id: id }).then((response) => {
-                this.filters = response.data.filters;
+                // this.filters = response.data.filters;
+                this.getFilters();
             });
         },
     },
