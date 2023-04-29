@@ -5,8 +5,8 @@
         <a
             href="/admin/images/add-page"
             class="btn btn-primary"
-            style="margin-left: 30px; padding-bottom: -15px"
-            >Добавить страницу</a
+            style="margin-left: 30px; height: fit-content"
+            ><CIcon icon="cil-plus" size="sm"/> Добавить страницу</a
         >
     </div>
     <CTable stripedColumns>
@@ -21,19 +21,19 @@
         </thead>
         <tbody>
             <tr v-for="item in items" :key="item.id">
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.slug }}</td>
-                <td>{{ item.keyword }}</td>
-                <td><CFormCheck style="margin-left: 15px" :checked='item.show' id="show" disabled /></td>
+                <td><div class="table_td">{{ item.id }}</div></td>
+                <td><div class="table_td">{{ item.name }}</div></td>
+                <td><div class="table_td">{{ item.slug }}</div></td>
+                <td><div class="table_td">{{ item.keyword }}</div></td>
+                <td><div class="table_td"><CFormCheck style="margin-left: 15px" :checked='item.show' id="show" disabled /></div></td>
                 <td>
-                    <CButton component="a" color="info" :href="'/admin/pages/' + item.slug" role="button">Изменить</CButton>
+                    <CButton component="a" color="info" :href="'/admin/pages/' + item.slug" role="button"><CIcon icon="cil-pen" size="sm"/> Изменить</CButton>
                     <!-- <router-link :to="'/admin/images/' + image.id"
                         >Изменить</router-link
                     > -->
                 </td>
                 
-                <td><CButton @click="deletePage(item.id)" color="danger" role="button">Удалить</CButton></td>
+                <td><div class="table_td"><CButton @click="deletePage(item.id)" color="danger" role="button"><CIcon icon="cil-trash" size="sm"/> Удалить</CButton></div></td>
             </tr>
         </tbody>
     </CTable>
@@ -65,5 +65,9 @@ export default {
     },
 };
 </script>
-
-<style></style>
+<style scoped>
+.table_td {
+    display: flex;
+    justify-content: center;
+}
+</style>

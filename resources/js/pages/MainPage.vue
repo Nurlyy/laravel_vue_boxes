@@ -13,7 +13,7 @@
       <CFormLabel for="body">Контент</CFormLabel>
       <CFormTextarea v-model="body" :value='body'  type="text" id="body" />
     </div>
-    <button class="btn btn-primary "> Сохранить</button>
+    <button class="btn btn-primary "><CIcon icon="cil-save" size="sm"/> Сохранить</button>
   </CForm>
   </template>
   

@@ -5,8 +5,8 @@
         <a
             href="/admin/images/add-filter"
             class="btn btn-primary"
-            style="margin-left: 30px"
-            >Добавить фильтр</a
+            style="margin-left: 30px; height: fit-content"
+            ><CIcon icon="cil-plus" size="sm"/> Добавить фильтр</a
         >
     </div>
     <CTable stripedColumns>
@@ -18,28 +18,28 @@
         </thead>
         <tbody>
             <tr v-for="filter in filters" :key="filter.id">
-                <td>{{ filter.id }}</td>
-                <td>{{ filter.name }}</td>
+                <td><div class="table_td">{{ filter.id }}</div></td>
+                <td><div class="table_td">{{ filter.name }}</div></td>
                 <td>
-                    <CButton
+                    <div class="table_td"><CButton
                         component="a"
                         color="info"
                         :href="'/admin/filters/' + filter.id"
                         role="button"
-                        >Изменить</CButton
-                    >
+                        ><CIcon icon="cil-pen" size="sm"/> Изменить</CButton
+                    ></div> 
                     <!-- <router-link :to="'/admin/images/' + image.id"
                         >Изменить</router-link
                     > -->
                 </td>
 
                 <td>
-                    <CButton
+                    <div class="table_td"><CButton
                         @click="deleteFilter(filter.id)"
                         color="danger"
                         role="button"
-                        >Удалить</CButton
-                    >
+                        ><CIcon icon="cil-trash" size="sm"/> Удалить</CButton
+                    ></div> 
                 </td>
             </tr>
         </tbody>
@@ -74,4 +74,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.table_td {
+    display: flex;
+    justify-content: center;
+}
+</style>

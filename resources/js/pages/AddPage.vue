@@ -82,7 +82,7 @@
         <CFormCheck style="margin-left: 15px" @change="changeVisibility" :checked='visibility' id="show" />
     </div>
 
-    <button class="btn btn-primary mb-5">Сохранить</button>
+    <button class="btn btn-primary mb-5"><CIcon icon="cil-save" size="sm"/> Сохранить</button>
     </CForm>
 </template>
 

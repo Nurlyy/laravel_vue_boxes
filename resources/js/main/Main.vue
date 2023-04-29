@@ -19,6 +19,7 @@
                         :href="image.path"
                         :data-pswp-width="maxWidth"
                         :data-pswp-height="maxHeight"
+                        :alt='image.description'
                         target="_blank"
                         rel="noreferrer"
                     ></a>

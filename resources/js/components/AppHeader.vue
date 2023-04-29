@@ -7,8 +7,13 @@
             >
                 <CIcon icon="cil-menu" size="lg" />
             </CHeaderToggler>
+            <CHeaderBrand class="mx-auto d-lg-none" to="/">
+                <img src="@/assets/logo.svg" alt="" />
+            </CHeaderBrand>
             <CHeaderNav>
-                <CButton color="warning" @click="logout()"><CIcon icon="cilAccountLogout" size="sm" /> Выход</CButton>
+                <CButton color="warning" @click="logout()"
+                    ><CIcon icon="cilAccountLogout" size="sm" /> Выход</CButton
+                >
             </CHeaderNav>
         </CContainer>
         <CHeaderDivider />
@@ -21,7 +26,7 @@
 <script>
 import AppBreadcrumb from "./AppBreadcrumb.vue";
 import AppHeaderDropdownAccnt from "./AppHeaderDropdownAccnt.vue";
-import router from '@/router/index.js';
+import router from "@/router/index.js";
 
 export default {
     name: "AppHeader",
@@ -37,7 +42,9 @@ export default {
                     {},
                     {
                         headers: {
-                            Authorization: `Bearer ` + localStorage.getItem('access_token'),
+                            Authorization:
+                                `Bearer ` +
+                                localStorage.getItem("access_token"),
                         },
                     }
                 )
@@ -53,11 +60,6 @@ export default {
                     console.log(error);
                 });
         },
-    },
-    setup() {
-        return {
-            logo,
-        };
     },
 };
 </script>

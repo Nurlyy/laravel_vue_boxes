@@ -1,4 +1,5 @@
 <template>
+    <CAlert color="danger" :visible="searchAlert" dismissible @close="() => { searchAlert = false }">Неверный ID для поиска!</CAlert>
     <div class="d-flex flex-row justify-content-between">
         <h1>Изображения</h1>
         <a
@@ -79,7 +80,7 @@
                             color="info"
                             :href="'/admin/images/' + image.id"
                             role="button"
-                            >Изменить</CButton
+                            ><CIcon icon="cil-pen" size="sm"/> Изменить</CButton
                         >
                     </div>
                     <!-- <router-link :to="'/admin/images/' + image.id"
@@ -93,7 +94,7 @@
                             @click="deleteImage(image.id)"
                             color="danger"
                             role="button"
-                            >Удалить</CButton
+                            ><CIcon icon="cil-trash" size="sm"/> Удалить</CButton
                         >
                     </div>
                 </td>
@@ -137,6 +138,7 @@ export default {
         return {
             images: [],
             searchInput: "",
+            searchAlert: false,
             // lastPage: null,
             // currentPage: 0,
             // perPage: 20,
@@ -152,14 +154,20 @@ export default {
         },
         search() {
             if (this.searchInput == null) {
+                this.searchAlert = true;
+                console.log("sI is null")
                 return;
             }
 
-            if (this.searchInput.length < 1) {
+            if (this.searchInput.length == 0) {
+                this.searchAlert = true;
+                console.log("sI has not enough length")
                 return;
             }
 
-            if (!isNaN(this.searchInput)) {
+            if (isNaN(this.searchInput)) {
+                this.searchAlert = true;
+                console.log("sI is not a number")
                 return;
             }
 

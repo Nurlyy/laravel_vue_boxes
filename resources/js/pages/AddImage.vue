@@ -106,7 +106,7 @@
             </div>
         </div>
         <br>
-        <button :disabled='image==null' class="btn btn-primary mb-5 mt-5">Сохранить</button>
+        <button :disabled='image==null' class="btn btn-primary mb-5 mt-5"><CIcon icon="cil-save" size="sm"/> Сохранить</button>
     </CForm>
 </template>
 
