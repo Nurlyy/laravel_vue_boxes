@@ -4,43 +4,98 @@
         <a
             href="/admin/images/add-image"
             class="btn btn-primary"
-            style="margin-left: 30px"
-            >Добавить изображение</a
+            style="margin-left: 30px; height: fit-content"
+            ><CIcon icon="cil-plus" size="sm"/> Добавить изображение</a
         >
     </div>
+    <b-col md="3" xl="3" sm="3" xs="3">
+        <div style="display: flex; flex-direction: row">
+            <CFormInput
+                type="text"
+                v-model="searchInput"
+                :value="searchInput"
+                placeholder="Введите ID"
+                @input="checkNumberInput"
+                style='width:250px;'
+            />
+            <CButton
+                @click="search"
+                :disabled="searchInput.length == 0"
+                color="info"
+                style="height: fit-content; margin-left: 15px"
+                ><CIcon icon="cil-search" size="sm"/> Поиск</CButton
+            >
+        </div>
+    </b-col>
+    <br />
     <CTable stripedColumns>
         <thead>
             <tr>
                 <th>№</th>
                 <th>Фото</th>
-                <th>Alt</th>
+                <th>Описание - Alt</th>
+                <th>Прикрепленные фильтры</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="image in images" :key="image.id">
-                <td class='table_td'>{{ image.id }}</td>
-                <td class='table_td'><img :src="image.path" height="100" /></td>
-                <td class='table_td'>{{ image.description }}</td>
-                <td class='table_td'>
-                    <CButton
-                        component="a"
-                        color="info"
-                        :href="'/admin/images/' + image.id"
-                        role="button"
-                        >Изменить</CButton
+                <td>
+                    <div class="table_td">{{ image.id }}</div>
+                </td>
+                <td>
+                    <div class="table_td">
+                        <img :src="image.path" height="80" />
+                    </div>
+                </td>
+                <td>
+                    <div class="table_td">{{ image.description }}</div>
+                </td>
+                <td style="width: 40%">
+                    <Widget
+                        class="mb-0 d-flex"
+                        style="
+                            display: flex;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                        "
                     >
+                        <div
+                            v-for="(filter, index) in image.filters"
+                            :key="index"
+                        >
+                            <CBadge
+                                color="info"
+                                shape="rounded-pill"
+                                style="margin: 10px"
+                                >{{ filter.name }}</CBadge
+                            >
+                        </div>
+                    </Widget>
+                </td>
+                <td>
+                    <div class="table_td">
+                        <CButton
+                            component="a"
+                            color="info"
+                            :href="'/admin/images/' + image.id"
+                            role="button"
+                            >Изменить</CButton
+                        >
+                    </div>
                     <!-- <router-link :to="'/admin/images/' + image.id"
                         >Изменить</router-link
                     > -->
                 </td>
 
-                <td class='table_td'>
-                    <CButton
-                        @click="deleteImage(image.id)"
-                        color="danger"
-                        role="button"
-                        >Удалить</CButton
-                    >
+                <td>
+                    <div class="table_td">
+                        <CButton
+                            @click="deleteImage(image.id)"
+                            color="danger"
+                            role="button"
+                            >Удалить</CButton
+                        >
+                    </div>
                 </td>
             </tr>
         </tbody>
@@ -81,6 +136,7 @@ export default {
     data() {
         return {
             images: [],
+            searchInput: "",
             // lastPage: null,
             // currentPage: 0,
             // perPage: 20,
@@ -90,6 +146,34 @@ export default {
         this.getImages();
     },
     methods: {
+        checkNumberInput() {
+            // Only allow numbers
+            this.searchInput = this.searchInput.replace(/[^0-9]/g, "");
+        },
+        search() {
+            if (this.searchInput == null) {
+                return;
+            }
+
+            if (this.searchInput.length < 1) {
+                return;
+            }
+
+            if (!isNaN(this.searchInput)) {
+                return;
+            }
+
+            axios
+                .post("/api/get-images-admin", {
+                    search: this.searchInput,
+                })
+                .then((response) => {
+                    this.images = response.data.images;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         // increasePage() {
         //     this.currentPage += 1;
         //     this.getImages(this.currentPage);
@@ -112,7 +196,6 @@ export default {
                     this.images = response.data.images;
                     // this.lastPage = response.data.lastPage;
                     // this.currentPage += 1;
-
                 })
                 .catch((error) => {
                     console.log(error);
@@ -140,7 +223,7 @@ export default {
         //             this.images = response.data.images;
         //             this.lastPage = response.data.lastPage;
         //             this.currentPage = page;
-                    
+
         //         })
         //         .catch((error) => {
         //             console.log(error);
@@ -159,7 +242,7 @@ export default {
 </script>
 
 <style scoped>
-.table_td{
+.table_td {
     display: flex;
     justify-content: center;
 }

@@ -40,6 +40,11 @@ export default {
         Pages,
         LikePage,
     },
+    // mounted(){
+    //     axios.post('/api/get-main-page').then(response =>{
+    //         document.title = response.data.mainPage.header;
+    //     })
+    // }
 };
 </script>
 

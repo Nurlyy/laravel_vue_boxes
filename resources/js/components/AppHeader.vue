@@ -8,7 +8,7 @@
                 <CIcon icon="cil-menu" size="lg" />
             </CHeaderToggler>
             <CHeaderNav>
-                <CButton color="warning" @click="logout()">Выход</CButton>
+                <CButton color="warning" @click="logout()"><CIcon icon="cilAccountLogout" size="sm" /> Выход</CButton>
             </CHeaderNav>
         </CContainer>
         <CHeaderDivider />

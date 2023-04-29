@@ -119,7 +119,7 @@ export default {
             likedImages: [],
             classList: ["card_small", "card_medium", "card_large"],
             randomClasses: {},
-            page: 0,
+            page: 1,
             perPage: 10,
             lastPage: null,
             isLoading: false,

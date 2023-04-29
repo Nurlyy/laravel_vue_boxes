@@ -43,6 +43,7 @@
       </CRow>
     </CContainer>
   </div>
+  <CAlert color="primary" :visible="alertVisible" dismissible @close="() => { alertVisible = false }">Вы ввели неверный пароль!</CAlert>
 </template>
 
 <script>
@@ -53,7 +54,8 @@ export default {
   data() {
     return {
         email: '',
-      password: ''
+      password: '',
+      alertVisible: false,
     }
   },
   methods: {

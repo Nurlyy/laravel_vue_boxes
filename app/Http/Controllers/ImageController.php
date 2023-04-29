@@ -142,27 +142,46 @@ class ImageController extends Controller
     public function getImagesAdmin(Request $request)
     {
         $filters = Filter::all();
+        $filters = json_decode(json_encode($filters), true);
+        $new_filters = [];
+        foreach($filters as $filter){
+            $new_filters[$filter['id']] = $filter['name'];
+        }
 
-        if ($request->images_ids != null) {
-            if ($request->images_ids == []) {
-                return response()->json(['images' => [], 'filters' => $filters]);
-            }
-            // return "FOFJEWO";
-            // return $request->images_ids[0];
-            $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+        if(isset($request->search)){
+            $images = Image::where('id', 'like', $request->search.'%')->get();
         } else {
-            $images = Image::all();
+            if ($request->images_ids != null) {
+                if ($request->images_ids == []) {
+                    return response()->json(['images' => [], 'filters' => $filters]);
+                }
+                // return "FOFJEWO";
+                // return $request->images_ids[0];
+                $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+            } else {
+                $images = Image::all();
+    
+                // $page = $request->page;
+                // $per_page = $request->per_page;
+    
+                // $items = Image::count();
+                // $lastPage = ceil($items / $per_page);
+                // // if ($page != 1) {
+                // // $images = Image::all();
+                // // } else {
+    
+                // $images = Image::skip(($page - 1) * $per_page)->take($per_page)->get();
+            }
+        }
 
-            // $page = $request->page;
-            // $per_page = $request->per_page;
+        
 
-            // $items = Image::count();
-            // $lastPage = ceil($items / $per_page);
-            // // if ($page != 1) {
-            // // $images = Image::all();
-            // // } else {
-
-            // $images = Image::skip(($page - 1) * $per_page)->take($per_page)->get();
+        foreach($images as $image){
+            $images_filters = ImagesFilter::where('image_id' , $image->id)->get();
+            foreach($images_filters as &$img){
+                $img->name = $new_filters[$img->filter_id];
+            }
+            $image->filters = $images_filters;
         }
 
 

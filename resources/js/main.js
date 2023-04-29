@@ -7,7 +7,7 @@ import './bootstrap';
 
 import CoreuiVue from '@coreui/vue'
 import CIcon from '@coreui/icons-vue'
-import { iconsSet as icons } from '@/assets/icons'
+import  * as icons from '@coreui/icons'
 import DocsExample from '@/components/DocsExample.vue'
 // import VueEasyLightbox from 'vue-easy-lightbox';
 

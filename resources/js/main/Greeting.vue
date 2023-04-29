@@ -43,8 +43,10 @@ export default {
     mounted(){
         axios.post('/api/get-main-page').then(response =>{
             this.title = response.data.mainPage.title;
+            
             this.body = response.data.mainPage.body;
             this.header = response.data.mainPage.header;
+            document.title = this.header;
         })
     }
 };

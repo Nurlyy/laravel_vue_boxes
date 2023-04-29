@@ -106,7 +106,7 @@
             </div>
         </div>
         <br>
-        <button :disabled='image!=null' class="btn btn-primary mb-5 mt-5">Сохранить</button>
+        <button :disabled='image==null' class="btn btn-primary mb-5 mt-5">Сохранить</button>
     </CForm>
 </template>
 
@@ -173,7 +173,10 @@ export default {
                     //   alert("saved");
                 }
             }
-            router.push({name: "Images"})
+            setTimeout(() => {
+                router.push({name: "Images"})
+            }, 500);
+            
         },
         saveImage(event) {
             this.image = event.target.files[0];
