@@ -56,15 +56,19 @@ export default {
         };
     },
     mounted() {
-        axios.post("/api/get-images-admin", {}).then((response) => {
-            this.images = response.data.images;
-        });
+        this.getAllImages();
     },
     methods: {
+        getAllImages(){
+            axios.post("/api/get-images-admin", {}).then((response) => {
+            this.images = response.data.images;
+        });
+        },
         deleteImage(id) {
             if (confirm("Are you sure you want to delete this?")) {
                 axios.post("/api/delete-image", { id: id }).then((response) => {
-                    this.images = response.data.images;
+                    this.getAllImages();
+                    console.log(response.data.message);
                 });
             }
         },

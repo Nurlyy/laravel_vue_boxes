@@ -90,11 +90,11 @@ class ImageController extends Controller
         $filters = Filter::all();
 
         $filter_id = $request->category_id;
-        if($filter_id==null){
+        if ($filter_id == null) {
             return response()->json(['message' => "Unkown id"], 404);
         }
         $filter = Filter::where('id', $filter_id)->first();
-        if(empty($filter)){
+        if (empty($filter)) {
             return response()->json(['message' => "Unkown id02"], 404);
         }
 
@@ -105,7 +105,7 @@ class ImageController extends Controller
         $imagesFilter = ImagesFilter::where('filter_id', $filter_id)->get();
         $ids = [];
 
-        foreach($imagesFilter as $imageFilter){
+        foreach ($imagesFilter as $imageFilter) {
             array_push($ids, $imageFilter->image_id);
         }
         $items = Image::whereIn('id', $ids)->count();
@@ -113,7 +113,7 @@ class ImageController extends Controller
         // if ($page != 1) {
         // $images = Image::all();
         // } else {
-        
+
         $images = Image::whereIn('id', $ids)->skip(($page - 1) * $per_page)->take($per_page)->get();
         // }
 
@@ -158,48 +158,140 @@ class ImageController extends Controller
         return response()->json(['images' => $images, 'filters' => $filters]);
     }
 
-    public function udpateImage(Request $request)
+    public function updateImage(Request $request)
     {
+        // return response()->json([$request->imageFilters], 500);
+
         $id = $request->id;
         $main_image = Image::where('id', $id)->first();
 
         $description = $request->description;
         // return $description;
         $imageFilters = json_decode($request->imageFilters);
+        $previousFilters = ImagesFilter::where('image_id', $main_image->id)->get();
+
+        // var_dump(!empty(get_object_vars($previousFilters)));
+        // return response()->json();
+        // var_dump(empty($imageFilters));exit;
 
         if ($description != null) {
 
-            $main_image::update(['description' => $description]);
+            $main_image->update(['description' => $description]);
+        }
 
-            if ($imageFilters != null) {
+        if (empty($imageFilters) && !empty(json_decode(json_encode($previousFilters), true))) {
+            
+            foreach ($previousFilters as $prev) {
+                $prev->delete();
+            }
+        } elseif (empty($imageFilters) && empty(json_decode(json_encode($previousFilters), true))) {
 
-                // $imagesFilters = ImagesFilter::where('image_id', $main_image->id)->get();
-                // foreach($imagesFilters as $imgsFiltrs){
-                //     $imgsFiltrs->delete();
-                // }
-                $db_deleted_filters = [];
-                foreach ($imageFilters as $imageFilter) {
-                    // return $imageFilter['id'];
-                    $filter = Filter::where('id', $imageFilter->id)->first();
-                    // return $filter;
-                    if ($filter != null && $filter != '' && $filter != []) {
-                        $db_imageFilter = ImagesFilter::where('id', $imageFilter->id)->first();
-                        array_push($db_deleted_filters, $db_imageFilter->id);
-                        if ($db_imageFilter->filter_id != $filter->id && $db_imageFilter->image_id != $main_image->id) {
-                            $imagesFilter = ImagesFilter::create([
-                                'image_id' => $main_image->id,
-                                'filter_id' => $filter->id,
-                            ]);
-                        }
-                    }
-                }
-                if(!empty($db_deleted_filters)){
-                    foreach($db_deleted_filters as $d){
-                        $d->delete();
-                    }
+            
+            foreach ($imageFilters as $img) {
+
+                if (isset($img->image_id)) {
+                    continue;
+                } else {
+                    ImagesFilter::create([
+                        'image_id' => $main_image->id,
+                        'filter_id' => $img->id,
+                    ]);
                 }
             }
+        } else{
+            
+            $imageFilters = json_decode(json_encode($imageFilters), true);
+            $previousFilters = json_decode(json_encode($previousFilters), true);
+
+            $idImages = array_map(function ($element) {
+                return $element['id'];
+            }, $imageFilters);
+
+            $idPrev = array_map(function ($element) {
+                return $element['id'];
+            }, $previousFilters);
+
+            $deleted_filters = array_diff($idPrev, $idImages);
+
+            foreach($deleted_filters as $id){
+                $imagef = ImagesFilter::where('id', $id)->first();
+                $imagef->delete();
+            }
+
+            $idPrev = array_diff($idPrev, $deleted_filters);
+
+            $added_filters = array_diff($idImages, $idPrev);
+
+            foreach($added_filters as $id)
+            {
+                $img = ImagesFilter::create([
+                    'image_id' => $main_image->id,
+                    'filter_id' => $id,
+                ]);
+            }
         }
+
+        // return response()->json(['gfdsj'], 404);
+
+        // $new_filters = [];
+
+        // $deleted_filters = [];
+
+        // foreach ($previousFilters as $prev) {
+        //     foreach ($imageFilters as $imageFilter) {
+        //         if (isset($imageFilter->image_id)) {
+        //             if ($imageFilter->image_id == $prev->filter_id) {
+        //                 continue 2;
+        //             } else {
+        //                 array_push($deleted_filters, $imageFilter);
+        //                 continue 2;
+        //             }
+        //         } else {
+        //             array_push($new_filters, $imageFilter);
+        //             continue 2;
+        //         }
+        //     }
+        // }
+
+        // foreach ($new_filters as $new) {
+        //     $new = ImagesFilter::create([
+        //         'image_id' => $new->image_id,
+        //         'filter_id' => $new->filter_id,
+        //     ]);
+        // }
+
+        // foreach ($deleted_filters as $del) {
+        //     $filter = ImagesFilter::where('id', $del->id);
+        //     $filter->delete();
+        // }
+
+        // $imagesFilters = ImagesFilter::where('image_id', $main_image->id)->get();
+        // foreach($imagesFilters as $imgsFiltrs){
+        //     $imgsFiltrs->delete();
+        // }
+        // $db_deleted_filters = [];
+        // foreach ($imageFilters as $imageFilter) {
+        //     // return $imageFilter['id'];
+        //     $filter = Filter::where('id', $imageFilter->id)->first();
+        //     // return $filter;
+        //     if ($filter != null && $filter != '' && $filter != []) {
+        //         $db_imageFilter = ImagesFilter::where('id', $imageFilter->id)->first();
+        //         array_push($db_deleted_filters, $db_imageFilter->id);
+        //         if ($db_imageFilter->filter_id != $filter->id && $db_imageFilter->image_id != $main_image->id) {
+        //             $imagesFilter = ImagesFilter::create([
+        //                 'image_id' => $main_image->id,
+        //                 'filter_id' => $filter->id,
+        //             ]);
+        //         }
+        //     }
+        // }
+        // if(!empty($db_deleted_filters)){
+        //     foreach($db_deleted_filters as $d){
+        //         $d->delete();
+        //     }
+        // }
+
+
         return response()->json(['message' => "Image Updated Successfully"]);
         // $main_image->path = 
     }
@@ -209,14 +301,26 @@ class ImageController extends Controller
         $id = $request->id;
         $image = Image::where('id', $id)->first();
         $imageFilters = ImagesFilter::where('image_id', $image->id)->get();
-        foreach($imageFilters as $imageFilter){
+        foreach ($imageFilters as $imageFilter) {
             $imageFilter->delete();
         }
+        if (file_exists($image->path)) {
+            unlink($image->path);
+            echo 'File deleted successfully.';
+        } else {
+            echo 'File not found.';
+        }
         $image->delete();
-        return response()->json(['images' => Image::all()], 204);
+        return response()->json(['message' => 'Image deleted'], 204);
     }
 
-    public function getImageAdmin(Request $request){
-        return response()->json(['image' => Image::where('id', $request->id)->first(), 'image_filters' => ImagesFilter::where('image_id', $request->id)->get()]);
+    public function getImageAdmin(Request $request)
+    {
+        $image = Image::where('id', $request->id)->first();
+        $imageFilters = ImagesFilter::where('image_id', $request->id)->get();
+        foreach ($imageFilters as &$imageFilter) {
+            $imageFilter['name'] = Filter::where('id', $imageFilter->filter_id)->first()->name;
+        }
+        return response()->json(['image' => $image, 'image_filters' => $imageFilters]);
     }
 }

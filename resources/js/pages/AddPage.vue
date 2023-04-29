@@ -47,7 +47,7 @@
     </div>
 
     <CFormLabel for="title">Тело</CFormLabel>
-    <QuillEditor :content-type='html' :contentType='html' v-model="body" :value='body' theme="snow" />
+    <QuillEditor  v-model:value="body" v-model:content="body" contentType="html" theme="snow"/>
 
     <!-- <div class="mb-3">
             <CFormLabel for="body">Body</CFormLabedl>
@@ -115,6 +115,7 @@ export default {
             this.slug = this.slugify(this.name);
         },
         submitForm() {
+            // console.log(this.body);
             const visibility = this.visibility == true ? "1" : "0";
             if (this.id != null) {
                 axios.post("/api/update-page", { name: this.name, slug: this.slug, title: this.title, header_title: this.header_title, body: this.body, keyword: this.keyword, description: this.description, visibility: visibility, id: this.id})

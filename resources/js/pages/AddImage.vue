@@ -7,7 +7,7 @@
                 @change="saveImage"
                 type="file"
                 id="image"
-                :disabled='image!=null'
+                :disabled="image != null"
             />
         </div>
 
@@ -22,61 +22,85 @@
         </div>
 
         <div>
-            <h5>Выбранные Фильтры:</h5>
-            <div>
+            <h5 v-if="imageFilters.length >= 1">Выбранные Фильтры:</h5>
+            <div v-if="imageFilters.length >= 1">
                 <b-row>
-                    <b-col md="6" xl="3" sm="6" xs="12">
-                        <div class="pb-xlg">
-                            <Widget class="mb-0 d-flex" style="width: 100%">
-                                <div
-                                    v-for="(filter, index) in imageFilters"
-                                    :key="index"
-                                    class="d-flex justify-content-between align-items-center"
-                                >
-                                    <CBadge
-                                        style="margin: 10px"
-                                        color="primary"
-                                        shape="rounded-pill"
+                    <CCard >
+                        <CCardBody>
+                            <b-col md="6" xl="3" sm="6" xs="12">
+                                <div class="pb-xlg">
+                                    <Widget
+                                        class="mb-0 d-flex"
+                                        style="width: 100%; display:flex; flex-direction:row; flex-wrap: wrap;"
                                     >
-                                        {{ filter.name }}
-                                        <span
-                                            @click="removeFilter(index, filter)"
-                                            style="
-                                                margin: 5px;
-                                                cursor: pointer;
-                                                color: red;
-                                            "
-                                            >x</span
+                                        <div
+                                            v-for="(
+                                                filter, index
+                                            ) in imageFilters"
+                                            :key="index"
+                                            class="d-flex justify-content-between align-items-center"
                                         >
-                                    </CBadge>
+                                            <CBadge
+                                                style="margin: 10px"
+                                                color="info"
+                                                shape="rounded-pill"
+                                            >
+                                                {{ filter.name }}
+                                                <span
+                                                    @click="
+                                                        removeFilter(
+                                                            index,
+                                                            filter
+                                                        )
+                                                    "
+                                                    style="
+                                                        margin: 5px;
+                                                        cursor: pointer;
+                                                        color: red;
+                                                    "
+                                                    >x</span
+                                                >
+                                            </CBadge>
+                                        </div>
+                                    </Widget>
                                 </div>
-                            </Widget>
-                        </div>
-                    </b-col>
-                    <b-col md="6" xl="3" sm="6" xs="12">
-                        <div class="pb-xlg">
-                            <Widget class="mb-0 d-flex" style="width: 100%">
-                                <label
-                                    for="filter-select"
-                                    class="mr-3"
-                                    style="margin-top: 7px"
-                                    >Доступные фильтры:</label
-                                >
-                                <div
-                                    v-for="(filter, index) in availableFilters"
-                                    :key="index"
-                                >
-                                    <CBadge
-                                        color="primary"
-                                        shape="rounded-pill"
-                                        style="margin: 10px"
-                                        @click="addFilter(index, filter)"
-                                        >{{ filter.name }}</CBadge
+                            </b-col>
+                        </CCardBody>
+                    </CCard>
+                </b-row>
+            </div>
+            <h5 v-if="availableFilters.length >= 1">Доступные Фильтры:</h5>
+            <div v-if="availableFilters.length >= 1">
+                <b-row>
+                    <CCard>
+                        <CCardBody>
+                            <b-col md="6" xl="3" sm="6" xs="12">
+                                <div class="pb-xlg">
+                                    <Widget
+                                        class="mb-0 d-flex"
+                                        style="width: 100%; display:flex; flex-direction:row; flex-wrap: wrap;"
                                     >
+                                        <div
+                                            v-for="(
+                                                filter, index
+                                            ) in availableFilters"
+                                            :key="index"
+                                        >
+                                            <CBadge
+                                                color="primary"
+                                                shape="rounded-pill"
+                                                style="margin: 10px"
+                                                @click="
+                                                    addFilter(index, filter)
+                                                "
+                                                >{{ filter.name }}</CBadge
+                                            >
+                                        </div>
+                                    </Widget>
                                 </div>
-                            </Widget>
-                        </div>
-                    </b-col>
+                            </b-col>
+                        </CCardBody>
+                    </CCard>
                 </b-row>
             </div>
         </div>
@@ -103,11 +127,7 @@ export default {
             ],
         };
     },
-    mounted() {
-        axios.post("/api/get-filters", {}).then((response) => {
-            this.availableFilters = response.data.filters;
-        });
-    },
+    mounted() {},
     methods: {
         submitForm() {
             if (this.id == null) {
@@ -167,6 +187,9 @@ export default {
         },
     },
     created() {
+        axios.post("/api/get-filters", {}).then((response) => {
+            this.availableFilters = response.data.filters;
+        });
         const id = this.$route.params.id;
         if (id) {
             axios.post("/api/get-image-admin", { id: id }).then((response) => {
@@ -175,16 +198,24 @@ export default {
                 this.image = response.data.image.path;
                 this.description = response.data.image.description;
                 console.log(response.data.image_filters);
-                // console.log(typeof(response.data.image_filters));
-                this.imageFilters = response.data.image_filters.length >= 1 ? JSON.parse(response.data.image_filters) : [];
+                console.log(Array.from(this.availableFilters));
+                this.imageFilters =
+                    response.data.image_filters.length >= 1
+                        ? response.data.image_filters
+                        : [];
                 this.id = id;
                 this.imageFilters.forEach((imageFilter) => {
-                    if (this.availableFilters.includes(imageFilter)) {
-                        this.availableFilters.splice(
-                            this.availableFilters.indexOf(imageFilter),
-                            1
-                        );
-                    }
+                    this.availableFilters.forEach((availableFilter, index) => {
+                        if (imageFilter.filter_id == availableFilter.id) {
+                            this.availableFilters.splice(index, 1);
+                        }
+                    });
+                    // if (this.availableFilters.includes(imageFilter)) {
+                    //     this.availableFilters.splice(
+                    //         this.availableFilters.indexOf(imageFilter),
+                    //         1
+                    //     );
+                    // }
                 });
             });
         }

@@ -14,7 +14,7 @@ class MainPageController extends Controller
         $title = $request->title;
         $body = $request->body;
 
-        $mainPage = MainPage::all()->first();
+        $mainPage = MainPage::first();
         $mainPage->update([
             'header' => $header,
             'title' => $title,
@@ -24,7 +24,7 @@ class MainPageController extends Controller
     }
 
     public function getMainPage(){
-        return response()->json(['mainPage' => MainPage::all()->first()]);
+        return response()->json(['mainPage' => MainPage::first()]);
     }
 
 }

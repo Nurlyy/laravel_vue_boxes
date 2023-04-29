@@ -4,6 +4,7 @@
             class="pin_container scroll-container"
             ref="scrollContainer"
             @scroll="console.log('Main scrolled')"
+            id="gallery_id"
         >
             <TransitionGroup @before-leave="beforeLeave">
                 <div
@@ -13,9 +14,17 @@
                     :id="image.id + '_image'"
                 >
                     <img :src="image.path" alt="" />
-                    <a @click="likeImage(image.id)"></a>
+                    <a
+                        @click='imageClicked(image.path)'
+                        :href="image.path"
+                        :data-pswp-width="maxWidth"
+                        :data-pswp-height="maxHeight"
+                        target="_blank"
+                        rel="noreferrer"
+                    ></a>
                     <button
                         :id="'like_button_' + image.id"
+                        @click="likeImage(image.id)"
                         :class="
                             isLiked(image.id)
                                 ? 'btn-like-card active'
@@ -26,14 +35,73 @@
                 </div>
             </TransitionGroup>
         </div>
+        <!-- <vue-easy-lightbox
+        :visible="visibleRef"
+        :imgs="imgsRef"
+        :index="indexRef"
+        :maxZoom="1.5"
+        :maxWidth="maxWidth"
+        :maxHeight="maxHeight"
+        :zIndex="9999"
+        @hide="onHide"
+        
+    ></vue-easy-lightbox> -->
     </div>
 </template>
 
 <script>
 import { returnStatement } from "@babel/types";
-import VueEasyLightbox from "vue-easy-lightbox";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import "photoswipe/style.css";
+// import VueEasyLightbox from "vue-easy-lightbox";
+// import { ref } from "vue";
 export default {
     name: "Main",
+    // setup() {
+    //     const visibleRef = ref(false);
+    //     const indexRef = ref(0); // default 0
+    //     const imgsRef = ref([]);
+    //     // Img Url , string or Array of string
+    //     // ImgObj { src: '', title: '', alt: '' }
+    //     // 'src' is required
+    //     // allow mixing
+
+    //     const onShow = () => {
+    //         visibleRef.value = true;
+    //     };
+    //     const showSingle = (value) => {
+    //         imgsRef.value = value;
+    //         // or
+    //         // imgsRef.value  = {
+    //         //   title: 'this is a placeholder',
+    //         //   src: 'http://via.placeholder.com/350x150'
+    //         // }
+    //         onShow();
+    //     };
+    //     const showMultiple = () => {
+    //         imgsRef.value = [
+    //             "http://via.placeholder.com/350x150",
+    //             "http://via.placeholder.com/350x150",
+    //         ];
+    //         // or
+    //         // imgsRef.value = [
+    //         //   { title: 'test img', src: 'http://via.placeholder.com/350x150' },
+    //         //   'http://via.placeholder.com/350x150'
+    //         // ]
+    //         indexRef.value = 0; // index of imgList
+    //         onShow();
+    //     };
+    //     const onHide = () => (visibleRef.value = false);
+
+    //     return {
+    //         visibleRef,
+    //         indexRef,
+    //         imgsRef,
+    //         showSingle,
+    //         showMultiple,
+    //         onHide,
+    //     };
+    // },
     created() {
         window.addEventListener("scroll", this.handleScroll);
         this.observer = new IntersectionObserver(this.handleIntersection, {
@@ -59,6 +127,8 @@ export default {
             error: "",
             observer: null,
             api_url: null,
+            maxWidth: 0,
+            maxHeight: 0,
             // category_id: null,
         };
     },
@@ -76,6 +146,16 @@ export default {
     //     });
     // },
     mounted() {
+        if (!this.lightbox) {
+            this.lightbox = new PhotoSwipeLightbox({
+                gallery: "#gallery_id",
+                children: "a",
+                pswpModule: () => import("photoswipe"),
+            });
+            this.lightbox.init();
+        }
+        // this.maxWidth = window.innerWidth * 0.8;
+        // this.maxHeight = window.innerHeight * 0.8;
         // mounted() {
         // window.addEventListener('scroll', this.handleScroll);
         // }
@@ -101,6 +181,12 @@ export default {
         // console.log(this.images);
     },
     methods: {
+        imageClicked(path){
+            const img = new Image();
+            img.src = path;
+            this.maxWidth = img.width;
+            this.maxHeight = img.height;
+        },
         beforeLeave(el) {
             const { marginLeft, marginTop, width, height } =
                 window.getComputedStyle(el);
@@ -151,7 +237,7 @@ export default {
             });
         },
         loadNextPage() {
-            console.log('cat id: '+this.category_id);
+            console.log("cat id: " + this.category_id);
             if (this.isLoading || this.isError) {
                 return;
             }
@@ -162,16 +248,14 @@ export default {
 
             this.isLoading = true;
 
-            if(this.category_id == null){
+            if (this.category_id == null) {
                 this.api_url = `/api/get-images?page=${this.page}&per_page=${this.perPage}`;
-            }else{
+            } else {
                 // this.api_url = `/api/get-category-images?category_id=${this.category_id}&{page=${this.page}&per_page=${this.perPage}`;
             }
 
             axios
-                .get(
-                    this.api_url
-                )
+                .get(this.api_url)
                 .then((response) => {
                     this.isLoading = false;
                     var temp = response.data.images;
@@ -213,6 +297,12 @@ export default {
             };
             // console.log("scrolled");
         },
+    },
+    unmounted() {
+        if (this.lightbox) {
+            this.lightbox.destroy();
+            this.lightbox = null;
+        }
     },
     // created() {
     //     // Assign a random class to each item
