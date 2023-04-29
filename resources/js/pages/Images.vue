@@ -19,7 +19,7 @@
         <tbody>
             <tr v-for="image in images" :key="image.id">
                 <td>{{ image.id }}</td>
-                <!-- <td>{{ image.path }}</td> -->
+                <td><img :src='image.path' height='100' /></td>
                 <td>{{ image.description }}</td>
                 <td>
                     <CButton

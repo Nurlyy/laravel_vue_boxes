@@ -10,9 +10,9 @@
                 :disabled="image != null"
             />
         </div>
-
+        <br>
         <div class="mb-3">
-            <CFormLabel for="description">Описание</CFormLabel>
+            <CFormLabel for="description">Alt тэг</CFormLabel>
             <CFormTextarea
                 v-model="description"
                 :value="description"
@@ -20,7 +20,7 @@
                 rows="3"
             ></CFormTextarea>
         </div>
-
+        <br>
         <div>
             <h5 v-if="imageFilters.length >= 1">Выбранные Фильтры:</h5>
             <div v-if="imageFilters.length >= 1">
@@ -69,6 +69,7 @@
                     </CCard>
                 </b-row>
             </div>
+            <br>
             <h5 v-if="availableFilters.length >= 1">Доступные Фильтры:</h5>
             <div v-if="availableFilters.length >= 1">
                 <b-row>
@@ -104,8 +105,8 @@
                 </b-row>
             </div>
         </div>
-
-        <button class="btn btn-primary mb-5 mt-5">Сохранить</button>
+        <br>
+        <button :disabled='image!=null' class="btn btn-primary mb-5 mt-5">Сохранить</button>
     </CForm>
 </template>
 
