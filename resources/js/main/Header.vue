@@ -16,10 +16,10 @@
                     <span class="counter">{{ likes_count }}</span>
                 </button>
                 <button @click="showOrder()" class="btn-header-universal order">
-                    Заявка на расчёт
+                    заявка на расчёт
                 </button>
                 <button @click='showFilters()' class="btn-header-universal filter">
-                    Каталог упаковки
+                    каталог упаковки
                 </button>
                 <a :href="'tel:' + phone_number" class="phone">
                     {{ phone_number }}

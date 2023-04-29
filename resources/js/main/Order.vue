@@ -1,22 +1,22 @@
 <template>
-  <div class="container-order-wrapper">
+    <div class="container-order-wrapper">
     <div class="container-order">
       <p>Заявка на расчёт упаковки</p>
-      <span class="order-header-text" style="white-space:pre-line">Свяжитесь с нами для расчета стоимости или консультации <br>
-        {{ contacts.phone_number }} | {{ contacts.email }} <br>
-        Или заполните форму ниже</span>
-        <div class="container-one">
-            <input type="text" class="inp" placeholder="Ваше имя">
-        </div>
+      <span class="order-header-text">Свяжитесь с нами для расчета стоимости или консультации <br/>
+{{ contacts.phone_number }} | {{ contacts.email }} <br/>
+Или заполните форму ниже</span>
+      <div class="container-one">
+        <input type="text" class="inp" placeholder="Ваше имя">
+      </div>
       <div class="container-two">
-        <input type="text" class="inp" placeholder="Email">
+        <input type="text" class="inp" placeholder="E-Mail">
         <input type="text" class="inp" placeholder="Телефон">
       </div>
       <div class="container-one">
         <textarea class="inp txr" placeholder="Опишите Вашу задачу"></textarea>
       </div>
-      <div class="container-one">
-        <label for="photo" class="label"><input type="checkbox" id="photo" name="photo" checked><span>Прикрепить фотографии к которым Вы поставили лайк?</span></label>
+      <div class="container-one add-like">
+        <label for="photo" class="label"><input type="checkbox" id="photo" name="photo" checked><span>Прикрепить фото с моими лайками</span></label>
       </div>
       <div class="container-one">
         <button class="btn-order-enter">Отправить заявку</button>
@@ -79,14 +79,14 @@ export default {
       font-size: 15px;
       text-transform: uppercase;
       color:#000;
-      padding:17px 0 16px;
+      padding:5px 0 16px;
       border-bottom:1px solid #e6e6e6;
     }
     .order-header-text {
       display: block;
       width: 100%;
       box-sizing:border-box;
-      padding:0 20px 30px;
+      padding:0 20px 16px;
       font-family: Roboto;
       font-weight:400;
       font-size: 13px;
@@ -130,7 +130,9 @@ export default {
       gap: 14px;
       box-sizing:border-box;
       padding: 0 20px;
-      margin-top:14px;
+      &.add-like {
+        padding:14px 20px !important;
+      }
     }
     .container-two {
       width:100%;
@@ -139,17 +141,16 @@ export default {
       grid-auto-rows: 1fr;
       gap: 14px;
       box-sizing:border-box;
-      padding: 0 20px;
-      margin-top:14px;
+      padding: 14px 20px;
     }
     .label {
       font-family: Roboto;
       font-weight:400;
       font-size: 13px;
       color:#000;
-      margin-top:2px;
+      margin-top:0;
       input {
-        margin:8px 0 0 0;
+        margin:1px 0 0 2px;
         float:left;
         -ms-transform: scale(1.4);
         -moz-transform: scale(1.4);
@@ -161,7 +162,7 @@ export default {
         float:left;
         width:80%;
         text-align: left;
-        margin:0 0 0 18px;
+        margin:0 0 0 12px;
       }
     }
     .inp {

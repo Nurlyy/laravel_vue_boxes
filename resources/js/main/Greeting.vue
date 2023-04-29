@@ -7,7 +7,7 @@
             </p>
             <div class="container-order-main">
                 <button @click="showOrder()" class="btn-order-main">
-                    Подать заявку на расчёт упаковки
+                    Отправить заявку на расчёт упаковки
                 </button>
             </div>
         </div>

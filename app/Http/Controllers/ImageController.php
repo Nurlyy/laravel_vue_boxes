@@ -152,7 +152,20 @@ class ImageController extends Controller
             $images = Image::whereIn('id', json_decode($request->images_ids))->get();
         } else {
             $images = Image::all();
+
+            // $page = $request->page;
+            // $per_page = $request->per_page;
+
+            // $items = Image::count();
+            // $lastPage = ceil($items / $per_page);
+            // // if ($page != 1) {
+            // // $images = Image::all();
+            // // } else {
+
+            // $images = Image::skip(($page - 1) * $per_page)->take($per_page)->get();
         }
+
+
 
 
         return response()->json(['images' => $images, 'filters' => $filters]);
@@ -180,13 +193,13 @@ class ImageController extends Controller
         }
 
         if (empty($imageFilters) && !empty(json_decode(json_encode($previousFilters), true))) {
-            
+
             foreach ($previousFilters as $prev) {
                 $prev->delete();
             }
         } elseif (empty($imageFilters) && empty(json_decode(json_encode($previousFilters), true))) {
 
-            
+
             foreach ($imageFilters as $img) {
 
                 if (isset($img->image_id)) {
@@ -198,8 +211,8 @@ class ImageController extends Controller
                     ]);
                 }
             }
-        } else{
-            
+        } else {
+
             $imageFilters = json_decode(json_encode($imageFilters), true);
             $previousFilters = json_decode(json_encode($previousFilters), true);
 
@@ -213,7 +226,7 @@ class ImageController extends Controller
 
             $deleted_filters = array_diff($idPrev, $idImages);
 
-            foreach($deleted_filters as $id){
+            foreach ($deleted_filters as $id) {
                 $imagef = ImagesFilter::where('id', $id)->first();
                 $imagef->delete();
             }
@@ -222,8 +235,7 @@ class ImageController extends Controller
 
             $added_filters = array_diff($idImages, $idPrev);
 
-            foreach($added_filters as $id)
-            {
+            foreach ($added_filters as $id) {
                 $img = ImagesFilter::create([
                     'image_id' => $main_image->id,
                     'filter_id' => $id,
