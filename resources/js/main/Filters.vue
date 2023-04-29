@@ -3,9 +3,9 @@
       <nav>
         <p>Фильтры</p>
         <ul>
-          <li v-for="filter in filters" :key='filter.id' >
-            <router-link :to="'/category/' + filter.id">{{ filter.name }}</router-link>
-            <!-- {{ filter.name }} -->
+          <li  v-for="filter in filters" :key='filter.id' @click='go_to_category(filter.id)' >
+            <!-- <router-link :to="'/category/' + filter.id">{{ filter.name }}</router-link> -->
+            <a :href='"/category/"+filter.id'>{{ filter.name }}</a>
         </li>
           <!-- <li><a href="#">Материалы</a></li>
           <li><a href="#">Технологии</a></li>
