@@ -111,6 +111,7 @@
 
 <script>
 import { ref } from "vue";
+import router from "@/router/index.js";
 export default {
     name: "AddImage",
     data() {
@@ -171,6 +172,7 @@ export default {
                     //   alert("saved");
                 }
             }
+            router.push({name: "Images"})
         },
         saveImage(event) {
             this.image = event.target.files[0];

@@ -21,7 +21,7 @@ class ImageController extends Controller
             // $newPath = $request->image->store('public/uploads', 's3');
             // return $newPath;
 
-            $path = 'uploads/' . $imageName;
+            $path = '/uploads/' . $imageName;
             $description = $request->description;
             // return $description;
             $imageFilters = json_decode($request->imageFilters);

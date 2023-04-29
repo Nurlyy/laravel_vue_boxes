@@ -89,6 +89,7 @@
 <script>
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import router from "@/router/index.js";
 export default {
     name: "AddPage",
     components: {
@@ -139,6 +140,7 @@ export default {
                     });
                 // alert("saved");
             }
+            router.push({name: "Pages"});
         },
         slugify(str) {
             return str

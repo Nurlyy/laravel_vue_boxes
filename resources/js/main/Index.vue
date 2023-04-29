@@ -24,7 +24,7 @@ export default {
             id: null,
         };
     },
-    mounted(){
+    created(){
         this.id = this.$route.params.id;
         console.log('cat id from index: ' + this.id);
     },

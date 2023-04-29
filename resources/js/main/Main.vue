@@ -251,7 +251,7 @@ export default {
             if (this.category_id == null) {
                 this.api_url = `/api/get-images?page=${this.page}&per_page=${this.perPage}`;
             } else {
-                // this.api_url = `/api/get-category-images?category_id=${this.category_id}&{page=${this.page}&per_page=${this.perPage}`;
+                this.api_url = `/api/get-category-images?category_id=${this.category_id}&{page=${this.page}&per_page=${this.perPage}`;
             }
 
             axios

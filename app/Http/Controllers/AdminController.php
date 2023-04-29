@@ -31,7 +31,7 @@ class AdminController extends Controller
 
         if ($password != null && strlen($password) > 8) {
             $admin->update([
-                'password' => $password,
+                'password' => Hash::make($password),
             ]);
         }
 
