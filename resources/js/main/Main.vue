@@ -36,73 +36,14 @@
                 </div>
             </TransitionGroup>
         </div>
-        <!-- <vue-easy-lightbox
-        :visible="visibleRef"
-        :imgs="imgsRef"
-        :index="indexRef"
-        :maxZoom="1.5"
-        :maxWidth="maxWidth"
-        :maxHeight="maxHeight"
-        :zIndex="9999"
-        @hide="onHide"
-        
-    ></vue-easy-lightbox> -->
     </div>
 </template>
 
 <script>
-import { returnStatement } from "@babel/types";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
-// import VueEasyLightbox from "vue-easy-lightbox";
-// import { ref } from "vue";
 export default {
     name: "Main",
-    // setup() {
-    //     const visibleRef = ref(false);
-    //     const indexRef = ref(0); // default 0
-    //     const imgsRef = ref([]);
-    //     // Img Url , string or Array of string
-    //     // ImgObj { src: '', title: '', alt: '' }
-    //     // 'src' is required
-    //     // allow mixing
-
-    //     const onShow = () => {
-    //         visibleRef.value = true;
-    //     };
-    //     const showSingle = (value) => {
-    //         imgsRef.value = value;
-    //         // or
-    //         // imgsRef.value  = {
-    //         //   title: 'this is a placeholder',
-    //         //   src: 'http://via.placeholder.com/350x150'
-    //         // }
-    //         onShow();
-    //     };
-    //     const showMultiple = () => {
-    //         imgsRef.value = [
-    //             "http://via.placeholder.com/350x150",
-    //             "http://via.placeholder.com/350x150",
-    //         ];
-    //         // or
-    //         // imgsRef.value = [
-    //         //   { title: 'test img', src: 'http://via.placeholder.com/350x150' },
-    //         //   'http://via.placeholder.com/350x150'
-    //         // ]
-    //         indexRef.value = 0; // index of imgList
-    //         onShow();
-    //     };
-    //     const onHide = () => (visibleRef.value = false);
-
-    //     return {
-    //         visibleRef,
-    //         indexRef,
-    //         imgsRef,
-    //         showSingle,
-    //         showMultiple,
-    //         onHide,
-    //     };
-    // },
     created() {
         window.addEventListener("scroll", this.handleScroll);
         this.observer = new IntersectionObserver(this.handleIntersection, {

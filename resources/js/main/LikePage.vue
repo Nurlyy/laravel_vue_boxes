@@ -20,11 +20,34 @@
                     </button>
                 </div>
             </div>
-            <div class="pin_container">
-                <div v-for="(image, index) in images" :key="index" class="card">
+            <div class="pin_container" id='gallery_id'>
+                <!-- <div v-for="(image, index) in images" :key="index" class="card">
                     <img :src="image.path" alt="" />
                     <a @click="unlikeImage(image.id, index)"></a>
                     <button class="btn-like-card active"></button>
+                    <span class="number-card">#{{ image.id }}</span>
+                </div> -->
+                <div
+                    v-for="image, index in images"
+                    :key="image.id"
+                    class="card"
+                    :id="image.id + '_image'"
+                >
+                    <img :src="image.path" alt="" />
+                    <a
+                        @click='imageClicked(image.path)'
+                        :href="image.path"
+                        :data-pswp-width="maxWidth"
+                        :data-pswp-height="maxHeight"
+                        :alt='image.description'
+                        target="_blank"
+                        rel="noreferrer"
+                    ></a>
+                    <button
+                        :id="'like_button_' + image.id"
+                        @click="unlikeImage(image.id, index)"
+                        class="btn-like-card active"
+                    ></button>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
             </div>
@@ -37,6 +60,9 @@
 import Header from "./Header.vue";
 import Order from "./Order.vue";
 
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import "photoswipe/style.css";
+
 export default {
     name: "LikePage",
     components: {
@@ -48,9 +74,19 @@ export default {
             images: [],
             likedImages: [],
             showOrder: false,
+            maxWidth: 0,
+            maxHeight: 0,
         };
     },
     mounted() {
+        if (!this.lightbox) {
+            this.lightbox = new PhotoSwipeLightbox({
+                gallery: "#gallery_id",
+                children: "a",
+                pswpModule: () => import("photoswipe"),
+            });
+            this.lightbox.init();
+        }
         this.likedImages =
             localStorage.getItem("likedImages") != null
                 ? JSON.parse(localStorage.getItem("likedImages"))
@@ -66,6 +102,12 @@ export default {
             });
     },
     methods: {
+        imageClicked(path){
+            const img = new Image();
+            img.src = path;
+            this.maxWidth = img.width;
+            this.maxHeight = img.height;
+        },
         unlikeImage(id, index) {
             this.images.splice(index, 1);
             this.likedImages.splice(this.likedImages.indexOf(id), 1);
@@ -79,6 +121,12 @@ export default {
         closeOrder() {
             this.showOrder = false;
         },
+    },
+    unmounted() {
+        if (this.lightbox) {
+            this.lightbox.destroy();
+            this.lightbox = null;
+        }
     },
 };
 </script>

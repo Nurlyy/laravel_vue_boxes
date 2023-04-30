@@ -31,7 +31,7 @@
             />
             <CButton
                 @click="search"
-                :disabled="searchInput.length == 0"
+                
                 color="info"
                 style="height: fit-content; margin-left: 15px"
                 ><CIcon icon="cil-search" size="sm" /> Поиск</CButton
@@ -171,18 +171,18 @@ export default {
         search() {
             if (this.searchInput == null) {
                 this.searchAlert = true;
+                setTimeout(()=>{ this.searchAlert = false }, 3000);
                 console.log("sI is null");
                 return;
             }
 
             if (this.searchInput.length == 0) {
-                this.searchAlert = true;
-                console.log("sI has not enough length");
-                return;
+                this.getImages();
             }
 
             if (isNaN(this.searchInput)) {
                 this.searchAlert = true;
+                setTimeout(()=>{ this.searchAlert = false }, 3000);
                 console.log("sI is not a number");
                 return;
             }
