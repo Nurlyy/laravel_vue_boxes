@@ -62,7 +62,7 @@ export default {
             classList: ["card_small", "card_medium", "card_large"],
             randomClasses: {},
             page: 1,
-            perPage: 10,
+            perPage: 16,
             lastPage: null,
             isLoading: false,
             isError: false,
