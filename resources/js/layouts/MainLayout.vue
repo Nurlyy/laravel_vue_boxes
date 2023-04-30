@@ -49,7 +49,9 @@ export default {
 </script>
 
 <style lang="scss">
+
 body {
+    font-family: 'Prompt', sans-serif;
     // padding:68px 0 0 0;
     margin: 0;
     background-color: #000;

@@ -1,12 +1,22 @@
 <template>
-    <CAlert color="danger" :visible="searchAlert" dismissible @close="() => { searchAlert = false }">Неверный ID для поиска!</CAlert>
+    <CAlert
+        color="danger"
+        :visible="searchAlert"
+        dismissible
+        @close="
+            () => {
+                searchAlert = false;
+            }
+        "
+        >Неверный ID для поиска!</CAlert
+    >
     <div class="d-flex flex-row justify-content-between">
         <h1>Изображения</h1>
         <a
             href="/admin/images/add-image"
             class="btn btn-primary"
             style="margin-left: 30px; height: fit-content"
-            ><CIcon icon="cil-plus" size="sm"/> Добавить изображение</a
+            ><CIcon icon="cil-plus" size="sm" /> Добавить изображение</a
         >
     </div>
     <b-col md="3" xl="3" sm="3" xs="3">
@@ -17,14 +27,14 @@
                 :value="searchInput"
                 placeholder="Введите ID"
                 @input="checkNumberInput"
-                style='width:250px;'
+                style="width: 250px"
             />
             <CButton
                 @click="search"
                 :disabled="searchInput.length == 0"
                 color="info"
                 style="height: fit-content; margin-left: 15px"
-                ><CIcon icon="cil-search" size="sm"/> Поиск</CButton
+                ><CIcon icon="cil-search" size="sm" /> Поиск</CButton
             >
         </div>
     </b-col>
@@ -52,26 +62,30 @@
                     <div class="table_td">{{ image.description }}</div>
                 </td>
                 <td style="width: 40%">
-                    <Widget
-                        class="mb-0 d-flex"
-                        style="
-                            display: flex;
-                            flex-direction: row;
-                            flex-wrap: wrap;
-                        "
-                    >
-                        <div
-                            v-for="(filter, index) in image.filters"
-                            :key="index"
-                        >
-                            <CBadge
-                                color="info"
-                                shape="rounded-pill"
-                                style="margin: 10px"
-                                >{{ filter.name }}</CBadge
+                    <CCard>
+                        <CCardBody>
+                            <Widget
+                                class="mb-0 d-flex"
+                                style="
+                                    display: flex;
+                                    flex-direction: row;
+                                    flex-wrap: wrap;
+                                "
                             >
-                        </div>
-                    </Widget>
+                                <div
+                                    v-for="(filter, index) in image.filters"
+                                    :key="index"
+                                >
+                                    <CBadge
+                                        color="info"
+                                        shape="rounded-pill"
+                                        style="margin: 10px"
+                                        >{{ filter.name }}</CBadge
+                                    >
+                                </div>
+                            </Widget>
+                        </CCardBody></CCard
+                    >
                 </td>
                 <td>
                     <div class="table_td">
@@ -80,7 +94,8 @@
                             color="info"
                             :href="'/admin/images/' + image.id"
                             role="button"
-                            ><CIcon icon="cil-pen" size="sm"/> Изменить</CButton
+                            ><CIcon icon="cil-pen" size="sm" />
+                            Изменить</CButton
                         >
                     </div>
                     <!-- <router-link :to="'/admin/images/' + image.id"
@@ -94,7 +109,8 @@
                             @click="deleteImage(image.id)"
                             color="danger"
                             role="button"
-                            ><CIcon icon="cil-trash" size="sm"/> Удалить</CButton
+                            ><CIcon icon="cil-trash" size="sm" />
+                            Удалить</CButton
                         >
                     </div>
                 </td>
@@ -155,19 +171,19 @@ export default {
         search() {
             if (this.searchInput == null) {
                 this.searchAlert = true;
-                console.log("sI is null")
+                console.log("sI is null");
                 return;
             }
 
             if (this.searchInput.length == 0) {
                 this.searchAlert = true;
-                console.log("sI has not enough length")
+                console.log("sI has not enough length");
                 return;
             }
 
             if (isNaN(this.searchInput)) {
                 this.searchAlert = true;
-                console.log("sI is not a number")
+                console.log("sI is not a number");
                 return;
             }
 

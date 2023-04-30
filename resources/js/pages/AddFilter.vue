@@ -1,5 +1,6 @@
 <template>
-    <h1>Добавить фильтр</h1>
+    <h1 v-if="id==null">Добавить фильтр</h1>
+    <h1 v-if="id!=null">Изменить фильтр</h1>
     <CForm @submit.prevent="submitForm()">
         <div class="mb-3">
             <CFormLabel for="name">Название</CFormLabel>
@@ -12,7 +13,9 @@
             />
         </div>
 
-        <button class="btn btn-primary mb-5"><CIcon icon="cil-save" size="sm"/> Сохранить</button>
+        <button class="btn btn-primary mb-5">
+            <CIcon icon="cil-save" size="sm" /> Сохранить
+        </button>
     </CForm>
 </template>
 
@@ -37,15 +40,16 @@ export default {
                         // console.log(response);
                         router.push({ name: "Filters" });
                     });
-            }
-            else {
+            } else {
                 axios
                     .post("/api/update-filter", {
                         id: this.id,
                         name: this.name,
                     })
                     .then((response) => {
-                        router.push({ name: "Filters" });
+                        setTimeout(() => {
+                            router.push({ name: "Filters" });
+                        }, 500);
                     });
             }
             // alert("saved");

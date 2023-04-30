@@ -1,5 +1,6 @@
 <template>
-    <h1>Добавить Изображение</h1>
+    <h1 v-if="id==null">Добавить Изображение</h1>
+    <h1 v-if="id!=null">Изменить Изображение</h1>
     <CForm @submit.prevent="submitForm()">
         <div class="mb-3">
             <CFormLabel for="image">Добавить Изображение</CFormLabel>

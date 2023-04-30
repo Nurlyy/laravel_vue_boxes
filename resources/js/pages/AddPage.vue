@@ -1,4 +1,6 @@
 <template>
+    <h1 v-if="id==null">Добавить Страницу</h1>
+    <h1 v-if="id!=null">Изменить Страницу</h1>
     <CForm @submit.prevent="submitForm()">
     <div class="mb-3">
         <CFormLabel for="name">название</CFormLabel>
@@ -140,7 +142,9 @@ export default {
                     });
                 // alert("saved");
             }
-            router.push({name: "Pages"});
+            setTimeout(() => {
+                router.push({name: "Pages"})
+            }, 500);
         },
         slugify(str) {
             return str

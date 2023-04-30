@@ -10,7 +10,10 @@
           value: event,
         })
     "
-  >
+  > <CSidebarBrand>
+      
+      <img style="padding:15px;" src="@/assets/logo.svg" alt="" />
+    </CSidebarBrand>
     <AppSidebarNav />
     <CSidebarToggler
       class="d-none d-lg-flex"
