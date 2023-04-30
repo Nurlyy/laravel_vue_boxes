@@ -315,6 +315,8 @@ export default {
 .card {
     padding: 0;
     margin: 10px 0;
+    border: 0 !important;
+    border: 0;
     border-radius: 14px;
     background-color: #4f4f4f;
     overflow: hidden;
