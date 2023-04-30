@@ -7,7 +7,19 @@ import './bootstrap';
 
 import CoreuiVue from '@coreui/vue'
 import CIcon from '@coreui/icons-vue'
-import  * as icons from '@coreui/icons'
+import  { cilLockLocked,
+    cilSave,
+    cilTrash,
+    cilPen,
+    cilPlus,
+    cilSearch,
+    cilImage,
+    cilListFilter,
+    cilContact,
+    cilUser,
+    cilFile,
+    cilFeaturedPlaylist
+     } from '@coreui/icons'
 import DocsExample from '@/components/DocsExample.vue'
 // import VueEasyLightbox from 'vue-easy-lightbox';
 
@@ -21,7 +33,7 @@ const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
-app.provide('icons', icons)
+// app.provide('icons', icons)
 app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
 

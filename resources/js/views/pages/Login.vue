@@ -67,6 +67,10 @@ export default {
       })
       .then(response => {
         console.log(response);
+        if(response.status == 401){
+            this.alertVisible = true;
+            setTimeout(() => {this.alertVisible = false;}, 2500)
+        }
         // Save access token to local storage
         localStorage.setItem('access_token', response.data.access_token)
         // Redirect to admin index page
