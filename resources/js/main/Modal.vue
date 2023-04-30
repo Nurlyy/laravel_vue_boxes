@@ -3,8 +3,8 @@
     <nav>
       <p>Меню</p>
       <ul>
-        <li><a href="#">Главная</a></li>
-        <li><a @click='showOrder = true;' >Заявка на расчёт</a></li>
+        <!-- <li><a href="#">Главная</a></li>
+        <li><a @click='showOrder = true;' >Заявка на расчёт</a></li> -->
         <!-- <li><a v-for="page in pages" :key='page.id' :href='"page/"+page.slug'>{{page.name}}</a></li> -->
         <li v-for="page in pages" :key='page.id' ><router-link :to="'/page/' + page.slug">{{ page.title }}</router-link></li>
         <!-- <li><a href="#">Материалы</a></li>

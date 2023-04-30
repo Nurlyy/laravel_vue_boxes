@@ -223,9 +223,9 @@ export default {
       }
       .counter {
         position: absolute;
-        bottom:-2px;
+        bottom:-3px;
         // padding-bottom:2px;
-        left:17px;
+        left:19px;
         height:17px;
         box-sizing:border-box;
         padding:0px 4px;
