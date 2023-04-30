@@ -256,7 +256,7 @@ export default {
         deleteImage(id) {
             if (confirm("Are you sure you want to delete this?")) {
                 axios.post("/api/delete-image", { id: id }).then((response) => {
-                    this.getAllImages();
+                    this.getImages();
                     console.log(response.data.message);
                 });
             }

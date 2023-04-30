@@ -57,7 +57,7 @@ export default {
         deletePage(id) {
             if (confirm("Are you sure you want to delete this?")) {
                 axios.post("/api/delete-page", { id: id }).then((response) => {
-                this.items = response.data.items;
+                window.location.reload();
                 // router.push({ name: "Pages" });
             });
             }
