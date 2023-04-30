@@ -225,8 +225,8 @@ export default {
         position: absolute;
         bottom:-3px;
         // padding-bottom:2px;
-        left:19px;
-        height:17px;
+        left:17px;
+        height:19px;
         box-sizing:border-box;
         padding:0px 4px;
         background-color: #d40000;
