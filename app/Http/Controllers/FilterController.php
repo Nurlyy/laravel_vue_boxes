@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Filter;
+use App\Models\ImagesFilter;
 
 class FilterController extends Controller
 {
 
     public function addFilter(Request $request){
         $name = $request->name;
-
         $filter = Filter::create([
             'name' => $name
         ]);
@@ -52,6 +52,10 @@ class FilterController extends Controller
     public function deleteFilter(Request $request)
     {
         $filter = Filter::find($request->id);
+        $imagesFilters = ImagesFilter::where('filter_id', $filter->id)->get();
+        foreach($imagesFilters as $imageFilter){
+            $imageFilter->delete();
+        }
         $filter->delete();
 
         return response()->json(['filters' => Filter::all()], 204);

@@ -75,7 +75,7 @@ export default {
     padding: 80px 0 60px;
     width: 100%;
     h1 {
-      font-family: Roboto;
+      font-family: 'Roboto', sans-serif;
       font-weight:200;
       font-size: 67px;
       color:#fff;
@@ -92,7 +92,7 @@ export default {
     }
     .greeting-text {
       max-width: 100%;
-      font-family: Roboto;
+      font-family: 'Roboto', sans-serif;
       font-weight:300;
       font-size: 14px;
       color:#cfcfcf;
@@ -106,7 +106,7 @@ export default {
         padding: 2px 7px;
         text-decoration: none;
         color:#000;
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-weight:400;
         font-size: 11px;
         margin: 0 0 0 4px;
@@ -134,7 +134,7 @@ export default {
         background-color: #febc67;
         height:42px;
         color:#000;
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-weight:500;
         font-size: 14px;
         cursor: pointer;
