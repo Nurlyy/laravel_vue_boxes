@@ -10,6 +10,7 @@
         <!-- <li><a href="#">Материалы</a></li>
         <li><a href="#">Технологии</a></li>
         <li><a href="#">Контакты</a></li> -->
+        <li> <a  href="https://instagram.com/_propako_"><img style="height:50px; margin-top: 15px;" src="../assets/insta.png" /></a> </li>
       </ul>
       <button @click='$emit("close");' class="close"></button>
     </nav> 
@@ -76,7 +77,7 @@ export default {
       font-size: 15px;
       text-transform: uppercase;
       color:#000;
-      padding: 17px 0 16px;
+      padding:17px 0 16px;
       border-bottom:1px solid #e6e6e6;
     }
     .close {
