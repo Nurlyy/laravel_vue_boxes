@@ -3,7 +3,7 @@
     <h1 v-if="id!=null">Изменить Страницу</h1>
     <CForm @submit.prevent="submitForm()">
     <div class="mb-3">
-        <CFormLabel for="name">название</CFormLabel>
+        <CFormLabel for="name">Придумайте URL (латинскими буквами)</CFormLabel>
         <CFormInput
             type="text"
             v-model="name"
@@ -26,19 +26,10 @@
         />
     </div>
 
-    <div class="mb-3">
-        <CFormLabel for="title">Тайтл</CFormLabel>
-        <CFormInput
-            type="text"
-            v-model="title"
-            :value="title"
-            id="title"
-            placeholder="TITLE"
-        />
-    </div>
+    
 
     <div class="mb-3">
-        <CFormLabel for="header_title">Заголовок страницы</CFormLabel>
+        <CFormLabel for="header_title">SEO - title</CFormLabel>
         <CFormInput
             type="text"
             v-model="header_title"
@@ -48,7 +39,18 @@
         />
     </div>
 
-    <CFormLabel for="title">Тело</CFormLabel>
+    <div class="mb-3">
+        <CFormLabel for="title">Заголовок страницы (Отображается на странице)</CFormLabel>
+        <CFormInput
+            type="text"
+            v-model="title"
+            :value="title"
+            id="title"
+            placeholder="TITLE"
+        />
+    </div>
+
+    <CFormLabel for="title">Текст страницы</CFormLabel>
     <QuillEditor  v-model:value="body" v-model:content="body" contentType="html" theme="snow"/>
 
     <!-- <div class="mb-3">
@@ -59,7 +61,7 @@
         </div> -->
 
     <div class="mb-3">
-        <CFormLabel for="keyword">Ключевые слова</CFormLabel>
+        <CFormLabel for="keyword">SEO - Ключевые слова (Укажите через запятую)</CFormLabel>
         <CFormInput
             type="text"
             v-model="keyword"
@@ -70,7 +72,7 @@
     </div>
 
     <div class="mb-3">
-        <CFormLabel for="description">Описание</CFormLabel>
+        <CFormLabel for="description">SEO - Description (Описание)</CFormLabel>
         <CFormTextarea
             id="description"
             v-model="description"
@@ -80,7 +82,7 @@
     </div>
 
     <div class="mb-3">
-        <CFormLabel for="show">Показывать</CFormLabel>
+        <CFormLabel for="show">Показывать ссылку на страницу в меню? </CFormLabel>
         <CFormCheck style="margin-left: 15px" @change="changeVisibility" :checked='visibility' id="show" />
     </div>
 
