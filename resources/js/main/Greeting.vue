@@ -74,6 +74,9 @@ export default {
     margin:0 auto;
     padding: 80px 0 60px;
     width: 100%;
+    @media (max-width:500px) {
+      padding: 20px 0 40px !important;
+    }
     h1 {
       font-family: 'Roboto', sans-serif;
       font-weight:200;
@@ -115,6 +118,9 @@ export default {
           background-color: #d8d8d8;
         }
       }
+      @media (max-width:500px) {
+        padding: 0 !important;
+      }
     }
     .container-order-main {
       width:100%;
@@ -142,6 +148,11 @@ export default {
           background-color: #fcb04d;
         }
       }
+    }
+    @media (max-width: 500px){
+        .container-order-main {
+            display:none !important;
+        }
     }
   }
 }
