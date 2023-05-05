@@ -1,7 +1,7 @@
 import "./es5-shims.min";
 import "./share";
 
-export function yandex_shared(id) {
+export function yandex_shared(id, path) {
     new Ya.share2(id, {
         // theme: {
         //     services: 'vkontakte,facebook,odnoklassniki,moimir,twitter,lj,collections,viber,whatsapp,skype,telegram',
@@ -12,14 +12,19 @@ export function yandex_shared(id) {
         //     popupDirection: 'bottom',
         //     moreButtonType: 'short',
         // }});
-        theme: {
-            services: 'messenger,lj,viber,twitter',
+        theme : {
+            services: 'vkontakte,telegram,whatsapp,pinterest',
             lang: 'uk',
             limit: 0,
             size: 's',
             bare: false,
             popupPosition: 'outer',
+            moreButtonType: "short",
             // popupDirection: ''
-        }});
+        },
+        content: {
+            image: path,
+        },
     // });
+});
 }

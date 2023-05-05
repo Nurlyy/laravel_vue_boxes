@@ -15,13 +15,14 @@
                 >
                     <img :src="image.path" alt="" />
                     <a
-                        @click="imageClicked(image.path)"
+                        @click="imageClicked(image.path, $event)"
                         :href="image.path"
                         :data-pswp-width="maxWidth"
                         :data-pswp-height="maxHeight"
                         :alt="image.description"
                         target="_blank"
                         rel="noreferrer"
+                        id="imageView"
                     ></a>
                     <button
                         :id="'like_button_' + image.id"
@@ -32,8 +33,12 @@
                                 : 'btn-like-card no-active add-image'
                         "
                     ></button>
-                    <button @click='handleClick' class="btn-like-card no-active" :id='"share_button_"+image.id' style="margin-top:35px;">
-                    </button>
+                    <button                
+                        class="btn-like-card no-active"
+                        :id="'share_button_' + image.id"
+                        style="margin-top: 35px;"
+                        @click='handleShareClick(image.id, $event)'
+                    ></button>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
             </TransitionGroup>
@@ -44,7 +49,7 @@
 <script>
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
-import {yandex_shared} from "../assets/ya/main.js";
+import { yandex_shared } from "../assets/ya/main.js";
 export default {
     name: "Main",
     created() {
@@ -54,7 +59,6 @@ export default {
             rootMargin: "0px",
             threshold: 1.0,
         });
-        
     },
     props: {
         category_id: null,
@@ -95,46 +99,36 @@ export default {
         if (!this.lightbox) {
             this.lightbox = new PhotoSwipeLightbox({
                 gallery: "#gallery_id",
-                children: "a",
+                children: "#imageView",
                 pswpModule: () => import("photoswipe"),
             });
             this.lightbox.init();
-        }
-        // this.maxWidth = window.innerWidth * 0.8;
-        // this.maxHeight = window.innerHeight * 0.8;
-        // mounted() {
-        // window.addEventListener('scroll', this.handleScroll);
-        // }
-
-        // axios.post("/api/get-images", {}).then((response) => {
-        //     this.images = response.data.images;
-        //     // console.log( response.data.images);
-        this.likedImages =
+        }        this.likedImages =
             localStorage.getItem("likedImages") != null
                 ? JSON.parse(localStorage.getItem("likedImages"))
                 : [];
-
-        //     this.images.forEach((image) => {
-        //         const randomIndex = Math.floor(
-        //             Math.random() * this.classList.length
-        //         );
-        //         this.randomClasses[image.id] = this.classList[randomIndex];
-        //     });
-        // });
-
         this.loadNextPage();
-
-        // console.log(this.images);
     },
     methods: {
-        handleClick(){
-            console.log('this fucking clicked');
+        handleShareClick(id, event){
+            // console.log('item_id : ' + event.currentTarget);
+            // console.log("clicked: share_button_"+id);
+            // const button = document.getElementById("share_button_"+id);
+            // const aTag = button.querySelector("a");
+            // console.log("aTag : " + aTag);
+            // event.stopPropagation();
+            // aTag.click();
+            // this.$refs.child.click();
+            // if(event.target.id=="share_button_"+id){
+            // }
         },
-        imageClicked(path) {
-            const img = new Image();
-            img.src = path;
-            this.maxWidth = img.width;
-            this.maxHeight = img.height;
+        imageClicked(path, event) {
+            if (event.target.tagName.toLowerCase() === 'a') {
+                const img = new Image();
+                img.src = path;
+                this.maxWidth = img.width;
+                this.maxHeight = img.height;
+            }
         },
         beforeLeave(el) {
             const { marginLeft, marginTop, width, height } =
@@ -221,10 +215,11 @@ export default {
                             ];
                     });
                     this.images.push(...temp);
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         temp.forEach((element) => {
-                        yandex_shared('share_button_'+element.id);
-                    })}, 500);
+                            yandex_shared("share_button_" + element.id, window.location.origin + element.path);
+                        });
+                    }, 500);
                     this.page += 1;
                     this.lastPage = response.data.lastPage;
                 })
@@ -278,8 +273,6 @@ export default {
 .list-leave-active {
     transition: opacity 0.5s ease;
 }
-
-
 
 .container-main {
     margin: 0 auto;
@@ -389,8 +382,8 @@ export default {
         &.active {
             background-color: rgba(230, 29, 31);
         }
-        
-        &.add-image{
+
+        &.add-image {
             background-image: url(@/assets/like-white.svg);
         }
     }
