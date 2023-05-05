@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Http\Response;
 
 class AdminController extends Controller
 {
@@ -23,7 +28,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($username != null){
+        if ($username != null) {
             $admin->update([
                 'username' => $username,
             ]);
@@ -41,6 +46,72 @@ class AdminController extends Controller
     public function getAdmin()
     {
         $admin = User::all()->first();
+        
         return response()->json($admin);
+    }
+
+    public function getEmailToken(){
+        // Cookie::queue('emailToken', Str::random(16), 5);
+        $cookie = cookie('emailToken', Str::random(), 5, null, null, null, false);
+        $response = new Response();
+        $response->withCookie($cookie);
+        return $response;
+    }
+
+    public function sendEmail(Request $request)
+    {
+
+        $emailToken = Cookie::get('emailToken');
+
+        if(!isset($emailToken) || $emailToken == null){
+            return response()->json(['status' => 'false']);
+        }
+
+        if($request->cookie('emailToken') == null || $request->cookie('emailToken') != $emailToken){
+            return response()->json(['status' => 'false']);
+        }
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $number = $request->input('number');
+        $description = $request->input('description');
+        $datetime = $request->input('datetime');
+
+        if(!isset($name) && !isset($email) && !isset($phone) && !isset($datetime)){
+            return response()->json(['status' => 'false']);
+        }
+
+        
+        $mail = new PHPMailer(true);
+
+        $mail->isSMTP();
+
+        // Enable SMTP authentication
+        $mail->SMTPAuth = true;
+        $mail->AuthType = 'LOGIN';
+        $mail->Username = 'no-replay@propako.ru';
+        $mail->Password = 'EXNkxmMsjYBPKwszxsoktx6b';
+
+        $mail->Host = 'smtp.yandex.com';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        $mail->setFrom('no-replay@propako.ru', 'Your Name');
+        $mail->addAddress('nurlitan.berikbol@yandex.ru', 'Новая Заявка');
+        $mail->Subject = 'Новая Заявка';
+        $mail->Body = "На сайте была оставлена заявка через форму. \r\n Данные заявки: \r\n Имя: {$name} \r\n Емайл: {$email} \r\n Телефон: {$number} \r\n Описание: {$description} \r\n Было отправлено: {$datetime}";
+        $mail->SMTPDebug = true;
+        $mail->Debugoutput = function ($str, $level) {
+            // echo "$level: $str\n";
+        };
+        try {
+            $mail->send();
+            Cookie::queue(Cookie::forget('emailToken'));
+            return response()->json(['status' => 'true']);
+            // echo 'Email sent successfully!';
+        } catch (Exception $e) {
+            return response()->json(['status' => 'false']);
+            // echo 'Email could not be sent. Error: ' . $mail->ErrorInfo;
+        }
+        exit;
     }
 }

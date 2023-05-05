@@ -23,17 +23,6 @@
                         target="_blank"
                         rel="noreferrer"
                     ></a>
-                    <div class="btn-like-card no-active">
-                        
-                        <div
-                            class="ya-share2"
-                            data-curtain
-                            data-shape="round"
-                            data-limit="0"
-                            data-more-button-type="short"
-                            data-services="vkontakte,telegram,whatsapp,pinterest"
-                        ></div>
-                    </div>
                     <button
                         :id="'like_button_' + image.id"
                         @click="likeImage(image.id)"
@@ -43,16 +32,6 @@
                                 : 'btn-like-card no-active'
                         "
                     ></button>
-                    <div class="no-active" style="margin-top:35px;">
-                        <div
-                            class="ya-share2"
-                            data-curtain
-                            data-shape="round"
-                            data-limit="0"
-                            data-more-button-type="short"
-                            data-services="vkontakte,telegram,whatsapp,pinterest"
-                        ></div>
-                    </div>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
             </TransitionGroup>
@@ -114,6 +93,10 @@ export default {
                 gallery: "#gallery_id",
                 children: "a",
                 pswpModule: () => import("photoswipe"),
+            });
+            this.lightbox.on("change", () => {
+                // triggers when slide is switched, and at initialization
+                console.log("change");
             });
             this.lightbox.init();
         }
@@ -287,6 +270,14 @@ export default {
 .list-enter-active,
 .list-leave-active {
     transition: opacity 0.5s ease;
+}
+
+.pswp__item {
+    object-fit:contain !important;
+}
+
+.pswp img {
+    object-fit:contain !important;
 }
 
 .container-main {
