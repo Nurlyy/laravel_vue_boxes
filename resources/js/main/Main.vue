@@ -32,8 +32,8 @@
                                 : 'btn-like-card no-active add-image'
                         "
                     ></button>
-                    <div class="btn-like-card no-active" :id='"share_button_"+image.id' style="margin-top:35px;">
-                    </div>
+                    <button @click='handleClick' class="btn-like-card no-active" :id='"share_button_"+image.id' style="margin-top:35px;">
+                    </button>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
             </TransitionGroup>
@@ -127,6 +127,9 @@ export default {
         // console.log(this.images);
     },
     methods: {
+        handleClick(){
+            console.log('this fucking clicked');
+        },
         imageClicked(path) {
             const img = new Image();
             img.src = path;
@@ -165,11 +168,11 @@ export default {
                     this.$emit("likesCount");
                 });
                 var btn = document.getElementById("like_button_" + id);
-                btn.className = "btn-like-card active";
+                btn.className = "btn-like-card active add-image";
             } else {
                 this.unlikeImage(id);
                 var btn = document.getElementById("like_button_" + id);
-                btn.className = "btn-like-card no-active";
+                btn.className = "btn-like-card no-active add-image";
             }
         },
         unlikeImage(id) {
@@ -275,6 +278,8 @@ export default {
 .list-leave-active {
     transition: opacity 0.5s ease;
 }
+
+
 
 .container-main {
     margin: 0 auto;
