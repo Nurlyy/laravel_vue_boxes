@@ -66,6 +66,7 @@ export default {
             number: "",
             description: "",
             isVisible: true,
+            images: [],
         };
     },
     mounted() {
@@ -74,6 +75,11 @@ export default {
         });
     },
     methods: {
+        getLikedImages(){
+            var likedImages = localStorage.getItem('likedImages')
+            
+            
+        },  
         getCookie(name) {
             const cookies = document.cookie.split(";");
 

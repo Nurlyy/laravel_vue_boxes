@@ -32,9 +32,8 @@
                                 : 'btn-like-card no-active add-image'
                         "
                     ></button>
-                    <div
-                        class="btn-like-card no-active"
-                    ><vue-yandex-share v-bind="options"></vue-yandex-share></div>
+                    <div class="btn-like-card no-active" :id='"share_button_"+image.id' style="margin-top:35px;">
+                    </div>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
             </TransitionGroup>
@@ -45,10 +44,9 @@
 <script>
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
-import VueYandexShare from "@alexlit/vue-yandex-share";
+import {yandex_shared} from "../assets/ya/main.js";
 export default {
     name: "Main",
-    components: { VueYandexShare },
     created() {
         window.addEventListener("scroll", this.handleScroll);
         this.observer = new IntersectionObserver(this.handleIntersection, {
@@ -56,6 +54,7 @@ export default {
             rootMargin: "0px",
             threshold: 1.0,
         });
+        
     },
     props: {
         category_id: null,
@@ -76,49 +75,6 @@ export default {
             api_url: null,
             maxWidth: 0,
             maxHeight: 0,
-            options: {
-                accessToken: null,
-                bare: false,
-                copy: "last",
-                description: null,
-                direction: "horizontal",
-                hashtags: null,
-                image: null,
-                lang: "ru",
-                limit: 24,
-                popupDirection: "bottom",
-                popupPosition: "inner",
-                size: "m",
-                title: null,
-                url: null,
-                services: [
-                    "blogger",
-                    "delicious",
-                    "digg",
-                    "evernote",
-                    "facebook",
-                    "gplus",
-                    "linkedin",
-                    "lj",
-                    "moimir",
-                    "odnoklassniki",
-                    "pinterest",
-                    "pocket",
-                    "qzone",
-                    "reddit",
-                    "renren",
-                    "sinaWeibo",
-                    "skype",
-                    "surfingbird",
-                    "telegram",
-                    "tencentWeibo",
-                    "tumblr",
-                    "twitter",
-                    "viber",
-                    "vkontakte",
-                    "whatsapp",
-                ],
-            },
             // category_id: null,
         };
     },
@@ -262,6 +218,10 @@ export default {
                             ];
                     });
                     this.images.push(...temp);
+                    setTimeout(()=>{
+                        temp.forEach((element) => {
+                        yandex_shared('share_button_'+element.id);
+                    })}, 500);
                     this.page += 1;
                     this.lastPage = response.data.lastPage;
                 })
@@ -424,8 +384,8 @@ export default {
         &.active {
             background-color: rgba(230, 29, 31);
         }
-
-        &.add-image {
+        
+        &.add-image{
             background-image: url(@/assets/like-white.svg);
         }
     }
