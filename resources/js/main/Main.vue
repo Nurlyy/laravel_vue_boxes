@@ -35,10 +35,9 @@
                     ></button>
                     <button                
                         class="btn-like-card no-active"
-                        :id="'share_button_' + image.id"
                         style="margin-top: 35px;"
                         @click='handleShareClick(image.id, $event)'
-                    ></button>
+                    ><div :id="'share_button_' + image.id" style='height:fit-content;border-radius:15px; width:fit-content;background-color:white;'></div></button>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
             </TransitionGroup>
@@ -272,6 +271,10 @@ export default {
 .list-enter-active,
 .list-leave-active {
     transition: opacity 0.5s ease;
+}
+
+.ya-share2__icon {
+    background-color: white !important;
 }
 
 .container-main {

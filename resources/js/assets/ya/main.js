@@ -14,7 +14,7 @@ export function yandex_shared(id, path) {
         // }});
         theme : {
             services: 'vkontakte,telegram,whatsapp,pinterest',
-            lang: 'uk',
+            lang: 'ru',
             limit: 0,
             size: 's',
             bare: false,
