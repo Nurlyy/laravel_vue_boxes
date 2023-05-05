@@ -21,6 +21,7 @@
         "lint": "eslint --fix './src/**/*.{ts,js,vue}'"
     },
     "dependencies": {
+        "@alexlit/vue-yandex-share": "^2.0.1",
         "@coreui/chartjs": "^3.0.0",
         "@coreui/coreui": "^4.2.3",
         "@coreui/icons": "^2.1.0",

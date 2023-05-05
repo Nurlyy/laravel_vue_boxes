@@ -23,36 +23,18 @@
                         target="_blank"
                         rel="noreferrer"
                     ></a>
-                    <div class="btn-like-card no-active">
-                        
-                        <div
-                            class="ya-share2"
-                            data-curtain
-                            data-shape="round"
-                            data-limit="0"
-                            data-more-button-type="short"
-                            data-services="vkontakte,telegram,whatsapp,pinterest"
-                        ></div>
-                    </div>
                     <button
                         :id="'like_button_' + image.id"
                         @click="likeImage(image.id)"
                         :class="
                             isLiked(image.id)
-                                ? 'btn-like-card active'
-                                : 'btn-like-card no-active'
+                                ? 'btn-like-card active add-image'
+                                : 'btn-like-card no-active add-image'
                         "
                     ></button>
-                    <div class="no-active" style="margin-top:35px;">
-                        <div
-                            class="ya-share2"
-                            data-curtain
-                            data-shape="round"
-                            data-limit="0"
-                            data-more-button-type="short"
-                            data-services="vkontakte,telegram,whatsapp,pinterest"
-                        ></div>
-                    </div>
+                    <div
+                        class="btn-like-card no-active"
+                    ><vue-yandex-share v-bind="options"></vue-yandex-share></div>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
             </TransitionGroup>
@@ -63,8 +45,10 @@
 <script>
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
+import VueYandexShare from "@alexlit/vue-yandex-share";
 export default {
     name: "Main",
+    components: { VueYandexShare },
     created() {
         window.addEventListener("scroll", this.handleScroll);
         this.observer = new IntersectionObserver(this.handleIntersection, {
@@ -92,6 +76,49 @@ export default {
             api_url: null,
             maxWidth: 0,
             maxHeight: 0,
+            options: {
+                accessToken: null,
+                bare: false,
+                copy: "last",
+                description: null,
+                direction: "horizontal",
+                hashtags: null,
+                image: null,
+                lang: "ru",
+                limit: 24,
+                popupDirection: "bottom",
+                popupPosition: "inner",
+                size: "m",
+                title: null,
+                url: null,
+                services: [
+                    "blogger",
+                    "delicious",
+                    "digg",
+                    "evernote",
+                    "facebook",
+                    "gplus",
+                    "linkedin",
+                    "lj",
+                    "moimir",
+                    "odnoklassniki",
+                    "pinterest",
+                    "pocket",
+                    "qzone",
+                    "reddit",
+                    "renren",
+                    "sinaWeibo",
+                    "skype",
+                    "surfingbird",
+                    "telegram",
+                    "tencentWeibo",
+                    "tumblr",
+                    "twitter",
+                    "viber",
+                    "vkontakte",
+                    "whatsapp",
+                ],
+            },
             // category_id: null,
         };
     },
@@ -379,7 +406,6 @@ export default {
         left: 10px;
         width: 32px;
         height: 32px;
-        background-image: url(@/assets/like-white.svg);
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 22px;
@@ -397,6 +423,10 @@ export default {
         }
         &.active {
             background-color: rgba(230, 29, 31);
+        }
+
+        &.add-image {
+            background-image: url(@/assets/like-white.svg);
         }
     }
     .number-card {
