@@ -1,5 +1,4 @@
 <template>
-    
     <div v-if="isVisible" class="container-order-wrapper">
         <div class="container-order">
             <p>Заявка на расчёт упаковки</p>
@@ -9,15 +8,30 @@
                 Или заполните форму ниже</span
             >
             <div class="container-one">
-                <input v-model="name" type="text" class="inp" placeholder="Ваше имя" />
+                <input
+                    v-model="name"
+                    type="text"
+                    class="inp"
+                    placeholder="Ваше имя"
+                />
             </div>
             <div class="container-two">
-                <input v-model="email" type="text" class="inp" placeholder="E-Mail" />
-                <input v-model="number" type="text" class="inp" placeholder="Телефон" />
+                <input
+                    v-model="email"
+                    type="text"
+                    class="inp"
+                    placeholder="E-Mail"
+                />
+                <input
+                    v-model="number"
+                    type="text"
+                    class="inp"
+                    placeholder="Телефон"
+                />
             </div>
             <div class="container-one">
                 <textarea
-                v-model="description"
+                    v-model="description"
                     class="inp txr"
                     placeholder="Опишите Вашу задачу"
                 ></textarea>
@@ -36,7 +50,7 @@
             <div class="container-one">
                 <button
                     :disabled="name == '' && email == '' && number == ''"
-                    @click="sendMail"
+                    @click="getCookieToken"
                     class="btn-order-enter"
                 >
                     Отправить заявку
@@ -75,11 +89,9 @@ export default {
         });
     },
     methods: {
-        getLikedImages(){
-            var likedImages = localStorage.getItem('likedImages')
-            
-            
-        },  
+        getLikedImages() {
+            this.images = localStorage.getItem("likedImages");
+        },
         getCookie(name) {
             const cookies = document.cookie.split(";");
 
@@ -96,44 +108,18 @@ export default {
         checkBoxChange() {
             this.sendImages = !this.sendImages;
         },
-        sendMail() {
+        getCookieToken() {
             axios
                 .get("/api/get-email-token", { withCredentials: true })
                 .then((response) => {
-                    console.log('got email token');
+                    console.log("got email token");
                     const cookie = this.getCookie("emailToken");
                     if (cookie != null && cookie != "undefined") {
-                        
-                        console.log('check email token');
+                        console.log("check email token");
                         this.isVisible = false;
-                        const now = new Date();
-                        const year = now.getFullYear();
-                        const month = String(now.getMonth() + 1).padStart(2, '0');
-                        const day = String(now.getDate()).padStart(2, '0');
-                        const hours = String(now.getHours()).padStart(2, '0');
-                        const minutes = String(now.getMinutes()).padStart(2, '0');
-                        const seconds = String(now.getSeconds()).padStart(2, '0');
-                        const dateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-                        axios
-                            .post("/api/send-email", {
-                                name: this.name,
-                                email: this.email,
-                                number: this.number,
-                                description: this.description,
-                                datetime: dateTime,
-                            })
-                            .then((response) => {
-                                console.log(response.data);
-                                if (response.data.status == 'true') {
-                                    console.log('success');
-                                    
-                                    this.$emit('close', {status: true});
-                                }else {
-                                    console.log('failure');
-                                    
-                                    this.$emit('close', {status: false});
-                                }
-                            });
+
+                        this.getLikedImages();
+                        this.sendMail();
                     }
                     // console.log(document.cookie);
                     // if (response.headers["set-cookie"]) {
@@ -152,6 +138,40 @@ export default {
                 })
                 .catch((error) => {
                     console.error(error);
+                });
+        },
+        sendMail() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+            const day = String(now.getDate()).padStart(2, "0");
+            const hours = String(now.getHours()).padStart(2, "0");
+            const minutes = String(now.getMinutes()).padStart(2, "0");
+            const seconds = String(now.getSeconds()).padStart(2, "0");
+            const dateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            var sendObject = {name: this.name,
+                    email: this.email,
+                    number: this.number,
+                    description: this.description,
+                    datetime: dateTime,};
+
+            if(this.sendImages){
+                sendObject['images'] = this.images;
+            }
+
+            axios
+                .post("/api/send-email", sendObject)
+                .then((response) => {
+                    console.log(response.data);
+                    if (response.data.status == "true") {
+                        console.log("success");
+                        localStorage.setItem['likedImages']=  null;
+                        this.$emit("close", { status: true });
+                    } else {
+                        console.log("failure");
+
+                        this.$emit("close", { status: false });
+                    }
                 });
         },
     },
