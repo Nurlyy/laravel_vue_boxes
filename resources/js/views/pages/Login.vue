@@ -88,20 +88,20 @@ export default {
                 })
                 .then((response) => {
                     console.log(response);
-                    if (response.status == 401) {
+                    if (response.data.error) {
                         this.alertVisible = true;
                         setTimeout(() => {
                             this.alertVisible = false;
                         }, 2500);
-                        
+                    } else {
+                        // Save access token to local storage
+                        localStorage.setItem(
+                            "access_token",
+                            response.data.access_token
+                        );
+                        // Redirect to admin index page
+                        router.push({ name: "Images" });
                     }
-                    // Save access token to local storage
-                    localStorage.setItem(
-                        "access_token",
-                        response.data.access_token
-                    );
-                    // Redirect to admin index page
-                    router.push({ name: "Images" });
                 })
                 .catch((error) => {
                     // Handle login error
