@@ -1,6 +1,6 @@
 <template>
-    <h1 v-if="id==null">Добавить Изображение</h1>
-    <h1 v-if="id!=null">Изменить Изображение</h1>
+    <h1 v-if="id == null">Добавить Изображение</h1>
+    <h1 v-if="id != null">Изменить Изображение</h1>
     <CForm @submit.prevent="submitForm()">
         <div class="mb-3">
             <CFormLabel for="image">Добавить Изображение</CFormLabel>
@@ -10,8 +10,9 @@
                 id="image"
                 :disabled="image != null"
             />
+            <img id="imagePreview" alt="Preview Image" style="height: 150px; border-radius: 15px; margin-top: 15; display:none;" />
         </div>
-        <br>
+        <br />
         <div class="mb-3">
             <CFormLabel for="description">Alt тэг</CFormLabel>
             <CFormTextarea
@@ -21,18 +22,23 @@
                 rows="3"
             ></CFormTextarea>
         </div>
-        <br>
+        <br />
         <div>
             <h5 v-if="imageFilters.length >= 1">Выбранные Фильтры:</h5>
             <div v-if="imageFilters.length >= 1">
                 <b-row>
-                    <CCard >
+                    <CCard>
                         <CCardBody>
                             <b-col md="6" xl="3" sm="6" xs="12">
                                 <div class="pb-xlg">
                                     <Widget
                                         class="mb-0 d-flex"
-                                        style="width: 100%; display:flex; flex-direction:row; flex-wrap: wrap;"
+                                        style="
+                                            width: 100%;
+                                            display: flex;
+                                            flex-direction: row;
+                                            flex-wrap: wrap;
+                                        "
                                     >
                                         <div
                                             v-for="(
@@ -70,7 +76,7 @@
                     </CCard>
                 </b-row>
             </div>
-            <br>
+            <br />
             <h5 v-if="availableFilters.length >= 1">Доступные Фильтры:</h5>
             <div v-if="availableFilters.length >= 1">
                 <b-row>
@@ -80,7 +86,12 @@
                                 <div class="pb-xlg">
                                     <Widget
                                         class="mb-0 d-flex"
-                                        style="width: 100%; display:flex; flex-direction:row; flex-wrap: wrap;"
+                                        style="
+                                            width: 100%;
+                                            display: flex;
+                                            flex-direction: row;
+                                            flex-wrap: wrap;
+                                        "
                                     >
                                         <div
                                             v-for="(
@@ -106,8 +117,10 @@
                 </b-row>
             </div>
         </div>
-        <br>
-        <button :disabled='image==null' class="btn btn-primary mb-5 mt-5"><CIcon icon="cil-save" size="sm"/> Сохранить</button>
+        <br />
+        <button :disabled="image == null" class="btn btn-primary mb-5 mt-5">
+            <CIcon icon="cil-save" size="sm" /> Сохранить
+        </button>
     </CForm>
 </template>
 
@@ -175,12 +188,25 @@ export default {
                 }
             }
             setTimeout(() => {
-                router.push({name: "Images"})
+                router.push({ name: "Images" });
             }, 500);
-            
         },
         saveImage(event) {
             this.image = event.target.files[0];
+            var preview = document.getElementById("imagePreview");
+
+            // Create a new FileReader instance
+            var reader = new FileReader();
+
+            // Set the image preview source
+            reader.onload = function (event) {
+                preview.src = event.target.result;
+            };
+
+            preview.style.display = "block";
+
+            // Read the image file as a data URL
+            reader.readAsDataURL(event.target.files[0]);
         },
         addFilter(index, filter) {
             // filter.selected = true;
@@ -211,6 +237,9 @@ export default {
                         ? response.data.image_filters
                         : [];
                 this.id = id;
+                var preview = document.getElementById("imagePreview");
+                preview.src = this.image;
+                preview.style.display = "block";
                 this.imageFilters.forEach((imageFilter) => {
                     this.availableFilters.forEach((availableFilter, index) => {
                         if (imageFilter.filter_id == availableFilter.id) {

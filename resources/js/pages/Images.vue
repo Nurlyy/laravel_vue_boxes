@@ -55,7 +55,7 @@
                 </td>
                 <td>
                     <div class="table_td">
-                        <img :src="image.path" height="80" />
+                        <img :src="image.path" height="80" style="border-radius:5px;" />
                     </div>
                 </td>
                 <td>

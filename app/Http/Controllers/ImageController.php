@@ -52,36 +52,19 @@ class ImageController extends Controller
 
     public function getImages(Request $request)
     {
-
-
         $filters = Filter::all();
-
-
         if ($request->images_ids != null) {
             if ($request->images_ids == []) {
                 return response()->json(['images' => [], 'filters' => $filters]);
             }
-            // return "FOFJEWO";
-            // return $request->images_ids[0];
-            $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+            $images = Image::whereIn('id', json_decode($request->images_ids))->orderBy('id', 'desc')->get();
         } else {
-
-
-
             $page = $request->page;
             $per_page = $request->per_page;
-
             $items = Image::count();
             $lastPage = ceil($items / $per_page);
-            // if ($page != 1) {
-            // $images = Image::all();
-            // } else {
-
-            $images = Image::skip(($page - 1) * $per_page)->take($per_page)->get();
-            // }
+            $images = Image::skip(($page - 1) * $per_page)->take($per_page)->orderBy('id', 'desc')->get();
         }
-
-
         return response()->json(['images' => $images, 'filters' => $filters, 'lastPage' => $lastPage]);
     }
 
@@ -114,7 +97,7 @@ class ImageController extends Controller
         // $images = Image::all();
         // } else {
 
-        $images = Image::whereIn('id', $ids)->skip(($page - 1) * $per_page)->take($per_page)->get();
+        $images = Image::whereIn('id', $ids)->skip(($page - 1) * $per_page)->take($per_page)->orderBy('id', 'desc')->get();
         // }
 
 
@@ -132,7 +115,7 @@ class ImageController extends Controller
         }
         // return "FOFJEWO";
         // return $request->images_ids[0];
-        $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+        $images = Image::whereIn('id', json_decode($request->images_ids))->orderBy('id', 'desc')->get();
 
 
 
@@ -149,7 +132,7 @@ class ImageController extends Controller
         }
 
         if(isset($request->search)){
-            $images = Image::where('id', 'like', $request->search.'%')->get();
+            $images = Image::where('id', 'like', $request->search.'%')->orderBy('id', 'desc')->get();
         } else {
             if ($request->images_ids != null) {
                 if ($request->images_ids == []) {
@@ -157,9 +140,9 @@ class ImageController extends Controller
                 }
                 // return "FOFJEWO";
                 // return $request->images_ids[0];
-                $images = Image::whereIn('id', json_decode($request->images_ids))->get();
+                $images = Image::whereIn('id', json_decode($request->images_ids))->orderBy('id', 'desc')->get();
             } else {
-                $images = Image::all();
+                $images = Image::orderBy('id', 'desc')->get();
     
                 // $page = $request->page;
                 // $per_page = $request->per_page;

@@ -93,6 +93,7 @@ export default {
                         setTimeout(() => {
                             this.alertVisible = false;
                         }, 2500);
+                        
                     }
                     // Save access token to local storage
                     localStorage.setItem(
