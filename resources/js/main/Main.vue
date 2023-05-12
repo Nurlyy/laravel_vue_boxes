@@ -217,6 +217,7 @@ export default {
                     setTimeout(() => {
                         temp.forEach((element) => {
                             yandex_shared("share_button_" + element.id, window.location.origin + element.path);
+                            console.log(window.location.origin + element.path);
                         });
                     }, 500);
                     this.page += 1;

@@ -12,6 +12,13 @@ export function yandex_shared(id, path) {
         //     popupDirection: 'bottom',
         //     moreButtonType: 'short',
         // }});
+        content: {
+            // image: path,
+            url: 'https://yandex.com',
+            title: 'Yandex',
+            description: 'All about Yandex',
+            image: 'https://yastatic.net/morda-logo/i/logo.svg'   
+        },
         theme : {
             services: 'vkontakte,telegram,whatsapp,pinterest',
             lang: 'ru',
@@ -22,9 +29,7 @@ export function yandex_shared(id, path) {
             moreButtonType: "short",
             // popupDirection: ''
         },
-        content: {
-            image: path,
-        },
+        
     // });
 });
 }
