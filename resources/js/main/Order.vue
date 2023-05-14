@@ -3,7 +3,7 @@
         <div class="container-order">
             <p>Заявка на расчёт упаковки</p>
             <span class="order-header-text" style='color:black'>«Вся упаковка производится под заказ, по индивидуальным параметрам»<br></span>
-            <br>
+            <!-- <br> -->
             <span 
             class="order-header-text">
                 
