@@ -67,7 +67,6 @@ export default {
             images: [],
             likedImages: [],
             classList: ["card_small", "card_medium", "card_large"],
-            randomClasses: {},
             page: 1,
             perPage: 16,
             lastPage: null,
@@ -137,9 +136,6 @@ export default {
             el.style.top = `${el.offsetTop - parseFloat(marginTop, 10)}px`;
             el.style.width = width;
             el.style.height = height;
-        },
-        getClass(id) {
-            return "card " + this.randomClasses[id];
         },
         isLiked(id) {
             if (localStorage.getItem("likedImages")) {
@@ -252,19 +248,6 @@ export default {
             this.lightbox = null;
         }
     },
-    // created() {
-    //     // Assign a random class to each item
-    //     this.images.forEach((image) => {
-    //         const randomIndex = Math.floor(
-    //             Math.random() * this.classList.length
-    //         );
-    //         this.$set(
-    //             this.randomClasses,
-    //             image.id,
-    //             "card " + this.classList[randomIndex]
-    //         );
-    //     });
-    // },
 };
 </script>
 
@@ -274,8 +257,23 @@ export default {
     transition: opacity 0.5s ease;
 }
 
-.ya-share2__icon {
-    background-color: white !important;
+// .ya-share2__icon {
+//     background-color: white !important;
+// }
+
+.ya-share2 {
+background-color: none !important;
+background: none !important;
+}
+
+.ya-share2__icon_more {
+  background-image: url('data:image/svg+xml,%3Csvg width="16" height="16" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M14.6 2.9a2.7 2.7 0 01-4.554 1.963L5.303 7.28a2.702 2.702 0 010 1.44l4.743 2.417a2.7 2.7 0 11-.834 1.708l-5.05-2.575a2.7 2.7 0 110-4.54l5.05-2.575A2.7 2.7 0 1114.6 2.9z" fill="%23fff"/%3E%3C/svg%3E') !important;
+}
+
+
+.ya-share2__container_size_s .ya-share2__badge .ya-share2__icon {
+  background-size: 18px 18px !important;
+  background-position: 0px 3px !important;
 }
 
 .container-main {

@@ -27,6 +27,7 @@ export function yandex_shared(id, path) {
             bare: false,
             popupPosition: 'outer',
             moreButtonType: "short",
+            colorScheme: 'whiteblack',
             // popupDirection: ''
         },
         

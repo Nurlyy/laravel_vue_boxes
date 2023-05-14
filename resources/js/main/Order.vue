@@ -2,8 +2,12 @@
     <div v-if="isVisible" class="container-order-wrapper">
         <div class="container-order">
             <p>Заявка на расчёт упаковки</p>
-            <span class="order-header-text"
-                >Свяжитесь с нами для расчета стоимости или консультации <br />
+            <span class="order-header-text" style='color:black'>«Вся упаковка производится под заказ, по индивидуальным параметрам»<br></span>
+            <br>
+            <span 
+            class="order-header-text">
+                
+                Свяжитесь с нами для расчета стоимости или консультации <br />
                 {{ contacts.phone_number }} | {{ contacts.email }} <br />
                 Или заполните форму ниже</span
             >
