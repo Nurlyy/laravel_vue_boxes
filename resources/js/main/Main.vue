@@ -48,14 +48,14 @@
 <script>
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
-// import { yandex_shared } from "../assets/ya/main.js";
+import { yandex_shared } from "../assets/ya/main.js";
 export default {
     name: "Main",
     created() {
         window.addEventListener("scroll", this.handleScroll);
         this.observer = new IntersectionObserver(this.handleIntersection, {
             root: null,
-            rootMargin: "0px",
+            rootMargin: "150px",
             threshold: 1.0,
         });
     },
@@ -181,7 +181,7 @@ export default {
             });
         },
         loadNextPage() {
-            console.log("cat id: " + this.category_id);
+            // console.log("cat id: " + this.category_id);
             if (this.isLoading || this.isError) {
                 return;
             }
@@ -217,10 +217,10 @@ export default {
                     });
                     this.images.push(...temp);
                     setTimeout(() => {
-                        // temp.forEach((element) => {
-                        //     yandex_shared("share_button_" + element.id, window.location.origin + element.path);
-                        //     console.log(window.location.origin + element.path);
-                        // });
+                        temp.forEach((element) => {
+                            yandex_shared("share_button_" + element.id, window.location.origin + element.path);
+                            console.log(window.location.origin + element.path);
+                        });
                     }, 500);
                     this.page += 1;
                     this.lastPage = response.data.lastPage;
@@ -246,7 +246,7 @@ export default {
             window.onscroll = () => {
                 if (
                     window.innerHeight + Math.ceil(window.pageYOffset) >=
-                    document.body.offsetHeight - 50
+                    document.body.offsetHeight - 1000
                 ) {
                     this.loadNextPage();
                 }
