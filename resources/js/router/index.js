@@ -23,10 +23,10 @@ const routes = [
         path: "/",
         name: "Main",
         component: MainLayout,
-        redirect: "/index",
+        redirect: "/",
         children: [
             {
-                path: "/index",
+                path: "/",
                 name: "MainIndex",
                 component: () =>
                     import(
@@ -188,9 +188,9 @@ const routes = [
             {
                 path: "/admin/images/:id", // slug is the dynamic parameter
                 component: () =>
-                import(
-                    /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
-                ),
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/AddImage.vue"
+                    ),
                 // redirect: "/admin/images",
                 props: true, // allows passing slug as a prop to the component
                 meta: { requiresAuth: true },
@@ -198,9 +198,9 @@ const routes = [
             {
                 path: "/admin/filters/:id", // slug is the dynamic parameter
                 component: () =>
-                import(
-                    /* webpackChunkName: "dashboard" */ "@/pages/AddFilter.vue"
-                ),
+                    import(
+                        /* webpackChunkName: "dashboard" */ "@/pages/AddFilter.vue"
+                    ),
                 // redirect: "/admin/images",
                 props: true, // allows passing slug as a prop to the component
                 meta: { requiresAuth: true },
@@ -212,6 +212,12 @@ const routes = [
         path: "/admin/login",
         name: "Login",
         component: () => import("@/views/pages/Login.vue"),
+    },
+    {
+        path: "/:catchAll(.*)", // Catch-all route for unknown paths
+        beforeEnter: (to, from, next) => {
+            next("/"); // Redirect to root path
+        },
     },
 ];
 

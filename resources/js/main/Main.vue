@@ -6,7 +6,7 @@
             @scroll="console.log('Main scrolled')"
             id="gallery_id"
         >
-            <TransitionGroup @before-leave="beforeLeave">
+            <!-- <transition-group name="list" tag="p"> -->
                 <div
                     v-for="image in images"
                     :key="image.id"
@@ -40,7 +40,7 @@
                     ><div :id="'share_button_' + image.id" style='height:fit-content;border-radius:15px; width:fit-content;background-color:white;'></div></button>
                     <span class="number-card">#{{ image.id }}</span>
                 </div>
-            </TransitionGroup>
+            <!-- </transition-group> -->
         </div>
     </div>
 </template>
@@ -264,6 +264,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .list-enter-active,
 .list-leave-active {
     transition: opacity 0.5s ease;
@@ -280,6 +281,21 @@ background: none !important;
 
 .ya-share2__icon_more {
   background-image: url('data:image/svg+xml,%3Csvg width="16" height="16" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M14.6 2.9a2.7 2.7 0 01-4.554 1.963L5.303 7.28a2.702 2.702 0 010 1.44l4.743 2.417a2.7 2.7 0 11-.834 1.708l-5.05-2.575a2.7 2.7 0 110-4.54l5.05-2.575A2.7 2.7 0 1114.6 2.9z" fill="%23fff"/%3E%3C/svg%3E') !important;
+}
+
+.list-item {
+  display: block;
+  position: relative;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 
