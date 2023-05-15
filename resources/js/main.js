@@ -21,6 +21,7 @@ import  { cilLockLocked,
     cilFile,
     cilFeaturedPlaylist,
     cilAccountLogout,
+    cilMenu,
      } from '@coreui/icons'
 import DocsExample from '@/components/DocsExample.vue'
 // import VueEasyLightbox from 'vue-easy-lightbox';
@@ -35,7 +36,7 @@ const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
-app.provide('icons', {cilContact, cilListFilter, cilLockLocked, cilSave, cilTrash, cilPen, cilPlus, cilSave, cilSearch, cilImage, cilUser, cilFeaturedPlaylist, cilFile, cilAccountLogout});
+app.provide('icons', {cilContact, cilListFilter, cilLockLocked, cilSave, cilTrash, cilPen, cilPlus, cilSave, cilSearch, cilImage, cilUser, cilFeaturedPlaylist, cilFile, cilAccountLogout, cilMenu});
 app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
 

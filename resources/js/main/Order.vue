@@ -2,7 +2,7 @@
     <div v-if="isVisible" class="container-order-wrapper">
         <div class="container-order">
             <p>Заявка на расчёт упаковки</p>
-            <span class="order-header-text" style='color:black'>«Вся упаковка производится под заказ, по индивидуальным параметрам»<br></span>
+            <span class="order-header-text" style='color:black; font-size: 15px;'>Вся упаковка производится под заказ, по индивидуальным параметрам<br></span>
             <!-- <br> -->
             <span 
             class="order-header-text">
