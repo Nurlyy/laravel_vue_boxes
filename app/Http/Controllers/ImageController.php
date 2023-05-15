@@ -336,7 +336,7 @@ class ImageController extends Controller
     {
         ini_set('memory_limit', '256M');
         // Set the directory path
-        $directory = str_replace('\\', '/', public_path()) . '/' . 'uploads/new/';
+        $directory = str_replace('\\', '/', public_path()) . '/' . 'uploads/';
 
         // Get all files in the directory
         $files = scandir($directory);
@@ -391,7 +391,7 @@ class ImageController extends Controller
     private function createPreview($file)
     {
         ini_set('memory_limit', '256M');
-        $directory = str_replace('\\', '/', public_path()) . '/' . "uploads/new/";
+        $directory = str_replace('\\', '/', public_path()) . '/' . "uploads/";
         $image = imagecreatefromwebp($directory . $file);
 
         // Get the current dimensions of the image
