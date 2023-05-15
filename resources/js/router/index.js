@@ -213,12 +213,12 @@ const routes = [
         name: "Login",
         component: () => import("@/views/pages/Login.vue"),
     },
-    {
-        path: "/:catchAll(.*)", // Catch-all route for unknown paths
-        beforeEnter: (to, from, next) => {
-            next("/"); // Redirect to root path
-        },
-    },
+    // {
+    //     path: "/:catchAll(.*)", // Catch-all route for unknown paths
+    //     beforeEnter: (to, from, next) => {
+    //         next("/"); // Redirect to root path
+    //     },
+    // },
 ];
 
 const router = createRouter({

@@ -48,7 +48,7 @@
 <script>
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
-import { yandex_shared } from "../assets/ya/main.js";
+// import { yandex_shared } from "../assets/ya/main.js";
 export default {
     name: "Main",
     created() {
@@ -217,10 +217,10 @@ export default {
                     });
                     this.images.push(...temp);
                     setTimeout(() => {
-                        temp.forEach((element) => {
-                            yandex_shared("share_button_" + element.id, window.location.origin + element.path);
-                            console.log(window.location.origin + element.path);
-                        });
+                        // temp.forEach((element) => {
+                        //     yandex_shared("share_button_" + element.id, window.location.origin + element.path);
+                        //     console.log(window.location.origin + element.path);
+                        // });
                     }, 500);
                     this.page += 1;
                     this.lastPage = response.data.lastPage;
