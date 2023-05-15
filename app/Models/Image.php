@@ -10,5 +10,5 @@ class Image extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table="image";
-    protected $fillable=['id', 'path', 'description'];
+    protected $fillable=['id', 'path', 'description', 'preview'];
 }

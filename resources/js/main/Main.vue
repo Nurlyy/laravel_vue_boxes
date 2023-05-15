@@ -13,7 +13,7 @@
                     :class="image.class"
                     :id="image.id + '_image'"
                 >
-                    <img :src="image.path" alt="" />
+                    <img :src="image.preview" alt="" />
                     <a
                         @click="imageClicked(image.path, $event)"
                         :href="image.path"

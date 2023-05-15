@@ -15,13 +15,22 @@ class ImageController extends Controller
         // return $request;
         if ($request->hasFile('image')) {
             // $path = $request->file('image')->store('public/uploads');
-            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('uploads'), $imageName);
+            // $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            // $request->image->move(public_path('uploads'), $imageName);
+
+            $imageName = time();
+            $ext = $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('uploads'), $imageName . "." . $ext);
+            $file =  $imageName . '.' . $ext;
+            $this->convertImageToWebp($file);
+            $this->createPreview($imageName . '.' . 'webp');
+            $path = '/uploads/' . $imageName . '.' . 'webp';
+            $preview = '/uploads/' . $imageName . '-preview' . '.' . 'webp';
             // return $imageName;
             // $newPath = $request->image->store('public/uploads', 's3');
             // return $newPath;
 
-            $path = '/uploads/' . $imageName;
+            // $path = '/uploads/' . $imageName;
             $description = $request->description;
             // return $description;
             $imageFilters = json_decode($request->imageFilters);
@@ -30,7 +39,7 @@ class ImageController extends Controller
 
             if ($path != null && $description != null) {
 
-                $image = Image::create(['path' => $path, 'description' => $description]);
+                $image = Image::create(['path' => $path, 'description' => $description, 'preview' => $preview]);
 
                 if ($imageFilters != null) {
 
@@ -127,12 +136,12 @@ class ImageController extends Controller
         $filters = Filter::all();
         $filters = json_decode(json_encode($filters), true);
         $new_filters = [];
-        foreach($filters as $filter){
+        foreach ($filters as $filter) {
             $new_filters[$filter['id']] = $filter['name'];
         }
 
-        if(isset($request->search)){
-            $images = Image::where('id', 'like', $request->search.'%')->orderBy('id', 'desc')->get();
+        if (isset($request->search)) {
+            $images = Image::where('id', 'like', $request->search . '%')->orderBy('id', 'desc')->get();
         } else {
             if ($request->images_ids != null) {
                 if ($request->images_ids == []) {
@@ -143,25 +152,25 @@ class ImageController extends Controller
                 $images = Image::whereIn('id', json_decode($request->images_ids))->orderBy('id', 'desc')->get();
             } else {
                 $images = Image::orderBy('id', 'desc')->get();
-    
+
                 // $page = $request->page;
                 // $per_page = $request->per_page;
-    
+
                 // $items = Image::count();
                 // $lastPage = ceil($items / $per_page);
                 // // if ($page != 1) {
                 // // $images = Image::all();
                 // // } else {
-    
+
                 // $images = Image::skip(($page - 1) * $per_page)->take($per_page)->get();
             }
         }
 
-        
 
-        foreach($images as $image){
-            $images_filters = ImagesFilter::where('image_id' , $image->id)->get();
-            foreach($images_filters as &$img){
+
+        foreach ($images as $image) {
+            $images_filters = ImagesFilter::where('image_id', $image->id)->get();
+            foreach ($images_filters as &$img) {
                 $img->name = $new_filters[$img->filter_id];
             }
             $image->filters = $images_filters;
@@ -245,66 +254,6 @@ class ImageController extends Controller
             }
         }
 
-        // return response()->json(['gfdsj'], 404);
-
-        // $new_filters = [];
-
-        // $deleted_filters = [];
-
-        // foreach ($previousFilters as $prev) {
-        //     foreach ($imageFilters as $imageFilter) {
-        //         if (isset($imageFilter->image_id)) {
-        //             if ($imageFilter->image_id == $prev->filter_id) {
-        //                 continue 2;
-        //             } else {
-        //                 array_push($deleted_filters, $imageFilter);
-        //                 continue 2;
-        //             }
-        //         } else {
-        //             array_push($new_filters, $imageFilter);
-        //             continue 2;
-        //         }
-        //     }
-        // }
-
-        // foreach ($new_filters as $new) {
-        //     $new = ImagesFilter::create([
-        //         'image_id' => $new->image_id,
-        //         'filter_id' => $new->filter_id,
-        //     ]);
-        // }
-
-        // foreach ($deleted_filters as $del) {
-        //     $filter = ImagesFilter::where('id', $del->id);
-        //     $filter->delete();
-        // }
-
-        // $imagesFilters = ImagesFilter::where('image_id', $main_image->id)->get();
-        // foreach($imagesFilters as $imgsFiltrs){
-        //     $imgsFiltrs->delete();
-        // }
-        // $db_deleted_filters = [];
-        // foreach ($imageFilters as $imageFilter) {
-        //     // return $imageFilter['id'];
-        //     $filter = Filter::where('id', $imageFilter->id)->first();
-        //     // return $filter;
-        //     if ($filter != null && $filter != '' && $filter != []) {
-        //         $db_imageFilter = ImagesFilter::where('id', $imageFilter->id)->first();
-        //         array_push($db_deleted_filters, $db_imageFilter->id);
-        //         if ($db_imageFilter->filter_id != $filter->id && $db_imageFilter->image_id != $main_image->id) {
-        //             $imagesFilter = ImagesFilter::create([
-        //                 'image_id' => $main_image->id,
-        //                 'filter_id' => $filter->id,
-        //             ]);
-        //         }
-        //     }
-        // }
-        // if(!empty($db_deleted_filters)){
-        //     foreach($db_deleted_filters as $d){
-        //         $d->delete();
-        //     }
-        // }
-
 
         return response()->json(['message' => "Image Updated Successfully"]);
         // $main_image->path = 
@@ -336,5 +285,74 @@ class ImageController extends Controller
             $imageFilter['name'] = Filter::where('id', $imageFilter->filter_id)->first()->name;
         }
         return response()->json(['image' => $image, 'image_filters' => $imageFilters]);
+    }
+
+
+    private function convertImageToWebp($file)
+    {
+        ini_set('memory_limit', '256M');
+        $directory = str_replace('\\', '/', public_path()) . '/' . "uploads/";
+        if (in_array(pathinfo($file, PATHINFO_EXTENSION), array('jpg', 'jpeg', 'png', "JPG", "JPEG", "PNG"))) {
+
+            if (in_array(pathinfo($file, PATHINFO_EXTENSION), array('jpg', 'jpeg', "JPG", "JPEG"))) {
+                // Load the original image
+                $original_image = imagecreatefromjpeg($directory . $file);
+
+                // Create a new WebP image
+                $new_image = imagecreatetruecolor(imagesx($original_image), imagesy($original_image));
+                imagepalettetotruecolor($new_image);
+
+                // Convert the original image to the WebP format
+                imagewebp($original_image, $directory . pathinfo($file, PATHINFO_FILENAME) . '.webp');
+
+                // Clean up the resources
+                imagedestroy($original_image);
+                imagedestroy($new_image);
+            } elseif (in_array(pathinfo($file, PATHINFO_EXTENSION), array('png', 'PNG'))) {
+                // Load the original image
+                $original_image = imagecreatefrompng($directory . $file);
+
+                // Create a new WebP image
+                $new_image = imagecreatetruecolor(imagesx($original_image), imagesy($original_image));
+                imagepalettetotruecolor($new_image);
+
+                // Convert the original image to the WebP format
+                imagewebp($original_image, $directory . pathinfo($file, PATHINFO_FILENAME) . '.webp');
+
+                // Clean up the resources
+                imagedestroy($original_image);
+                imagedestroy($new_image);
+            }
+        }
+        unlink($directory . $file);
+    }
+
+
+    private function createPreview($file)
+    {
+        ini_set('memory_limit', '256M');
+        $directory = str_replace('\\', '/', public_path()) . '/' . "uploads/";
+        $image = imagecreatefromwebp($directory . $file);
+
+        // Get the current dimensions of the image
+        $width = imagesx($image);
+        $height = imagesy($image);
+
+        // Calculate the new dimensions
+        $new_height = 400; // 50% of the original height or minimum 400 pixels
+        $new_width = $new_height * $width / $height; // Maintain the aspect ratio
+
+        // Create a new image with the new dimensions
+        $new_image = imagecreatetruecolor($new_width, $new_height);
+
+        // Squeeze the original image into the new image
+        imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+        // Save the new image as a .webp file
+        imagewebp($new_image, $directory . pathinfo($file, PATHINFO_FILENAME).'-preview' . '.webp', 80); // 80 is the quality parameter, which can be set between 0 and 100
+
+        // Free up memory
+        imagedestroy($image);
+        imagedestroy($new_image);
     }
 }
