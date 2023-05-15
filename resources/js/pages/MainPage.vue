@@ -13,6 +13,10 @@
       <CFormLabel for="body">Контент</CFormLabel>
       <CFormTextarea v-model="body" :value='body'  type="text" id="body" />
     </div>
+    <div class="mb-3">
+      <CFormLabel for="foot_text">Текст под галереей</CFormLabel>
+      <CFormTextarea v-model="foot_text" :value='foot_text'  type="text" id="foot_text" />
+    </div>
     <button class="btn btn-primary "><CIcon icon="cil-save" size="sm"/> Сохранить</button>
   </CForm>
   </template>
@@ -25,6 +29,7 @@
           header: '',
           title: '',
           body: '',
+          foot_text: '',
       }
     },
     mounted(){
@@ -33,11 +38,12 @@
           this.header = response.data.mainPage.header;
           this.title = response.data.mainPage.title;
           this.body = response.data.mainPage.body;
+          this.foot_text = response.data.mainPage.foot_text;
       });
     },
     methods: {
       submitForm(){
-          axios.post('/api/save-main-page', {header: this.header, title: this.title, body: this.body}).then(function(response){
+          axios.post('/api/save-main-page', {header: this.header, title: this.title, body: this.body, foot_text: this.foot_text}).then(function(response){
               console.log(response.data);
           })
           // alert('saved');

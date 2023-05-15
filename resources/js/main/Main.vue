@@ -77,6 +77,12 @@ export default {
             api_url: null,
             maxWidth: 0,
             maxHeight: 0,
+
+
+            loadedPages: [],
+            imageUrls: [],
+            preloadedImages: [],
+            loadedImages: [],
             // category_id: null,
         };
     },
@@ -225,6 +231,12 @@ export default {
                     this.error = error.message;
                 });
         },
+        loadPage(){
+
+        },
+        loadImages(){
+
+        },
         handleIntersection(entries) {
             if (entries[0].isIntersecting) {
                 this.loadNextPage();
@@ -295,7 +307,7 @@ background: none !important;
 .pin_container {
     padding: 0;
     position: relative;
-    margin: 0 auto 80px !important;
+    margin: 0 auto 40px !important;
     display: grid;
     grid-auto-rows: 10px;
     justify-content: center;

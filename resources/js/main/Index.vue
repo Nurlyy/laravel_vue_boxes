@@ -3,6 +3,7 @@
         <Header ref="header" />
         <Greeting />
         <Main :category_id='id' @likesCount="getLikesCount()" />
+        <UnderGallery />
     </div>
 </template>
 
@@ -10,13 +11,14 @@
 import Greeting from "../main/Greeting.vue";
 import Main from "../main/Main.vue";
 import Header from "./Header.vue";
+import UnderGallery from './UnderGallery.vue';
 
 export default {
     name: "Index",
     components: {
         Header,
         Greeting,
-        Main,
+        Main,UnderGallery,
     },
     data() {
         return {
