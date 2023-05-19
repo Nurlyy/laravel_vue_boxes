@@ -6,7 +6,13 @@
                 <h1>{{ page.title }}</h1>
             </h1>
             <span class="dividing-line"></span>
-            <iframe v-if='isContactsPage' src="https://yandex.ru/map-widget/v1/?um=constructor%3Af5ad9cf579aac300dd059222ab0ee24786597344517fc8d560c2ea958a0a613b&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe>
+            <iframe
+                v-if="isContactsPage"
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3Af5ad9cf579aac300dd059222ab0ee24786597344517fc8d560c2ea958a0a613b&amp;source=constructor"
+                width="100%"
+                height="400"
+                frameborder="0"
+            ></iframe>
             <!-- <span class="dividing-line"></span> -->
             <div class="container-body-pages">
                 <div v-html="page.body"></div>
@@ -17,7 +23,7 @@
 </template>
 
 <script>
-import Footer from './Footer.vue';
+import Footer from "./Footer.vue";
 import Header from "./Header.vue";
 export default {
     name: "Pages",
@@ -39,7 +45,7 @@ export default {
             console.log(response.data);
         });
         if (window.location.href.indexOf("contact") > -1) {
-            console.log('contact')
+            console.log("contact");
             this.isContactsPage = true;
         }
         // Fetch page data from database using slug
@@ -108,6 +114,31 @@ export default {
     .container-body-pages {
         width: 100%;
         height: auto;
+
+        div {
+            img {
+                vertical-align: middle;
+                max-width: min-content !important;
+                display: inline-block !important;
+                width: 100% !important;
+            }
+        }
+        div p {
+            img {
+                vertical-align: middle;
+                max-width: min-content !important;
+                display: inline-block !important;
+                width: 100% !important;
+            }
+        }
+        div p span {
+            img {
+                vertical-align: middle;
+                max-width: min-content !important;
+                display: inline-block !important;
+                width: 100% !important;
+            }
+        }
     }
 }
 </style>

@@ -28,8 +28,8 @@ class ImageController extends Controller
             $request->image->move(public_path('uploads'), $imageName . "." . $ext);
             $file =  $imageName . '.' . $ext;
             $this->convertImageToWebp($file);
-            $this->createPreview($imageName . '.' . 'webp');
             $path = '/uploads/' . $imageName . '.' . 'webp';
+            $this->createPreview($imageName . '.' . 'webp');
             $preview = '/uploads/' . $imageName . '-preview' . '.' . 'webp';
             // return $imageName;
             // $newPath = $request->image->store('public/uploads', 's3');
@@ -528,18 +528,18 @@ class ImageController extends Controller
 
 
 
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Select all rows from the image table
-$sql = "SELECT * FROM image";
-$stmt = $conn->query($sql);
+            // Select all rows from the image table
+            $sql = "SELECT * FROM image";
+            $stmt = $conn->query($sql);
 
-// Fetch all rows and display the results
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-var_dump($rows);
-} catch (PDOException $e) {
-echo "Error retrieving data: " . $e->getMessage();
-}
+            // Fetch all rows and display the results
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            var_dump($rows);
+        } catch (PDOException $e) {
+            echo "Error retrieving data: " . $e->getMessage();
+        }
 
 
 
