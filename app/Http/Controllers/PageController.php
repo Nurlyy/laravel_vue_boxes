@@ -40,6 +40,21 @@ class PageController extends Controller
         }
     }
 
+    public function uploadImage(Request $request){
+        if($request->hasFile("image")){
+            $imageName = time();
+            $ext = $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('uploads/editor/'), $imageName . "." . $ext);
+            $file =  $imageName . '.' . $ext;
+            $this->convertImageToWebp($file);
+            $path = '/uploads/editor/' . $imageName . '.' . 'webp';
+            if ($path != null) {
+                $image = $path;
+            }
+            return $path;
+        }
+    }
+
     public function updatePage(Request $request)
     {
         // return response()->json(['page' => $request->name]);

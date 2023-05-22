@@ -24,6 +24,8 @@ import  { cilLockLocked,
     cilMenu,
      } from '@coreui/icons'
 import DocsExample from '@/components/DocsExample.vue'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 // import VueEasyLightbox from 'vue-easy-lightbox';
 
 const app = createApp(App)
@@ -35,6 +37,7 @@ const app = createApp(App)
 //   });
 app.use(store)
 app.use(router)
+app.use(mavonEditor)
 app.use(CoreuiVue)
 app.provide('icons', {cilContact, cilListFilter, cilLockLocked, cilSave, cilTrash, cilPen, cilPlus, cilSave, cilSearch, cilImage, cilUser, cilFeaturedPlaylist, cilFile, cilAccountLogout, cilMenu});
 app.component('CIcon', CIcon)
