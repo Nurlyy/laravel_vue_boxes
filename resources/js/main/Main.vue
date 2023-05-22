@@ -77,28 +77,12 @@ export default {
             api_url: null,
             maxWidth: 0,
             maxHeight: 0,
-
-
             loadedPages: [],
             imageUrls: [],
             preloadedImages: [],
             loadedImages: [],
-            // category_id: null,
         };
     },
-    // setup () {
-    //     document.addEventListener("DOMContentLoaded", function (e) {
-    //         document.addEventListener("scroll", function (e) {
-    //             let documentHeight = document.body.scrollHeight;
-    //             let currentScroll = window.scrollY + window.innerHeight;
-    //             // When the user is [modifier]px from the bottom, fire the event.
-    //             let modifier = 200;
-    //             if (currentScroll + modifier > documentHeight) {
-    //                 console.log("You are at the bottom!");
-    //             }
-    //         });
-    //     });
-    // },
     mounted() {
         if (!this.lightbox) {
             this.lightbox = new PhotoSwipeLightbox({
@@ -114,18 +98,6 @@ export default {
         this.loadNextPage();
     },
     methods: {
-        handleShareClick(id, event){
-            // console.log('item_id : ' + event.currentTarget);
-            // console.log("clicked: share_button_"+id);
-            // const button = document.getElementById("share_button_"+id);
-            // const aTag = button.querySelector("a");
-            // console.log("aTag : " + aTag);
-            // event.stopPropagation();
-            // aTag.click();
-            // this.$refs.child.click();
-            // if(event.target.id=="share_button_"+id){
-            // }
-        },
         imageClicked(path, event) {
             if (event.target.tagName.toLowerCase() === 'a') {
                 const img = new Image();
@@ -133,15 +105,6 @@ export default {
                 this.maxWidth = img.width;
                 this.maxHeight = img.height;
             }
-        },
-        beforeLeave(el) {
-            const { marginLeft, marginTop, width, height } =
-                window.getComputedStyle(el);
-
-            el.style.left = `${el.offsetLeft - parseFloat(marginLeft, 10)}px`;
-            el.style.top = `${el.offsetTop - parseFloat(marginTop, 10)}px`;
-            el.style.width = width;
-            el.style.height = height;
         },
         isLiked(id) {
             if (localStorage.getItem("likedImages")) {
