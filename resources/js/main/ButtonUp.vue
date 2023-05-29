@@ -1,6 +1,6 @@
 <template>
   <div class="container-button">
-    <button @click=' scrollToTop()' class="button-up"></button>
+    <button @click=' scrollToTop()' class="button-up" aria-label="Top"></button>
   </div>
 </template>
 

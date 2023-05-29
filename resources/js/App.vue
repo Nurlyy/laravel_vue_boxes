@@ -6,6 +6,8 @@
 // Import Main styles for this application
 @import "styles/style.scss";
 
+@import "./assets/fonts/roboto.css";
+
 .ya-share2 {
     background-color: none !important;
     background: none !important;

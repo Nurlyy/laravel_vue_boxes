@@ -21,7 +21,6 @@
         "lint": "eslint --fix './src/**/*.{ts,js,vue}'"
     },
     "dependencies": {
-        "@alexlit/vue-yandex-share": "^2.0.1",
         "@coreui/chartjs": "^3.0.0",
         "@coreui/coreui": "^4.2.3",
         "@coreui/icons": "^2.1.0",
@@ -30,16 +29,11 @@
         "@coreui/vue": "^4.5.0",
         "@coreui/vue-chartjs": "2.0.1",
         "@vitejs/plugin-vue": "^4.2.0",
-        "@vueup/vue-quill": "^1.1.1",
-        "core-js": "^3.26.1",
         "mavon-editor": "^3.0.1",
         "photoswipe": "^5.3.7",
-        "v-viewer": "^1.6.4",
         "vue": "^3.2.45",
         "vue-axios": "^3.5.2",
-        "vue-easy-lightbox": "^1.16.0",
         "vue-router": "^4.1.6",
-        "vuejs-paginate-next": "^1.0.2",
         "vuex": "^4.1.0"
     },
     "devDependencies": {

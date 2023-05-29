@@ -13,13 +13,13 @@
                     :class="image.class"
                     :id="image.id + '_image'"
                 >
-                    <img :src="image.preview" alt="" />
+                    <img :src="image.preview" :alt="image.description" />
                     <a
                         @click="imageClicked(image.path, $event)"
                         :href="image.path"
                         :data-pswp-width="maxWidth"
                         :data-pswp-height="maxHeight"
-                        :alt="image.description"
+                        :aria-label='image.description'
                         target="_blank"
                         rel="noreferrer"
                         id="imageView"
@@ -27,13 +27,15 @@
                     <button
                         :id="'like_button_' + image.id"
                         @click="likeImage(image.id)"
+                        aria-label="Like image button"
                         :class="
                             isLiked(image.id)
                                 ? 'btn-like-card active add-image'
                                 : 'btn-like-card no-active add-image'
                         "
                     ></button>
-                    <button                
+                    <button   
+                        aria-label="Share button"    
                         class="btn-like-card no-active"
                         style="margin-top: 35px;"
                         @click='handleShareClick(image.id, $event)'
