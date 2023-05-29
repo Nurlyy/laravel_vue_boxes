@@ -3,7 +3,7 @@
         <Header ref="header" />
         <Greeting />
         <Main :category_id='id' @likesCount="getLikesCount()" />
-        <UnderGallery />
+        <!-- <UnderGallery /> -->
     </div>
 </template>
 
