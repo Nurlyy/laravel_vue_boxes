@@ -173,6 +173,7 @@ export default {
                             // this.saveImagePath(response.data.path);
                             console.log(response.data);
                             this.isLoading = false;
+                            router.push({ name: "Images" });
                         })
                         .catch((error) => {
                             console.log(error);
@@ -194,6 +195,7 @@ export default {
                             // this.saveImagePath(response.data.path);
                             console.log(response.data);
                             this.isLoading = false;
+                            router.push({ name: "Images" });
                         })
                         .catch((error) => {
                             console.log(error);
@@ -201,9 +203,6 @@ export default {
                     //   alert("saved");
                 }
             }
-            setTimeout(() => {
-                router.push({ name: "Images" });
-            }, 500);
         },
         saveImage(event) {
             this.image = event.target.files[0];

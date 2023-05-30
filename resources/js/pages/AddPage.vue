@@ -195,6 +195,7 @@ export default {
                     .then((response) => {
                         console.log(response.data);
                         this.isLoading = false;
+                        router.push({ name: "Pages" });
                     });
             } else {
                 axios
@@ -211,12 +212,10 @@ export default {
                     .then(function (response) {
                         console.log(response.data);
                         this.isLoading = false;
+                        router.push({ name: "Pages" });
                     });
                 // alert("saved");
             }
-            setTimeout(() => {
-                router.push({ name: "Pages" });
-            }, 500);
         },
         slugify(str) {
             return str
