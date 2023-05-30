@@ -606,12 +606,12 @@ class ImageController extends Controller
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // Select all rows from the image table
-            $sql = "SELECT * FROM image";
+            $sql = "alter table main_page add column description text;";
             $stmt = $conn->query($sql);
-
+            return 'true';
             // Fetch all rows and display the results
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            var_dump($rows);
+            // $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // var_dump($rows);
         } catch (PDOException $e) {
             echo "Error retrieving data: " . $e->getMessage();
         }

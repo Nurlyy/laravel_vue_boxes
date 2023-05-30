@@ -82,6 +82,10 @@ export default {
                 .then((response) => {
                     console.log(response.data);
                     this.alert_state = true;
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
                     setTimeout(() => {
                         this.alert_state = false;
                     }, 1500);
