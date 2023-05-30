@@ -28,6 +28,18 @@
                 id="foot_text"
             />
         </div>
+
+        <div class="mb-3">
+            <CFormLabel for="description"
+                >SEO - Description (Описание)</CFormLabel
+            >
+            <CFormTextarea
+                id="description"
+                v-model="description"
+                :value="description"
+                rows="3"
+            ></CFormTextarea>
+        </div>
         <button class="btn btn-primary">
             <CIcon icon="cil-save" size="sm" /> Сохранить
         </button>
@@ -43,6 +55,7 @@ export default {
             title: "",
             body: "",
             foot_text: "",
+            description: "",
             alert_state: false,
         };
     },
@@ -53,6 +66,7 @@ export default {
             this.title = response.data.mainPage.title;
             this.body = response.data.mainPage.body;
             this.foot_text = response.data.mainPage.foot_text;
+            this.description = response.data.mainPage.description;
         });
     },
     methods: {
@@ -63,6 +77,7 @@ export default {
                     title: this.title,
                     body: this.body,
                     foot_text: this.foot_text,
+                    description: this.description,
                 })
                 .then((response) => {
                     console.log(response.data);

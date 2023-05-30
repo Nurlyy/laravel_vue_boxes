@@ -1,5 +1,5 @@
 <template>
-    <CHeader position="sticky" class="mb-4">
+    <CHeader position="sticky" class="mb-4" style="z-index:1501 !important;">
         <CContainer fluid>
             <CHeaderToggler
                 class="ps-1"

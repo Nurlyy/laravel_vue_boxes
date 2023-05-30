@@ -1,5 +1,6 @@
 <template>
   <CSidebar
+    style="z-index:1501 !important;"
     position="fixed"
     :unfoldable="sidebarUnfoldable"
     :visible="sidebarVisible"
