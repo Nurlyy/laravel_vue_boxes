@@ -1,7 +1,7 @@
 <template>
     <div>
         <CToaster placement="top-end" visible>
-            <CToast v-for="(toast, index) in toasts" :key=index>
+            <CToast v-for="(toast, index) in toasts" :key="index">
                 <CToastHeader closeButton>
                     <span class="me-auto fw-bold">{{ toast.title }}</span>
                     <small>7 min ago</small>
@@ -15,24 +15,36 @@
         <div class="container-header-wrapper">
             <div class="container-header">
                 <a href="/" class="logo">
-                    <img src="@/assets/logo.svg" alt="propako.ru" style="height:auto; width:auto;" />
+                    <img src="@/assets/logo.svg" alt="propako.ru" />
                 </a>
                 <div class="slogan">Производство упаковки</div>
-                <button @click="showModal()" aria-label="Menu button" class="btn-gamburger-menu">
+                <button
+                    @click="showModal()"
+                    aria-label="Menu button"
+                    class="btn-gamburger-menu"
+                >
                     <span class="line"></span>
                     <span class="line ots"></span>
                     <span class="line ots"></span>
                 </button>
-                <button @click="go_to_likes()" aria-label="Likes button"  class="btn-like">
+                <button
+                    @click="go_to_likes()"
+                    aria-label="Likes button"
+                    class="btn-like"
+                >
                     <span class="counter">{{ likes_count }}</span>
                 </button>
-                <button @click="showOrder()" aria-label="Order button"  class="btn-header-universal order">
+                <button
+                    @click="showOrder()"
+                    aria-label="Order button"
+                    class="btn-header-universal order"
+                >
                     заявка на расчёт
                 </button>
                 <button
                     @click="showFilters()"
                     class="btn-header-universal filter"
-                    aria-label="Catalog button" 
+                    aria-label="Catalog button"
                 >
                     каталог упаковки
                 </button>

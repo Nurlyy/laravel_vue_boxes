@@ -37,6 +37,7 @@ export default {
 
 <style scoped lang="scss">
 .container-footer-wrapper {
+    bottom:0;
     margin: 0 auto;
     height: auto;
     padding: 0 20px;

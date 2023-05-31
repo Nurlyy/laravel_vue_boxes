@@ -8,6 +8,10 @@
 
 @import "./assets/fonts/roboto.css";
 
+body {
+    height:1200px;
+}
+
 .ya-share2 {
     background-color: none !important;
     background: none !important;

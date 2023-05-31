@@ -99,7 +99,7 @@ class AdminController extends Controller
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465;
         $mail->setFrom('no-replay@propako.ru', 'Your Name');
-        $mail->addAddress('public@propako.ru', 'Новая Заявка');
+        $mail->addAddress('nurlitan.berikbol@yandex.ru', 'Новая Заявка');
         $mail->Subject = 'Новая Заявка';
         $mail->Body = "На сайте была оставлена заявка через форму. \r\n Данные заявки: \r\n Имя: {$name} \r\n Емайл: {$email} \r\n Телефон: {$number} \r\n Описание: {$description} \r\n Было отправлено: {$datetime}";
         if (isset($images) && !empty($images)) {
@@ -123,6 +123,7 @@ class AdminController extends Controller
             return response()->json(['status' => 'true']);
             // echo 'Email sent successfully!';
         } catch (Exception $e) {
+            return $e->getMessage();
             return response()->json(['status' => 'false']);
             // echo 'Email could not be sent. Error: ' . $mail->ErrorInfo;
         }
