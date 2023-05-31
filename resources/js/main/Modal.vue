@@ -6,7 +6,7 @@
         <!-- <li><a href="#">Главная</a></li>
         <li><a @click='showOrder = true;' >Заявка на расчёт</a></li> -->
         <!-- <li><a v-for="page in pages" :key='page.id' :href='"page/"+page.slug'>{{page.name}}</a></li> -->
-        <li v-for="page in pages" :key='page.id' ><router-link :to="'/page/' + page.slug">{{ page.title }}</router-link></li>
+        <li v-for="page in pages" :key='page.id' ><a :href='"/page/" + page.slug' style="text-decoration:none; color:black;">{{ page.title }}</a></li>
         <!-- <li><a href="#">Материалы</a></li>
         <li><a href="#">Технологии</a></li>
         <li><a href="#">Контакты</a></li> -->
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import router from "@/router/index.js";
 export default {
   name: 'Modal',
   data(){
@@ -35,7 +36,7 @@ export default {
   methods: {
     closeOrder(){
         this.showOrder = false;
-    }
+    },
   }
 }
 </script>

@@ -209,7 +209,7 @@ export default {
                         description: this.description,
                         visibility: this.visibility,
                     })
-                    .then(function (response) {
+                    .then((response) => {
                         console.log(response.data);
                         this.isLoading = false;
                         router.push({ name: "Pages" });

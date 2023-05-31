@@ -2,11 +2,14 @@
     <div v-if="isVisible" class="container-order-wrapper">
         <div class="container-order">
             <p>Заявка на расчёт упаковки</p>
-            <span class="order-header-text" style='color:black; font-size: 15px;'>Вся упаковка производится под заказ, по индивидуальным параметрам<br></span>
+            <span
+                class="order-header-text"
+                style="color: black; font-size: 15px"
+                >Вся упаковка производится под заказ, по индивидуальным
+                параметрам<br
+            /></span>
             <!-- <br> -->
-            <span 
-            class="order-header-text">
-                
+            <span class="order-header-text">
                 Свяжитесь с нами для расчета стоимости или консультации <br />
                 {{ contacts.phone_number }} | {{ contacts.email }} <br />
                 Или заполните форму ниже</span
@@ -63,9 +66,7 @@
             <button @click="$emit('close')" class="close"></button>
 
             <!-- Выводим уведомление при успешной отправки -->
-            <!-- <div class="container-sending-true">
-        Заявка успешно отправлена
-      </div> -->
+            <div v-if="success" class="container-sending-true">Заявка успешно отправлена</div>
             <!-- ////// -->
         </div>
     </div>
@@ -77,7 +78,10 @@ export default {
     name: "Order",
     data() {
         return {
-            contacts: null,
+            contacts: {
+                phone_number: "",
+                email: "",
+            },
             sendImages: true,
             name: "",
             email: "",
@@ -85,6 +89,7 @@ export default {
             description: "",
             isVisible: true,
             images: [],
+            success:false,
         };
     },
     mounted() {
@@ -116,11 +121,11 @@ export default {
             axios
                 .get("/api/get-email-token", { withCredentials: true })
                 .then((response) => {
-                    console.log("got email token");
+                    // console.log("got email token");
                     const cookie = this.getCookie("emailToken");
                     if (cookie != null && cookie != "undefined") {
-                        console.log("check email token");
-                        this.isVisible = false;
+                        // console.log("check email token");
+                        
 
                         this.getLikedImages();
                         this.sendMail();
@@ -153,30 +158,35 @@ export default {
             const minutes = String(now.getMinutes()).padStart(2, "0");
             const seconds = String(now.getSeconds()).padStart(2, "0");
             const dateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-            var sendObject = {name: this.name,
-                    email: this.email,
-                    number: this.number,
-                    description: this.description,
-                    datetime: dateTime,};
+            var sendObject = {
+                name: this.name,
+                email: this.email,
+                number: this.number,
+                description: this.description,
+                datetime: dateTime,
+            };
 
-            if(this.sendImages){
-                sendObject['images'] = this.images;
+            if (this.sendImages) {
+                sendObject["images"] = this.images;
             }
-
-            axios
-                .post("/api/send-email", sendObject)
-                .then((response) => {
-                    console.log(response.data);
-                    if (response.data.status == "true") {
-                        console.log("success");
-                        localStorage.setItem['likedImages']=  null;
+            this.success = true;
+            axios.post("/api/send-email", sendObject).then((response) => {
+                console.log(response.data);
+                if (response.data.status == "true") {
+                    console.log("success");
+                    localStorage.setItem["likedImages"] = null;
+                    
+                    setTimeout(()=> {
+                        this.isVisible = false;
                         this.$emit("close", { status: true });
-                    } else {
-                        console.log("failure");
+                        
+                    }, 2000);
+                } else {
+                    console.log("failure");
 
-                        this.$emit("close", { status: false });
-                    }
-                });
+                    this.$emit("close", { status: false });
+                }
+            });
         },
     },
 };

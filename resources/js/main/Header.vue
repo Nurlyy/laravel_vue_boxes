@@ -1,16 +1,16 @@
 <template>
     <div>
-        <CToaster placement="top-end" visible>
-            <CToast v-for="(toast, index) in toasts" :key="index">
-                <CToastHeader closeButton>
-                    <span class="me-auto fw-bold">{{ toast.title }}</span>
-                    <small>7 min ago</small>
-                </CToastHeader>
-                <CToastBody>
-                    {{ toast.content }}
-                </CToastBody>
-            </CToast>
-        </CToaster>
+        <!-- <CToast
+            v-if="showToast"
+            :autohide="true"
+            style="position: absolute; z-index: 9999; top: 15px; right: 15px"
+            visible
+        >
+            <CToastHeader closeButton>
+                <span class="me-auto fw-bold">{{ title }}</span>
+            </CToastHeader>
+            <CToastBody>{{ content }}</CToastBody>
+        </CToast> -->
         <div class="conteaner-zero"></div>
         <div class="container-header-wrapper">
             <div class="container-header">
@@ -48,6 +48,11 @@
                 >
                     каталог упаковки
                 </button>
+
+                <form action="https://t.me/propako" target="_blank">
+                    <button class="telegram" aria-label="Telegram button"></button>
+                </form>
+
                 <a :href="'tel:' + phone_number" class="phone">
                     {{ phone_number }}
                 </a>
@@ -83,6 +88,10 @@ export default {
             success: false,
             fail: false,
             toasts: [],
+            showToast: false,
+            title: "",
+            content: "",
+            status: false,
         };
     },
     mounted() {
@@ -119,9 +128,25 @@ export default {
             this.showingOrder = true;
             document.getElementById("app_main").className = "blocked";
         },
-        hideOrder() {
+        hideOrder(status) {
             this.showingOrder = false;
             document.getElementById("app_main").className = "";
+            // console.log(status);
+            if(status){
+                if (status.status == true) {
+                this.showToast = true;
+                this.title = status.status
+                    ? "Вы успешно оставили заявку!"
+                    : "Произошла ошибка!";
+                this.content = status.status
+                    ? "Мы обязательно обработаем вашу заявку"
+                    : "Попробуйте заново";
+                setTimeout(() => {
+                    this.showToast = false;
+                }, 3000);
+            }
+            }
+            
         },
         showModal() {
             this.showingModal = true;
@@ -330,19 +355,55 @@ export default {
                 }
             }
         }
+        .telegram {
+            float: right;
+            position: relative;
+            width: 30px;
+            display: block;
+            height: 26px;
+            background-color: none;
+            background: none;
+            background-image: url(@/assets/telegram.svg);
+            background-repeat: no-repeat;
+            background-position: top -2px left 1px;
+            background-size: 30px;
+            cursor: pointer;
+            border: 0;
+            outline: none;
+            margin: 3px 18px 0 0;
+            transition: 0.3s;
+            @media (max-width: 860px) {
+                width: 26px;
+                margin: 5px 14px 0 0;
+                background-size: 24px !important;
+                background-position: top 0px left 1px !important;
+            }
+            @media (max-width: 720px) {
+                display: none;
+            }
+            &:hover {
+                -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+                filter: alpha(opacity=80);
+                -moz-opacity: 0.8;
+                -khtml-opacity: 0.8;
+                opacity: 0.8;
+            }
+        }
         .phone {
             float: right;
             font-family: Roboto;
             font-weight: 300;
             font-size: 23px;
-            //   padding: 3px 0;
-            //   padding-bottom:3px;
             color: #fff;
             text-decoration: none;
-            margin-right: 12px;
-            @media (min-width: 690px) and (max-width: 800px) {
+            margin-right: 14px;
+            @media (min-width: 750px) and (max-width: 850px) {
                 font-size: 18px !important;
                 padding: 6px 0 !important;
+            }
+            @media (max-width: 750px) {
+                font-size: 16px !important;
+                padding: 8px 0 !important;
             }
             @media (max-width: 690px) {
                 display: none !important;
