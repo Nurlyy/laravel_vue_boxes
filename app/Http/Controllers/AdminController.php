@@ -90,16 +90,20 @@ class AdminController extends Controller
         $mail->isSMTP();
 
         // Enable SMTP authentication
-        $mail->SMTPAuth = true;
-        $mail->AuthType = 'LOGIN';
-        $mail->Username = 'no-replay@propako.ru';
-        $mail->Password = 'EXNkxmMsjYBPKwszxsoktx6b';
+        // $mail->SMTPAuth = true;
+        // $mail->AuthType = 'LOGIN';
+        // $mail->Username = 'no-replay@propako.ru';
+        // $mail->Password = 'EXNkxmMsjYBPKwszxsoktx6b';
 
-        $mail->Host = 'smtp.yandex.com';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
-        $mail->setFrom('no-replay@propako.ru', 'Your Name');
-        $mail->addAddress('nurlitan.berikbol@yandex.ru', 'Новая Заявка');
+        $mail->Host       = 'smtp.yandex.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = 'public@kdpost.ru';                     //SMTP username
+        $mail->Password   = 'Globalpro2023';                               //SMTP password
+        $mail->SMTPSecure = 'ssl';         
+        $mail->Port       = 465;
+        $mail->setFrom('public@kdpost.ru', 'Your Name');
+        $mail->addAddress('public@propako.ru', 'Новая Заявка');
+        // $mail->addAddress('public@propako.ru', 'Новая Заявка');
         $mail->Subject = 'Новая Заявка';
         $mail->Body = "На сайте была оставлена заявка через форму. \r\n Данные заявки: \r\n Имя: {$name} \r\n Емайл: {$email} \r\n Телефон: {$number} \r\n Описание: {$description} \r\n Было отправлено: {$datetime}";
         if (isset($images) && !empty($images)) {
