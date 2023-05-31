@@ -1,4 +1,5 @@
 <template>
+    <CAlert :visible="alert_state" color="success">Изменения сохранены</CAlert>
     <h1>Изменить аккаунт админа</h1>
     <CForm @submit.prevent="submitForm">
         <div style="width: 50%">
@@ -47,6 +48,7 @@ export default {
             email: "",
             username: "",
             password: "",
+            alert_state: false,
         };
     },
     mounted() {
@@ -65,8 +67,12 @@ export default {
                     username: this.username,
                     password: this.password,
                 })
-                .then(function (response) {
+                .then((response) => {
                     console.log(response.data);
+                    this.alert_state = true;
+                    setTimeout(() => {
+                        this.alert_state = false;
+                    }, 1500);
                 });
             //   alert('saved');
         },

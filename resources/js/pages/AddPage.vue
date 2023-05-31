@@ -1,4 +1,14 @@
 <template>
+    <div v-if="isLoading" class="loading-overlay">
+        <CButton disabled>
+            <CSpinner
+                component="span"
+                size="xsl"
+                color="light"
+                aria-hidden="true"
+            />
+        </CButton>
+    </div>
     <h1 v-if="id == null">Добавить Страницу</h1>
     <h1 v-if="id != null">Изменить Страницу</h1>
     <CForm @submit.prevent="submitForm()">
@@ -61,15 +71,8 @@
             @save="change"
             @imgAdd="imgUpload"
             ref="mavoneditor"
+            class='mb-3'
         />
-        <!-- <QuillEditor  v-model:value="body" v-model:content="body" contentType="html" theme="snow"/> -->
-
-        <!-- <div class="mb-3">
-            <CFormLabel for="body">Body</CFormLabedl>
-            <CFormTextarea id="body" v-model="body" rows="3">{{
-                this.body
-            }}</CFormTextarea>
-        </div> -->
 
         <div class="mb-3">
             <CFormLabel for="keyword"
@@ -134,6 +137,7 @@ export default {
             description: "",
             visibility: false,
             id: null,
+            isLoading: false,
         };
     },
     methods: {
@@ -173,6 +177,7 @@ export default {
         },
         submitForm() {
             // console.log(this.body);
+            this.isLoading = true;
             const visibility = this.visibility == true ? "1" : "0";
             if (this.id != null) {
                 axios
@@ -187,8 +192,10 @@ export default {
                         visibility: visibility,
                         id: this.id,
                     })
-                    .then(function (response) {
+                    .then((response) => {
                         console.log(response.data);
+                        this.isLoading = false;
+                        router.push({ name: "Pages" });
                     });
             } else {
                 axios
@@ -204,12 +211,11 @@ export default {
                     })
                     .then(function (response) {
                         console.log(response.data);
+                        this.isLoading = false;
+                        router.push({ name: "Pages" });
                     });
                 // alert("saved");
             }
-            setTimeout(() => {
-                router.push({ name: "Pages" });
-            }, 500);
         },
         slugify(str) {
             return str
@@ -248,4 +254,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+</style>

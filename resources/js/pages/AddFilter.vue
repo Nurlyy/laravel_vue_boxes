@@ -1,4 +1,14 @@
 <template>
+    <div v-if="isLoading" class="loading-overlay">
+        <CButton disabled>
+            <CSpinner
+                component="span"
+                size="xsl"
+                color="light"
+                aria-hidden="true"
+            />
+        </CButton>
+    </div>
     <h1 v-if="id==null">Добавить фильтр</h1>
     <h1 v-if="id!=null">Изменить фильтр</h1>
     <CForm @submit.prevent="submitForm()">
@@ -27,18 +37,21 @@ export default {
         return {
             name: "",
             id: null,
+            isLoading: false,
         };
     },
     methods: {
         submitForm() {
+            this.isLoading = true;
             console.log(this.id);
             if (!this.id) {
                 axios
                     .post("/api/add-filter", { name: this.name })
-                    .then(function (response) {
+                    .then((response) => {
                         // alert('Saved');
                         // console.log(response);
                         router.push({ name: "Filters" });
+                        this.isLoading = false;
                     });
             } else {
                 axios
@@ -47,6 +60,7 @@ export default {
                         name: this.name,
                     })
                     .then((response) => {
+                        this.isLoading = false;
                         setTimeout(() => {
                             router.push({ name: "Filters" });
                         }, 500);
@@ -73,4 +87,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+</style>

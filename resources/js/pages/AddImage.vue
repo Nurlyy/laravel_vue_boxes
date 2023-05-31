@@ -1,4 +1,14 @@
 <template>
+    <div v-if="isLoading" class="loading-overlay">
+        <CButton disabled>
+            <CSpinner
+                component="span"
+                size="xsl"
+                color="light"
+                aria-hidden="true"
+            />
+        </CButton>
+    </div>
     <h1 v-if="id == null">Добавить Изображение</h1>
     <h1 v-if="id != null">Изменить Изображение</h1>
     <CForm @submit.prevent="submitForm()">
@@ -141,11 +151,13 @@ export default {
                 // { id: 2, name: "Filter 2" },
                 // { id: 3, name: "Filter 3" },
             ],
+            isLoading: false,
         };
     },
     mounted() {},
     methods: {
         submitForm() {
+            this.isLoading = true;
             if (this.id == null) {
                 if (this.image != null) {
                     let formData = new FormData();
@@ -160,6 +172,8 @@ export default {
                         .then((response) => {
                             // this.saveImagePath(response.data.path);
                             console.log(response.data);
+                            this.isLoading = false;
+                            router.push({ name: "Images" });
                         })
                         .catch((error) => {
                             console.log(error);
@@ -180,6 +194,8 @@ export default {
                         .then((response) => {
                             // this.saveImagePath(response.data.path);
                             console.log(response.data);
+                            this.isLoading = false;
+                            router.push({ name: "Images" });
                         })
                         .catch((error) => {
                             console.log(error);
@@ -187,9 +203,6 @@ export default {
                     //   alert("saved");
                 }
             }
-            setTimeout(() => {
-                router.push({ name: "Images" });
-            }, 500);
         },
         saveImage(event) {
             this.image = event.target.files[0];
@@ -259,4 +272,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+</style>

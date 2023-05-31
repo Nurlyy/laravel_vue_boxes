@@ -29,6 +29,10 @@ export default {
     created(){
         this.id = this.$route.params.id;
         console.log('cat id from index: ' + this.id);
+        axios.post('/api/get-main-page').then(response =>{
+            const description = response.data.mainPage.description;
+            document.querySelector('meta[name="description"]').setAttribute('content', description);
+        })
     },
     methods: {
         getLikesCount() {

@@ -42,6 +42,8 @@ export default {
         axios.post("/api/get-page", { slug: slug }).then((response) => {
             this.page = response.data.page;
             document.title = this.page.header_title;
+            const description = this.page.description;
+            document.querySelector('meta[name="description"]').setAttribute('content', description);
             console.log(response.data);
         });
         if (window.location.href.indexOf("contact") > -1) {
