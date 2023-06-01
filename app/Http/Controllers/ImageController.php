@@ -370,28 +370,28 @@ class ImageController extends Controller
             } elseif (in_array(pathinfo($file, PATHINFO_EXTENSION), array('png', 'PNG'))) {
                 // Load the original image
                 $original_image = imagecreatefrompng($directory . $file);
-                $exif = exif_read_data($directory . $file);
-                if ($exif && isset($exif['Orientation'])) {
-                    $orientation = $exif['Orientation'];
-                    if ($orientation != 1) {
-                        $deg = 0;
-                        switch ($orientation) {
-                            case 3:
-                                $deg = 180;
-                                break;
-                            case 6:
-                                $deg = 270;
-                                break;
-                            case 8:
-                                $deg = 90;
-                                break;
-                        }
-                        if ($deg) {
-                            $original_image = imagerotate($original_image, $deg, 0);
-                        }
-                        // then rewrite the rotated image back to the disk as $filename 
-                    } // if there is some rotation necessary
-                }
+                // $exif = exif_read_data($directory . $file);
+                // if ($exif && isset($exif['Orientation'])) {
+                //     $orientation = $exif['Orientation'];
+                //     if ($orientation != 1) {
+                //         $deg = 0;
+                //         switch ($orientation) {
+                //             case 3:
+                //                 $deg = 180;
+                //                 break;
+                //             case 6:
+                //                 $deg = 270;
+                //                 break;
+                //             case 8:
+                //                 $deg = 90;
+                //                 break;
+                //         }
+                //         if ($deg) {
+                //             $original_image = imagerotate($original_image, $deg, 0);
+                //         }
+                //         // then rewrite the rotated image back to the disk as $filename 
+                //     } // if there is some rotation necessary
+                // }
                 // Create a new WebP image
                 $new_image = imagecreatetruecolor(imagesx($original_image), imagesy($original_image));
                 imagepalettetotruecolor($new_image);
